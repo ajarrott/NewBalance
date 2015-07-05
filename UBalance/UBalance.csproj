@@ -87,12 +87,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\UBalance.Library.csproj">
-      <Project>{94b41942-77a8-4ad2-bfc2-90ade2d1cac9}</Project>
-      <Name>UBalance.Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="FormSetup\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
