@@ -1,0 +1,6 @@
+C:\Users\anthony\Desktop\UBalance\UBalance.Logic\bin\Debug\UBalance.Logic.exe.config
+C:\Users\anthony\Desktop\UBalance\UBalance.Logic\bin\Debug\UBalance.Logic.exe
+C:\Users\anthony\Desktop\UBalance\UBalance.Logic\bin\Debug\UBalance.Logic.pdb
+C:\Users\anthony\Desktop\UBalance\UBalance.Logic\obj\Debug\UBalance.Logic.exe
+C:\Users\anthony\Desktop\UBalance\UBalance.Logic\obj\Debug\UBalance.Logic.pdb
+C:\Users\anthony\Desktop\UBalance\UBalance.Logic\obj\Debug\UBalance.Logic.csprojResolveAssemblyReference.cache
