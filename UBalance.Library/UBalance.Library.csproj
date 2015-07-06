@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="AppLoading\AppLoader.cs" />
     <Compile Include="Classes\AppItem.cs" />
+    <Compile Include="Events\PreferenceCloseEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

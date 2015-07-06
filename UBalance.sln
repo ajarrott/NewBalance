@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBalance", "UBalance\UBalan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBalance.Library", "UBalance.Library\UBalance.Library.csproj", "{94B41942-77A8-4AD2-BFC2-90ADE2D1CAC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBalance.Logic.Test", "UBalance.Logic\UBalance.Logic.Test.csproj", "{1B05737E-D1D1-4CCA-B8BB-38EC9C4CFC44}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{94B41942-77A8-4AD2-BFC2-90ADE2D1CAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94B41942-77A8-4AD2-BFC2-90ADE2D1CAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94B41942-77A8-4AD2-BFC2-90ADE2D1CAC9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B05737E-D1D1-4CCA-B8BB-38EC9C4CFC44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B05737E-D1D1-4CCA-B8BB-38EC9C4CFC44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B05737E-D1D1-4CCA-B8BB-38EC9C4CFC44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B05737E-D1D1-4CCA-B8BB-38EC9C4CFC44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

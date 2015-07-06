@@ -50,6 +50,12 @@
     <Compile Include="Popup.Designer.cs">
       <DependentUpon>Popup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Preferences.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Preferences.Designer.cs">
+      <DependentUpon>Preferences.cs</DependentUpon>
+    </Compile>
     <Compile Include="UBalance.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +66,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Popup.resx">
       <DependentUpon>Popup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Preferences.resx">
+      <DependentUpon>Preferences.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UBalance.resx">
       <DependentUpon>UBalance.cs</DependentUpon>
@@ -88,6 +97,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FormSetup\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UBalance.Library\UBalance.Library.csproj">
+      <Project>{94b41942-77a8-4ad2-bfc2-90ade2d1cac9}</Project>
+      <Name>UBalance.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

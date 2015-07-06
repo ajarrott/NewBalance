@@ -11,7 +11,7 @@ namespace UBalance.Library.AppLoading
     public class AppLoader
     {
         private List<AppItem> _appFiles;
-        private const string _defaultDirectory = "C:\\Users\\anthony\\Desktop\\Balance";
+        private string _defaultDirectory = "C:\\Users\\anthony\\Desktop\\Balance";
         public AppLoader()
         {
             GetAppFiles();
@@ -37,6 +37,18 @@ namespace UBalance.Library.AppLoading
         public List<string> GetDirectoryNames()
         {
             return _appFiles.Select(a => a.GetDirectory()).ToList();
+        }
+
+        public void UpdatePath(string s)
+        {
+            _defaultDirectory = s;
+
+            GetAppFiles();
+        }
+
+        public string GetPath()
+        {
+            return _defaultDirectory;
         }
     }
 }
