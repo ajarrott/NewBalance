@@ -78,12 +78,14 @@ namespace UBalance
 
             int index = App.GetFileNames().IndexOf(t.Text);
 
-            Popup p = new Popup();
+            /*Popup p = new Popup();
 
             p.Text = t.Text;
             p.ChangeTextBox1Text(App.GetDirectoryNames()[index]);
 
-            p.Show();
+            p.Show();*/
+
+            AppParser a = new AppParser(App.GetDirectoryNames()[index]);
 
             //textBox1.Text = app.GetDirectoryNames()[index];
             //.ShowDialog();
