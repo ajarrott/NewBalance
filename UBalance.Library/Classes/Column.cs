@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,13 +14,65 @@ namespace UBalance.Library.Classes
         private string _Digits;
         private string _Precision;
 
-        private 
-        enum ColumnType 
+        public enum ColumnType 
         {
             K, // Keyboard
             W, // Weight
             C, // Calculation
             M  // Mirror
+        }
+
+        // getters
+        public Column(string label, ColumnType type, string digits, string precision)
+        {
+            _Label = label;
+            _Type = type;
+            _Digits = digits;
+            _Precision = precision;
+        }
+
+        public int Digits
+        {
+            get
+            {
+                try
+                {
+                    int returnValue;
+                    int.TryParse(_Digits, out returnValue);
+                    return returnValue;
+                }
+                catch (Exception)
+                {
+                    return -1;
+                }
+            }
+        }
+
+        public int Precision
+        {
+            get
+            {
+                try
+                {
+                    int returnValue;
+                    int.TryParse(_Precision, out returnValue);
+                    return returnValue;
+                }
+                catch (Exception)
+                {
+                    return -1;
+                }
+            }
+        }
+
+        public string Label
+        {
+            get { return _Label; }
+        }
+
+        public ColumnType Type
+        {
+            get { return _Type; }
         }
 
         // 'K' type elements can have 'AUTO', 'DITTO', or 'NULL'.  'AUTO' will automatically generate numbers                     
