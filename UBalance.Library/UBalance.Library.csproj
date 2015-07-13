@@ -44,6 +44,7 @@
     <Compile Include="Classes\AppItem.cs" />
     <Compile Include="Classes\Calculation.cs" />
     <Compile Include="Classes\Column.cs" />
+    <Compile Include="Classes\GridData.cs" />
     <Compile Include="Classes\Row.cs" />
     <Compile Include="Events\AllColumnsPopulatedEventArgs.cs" />
     <Compile Include="Events\ColumnChangedEventArgs.cs" />

@@ -10,8 +10,8 @@ namespace UBalance.Library.Classes
 {
     public class Row
     {
+        private List<Column> _Types;
         private List<double> _Values; 
-        private List<Column> _Columns;
         private int _RowNumber;
 
         // event handlers
@@ -24,14 +24,15 @@ namespace UBalance.Library.Classes
 
         public Row(List<Column> columns, int rowNumber)
         {
+            _Types = new List<Column>();
             _Values = new List<double>();
-            _Columns = new List<Column>();
+
             _RowNumber = rowNumber;
 
-            foreach (Column c in columns)
+            foreach(Column c in columns)
             {
+                _Types.Add(c);
                 _Values.Add(0.0);
-                _Columns.Add(c);
             }
         }
 
@@ -48,13 +49,24 @@ namespace UBalance.Library.Classes
             }
         }
 
+        public void ChangeRowNumber(int rowNumber)
+        {
+            _RowNumber = rowNumber;
+        }
+
         private bool CheckIfColumnsPopulated()
         {
+            // need to check if value has been changed, 0 should be ok
             if (_Values.Any(v => !v.Equals(0.0)))
             {
                 return false;
             }
             return true;
+        }
+
+        public List<string> RowHeaders()
+        {
+            return _Types.Select(c => c.Label).ToList();
         }
     }
 }

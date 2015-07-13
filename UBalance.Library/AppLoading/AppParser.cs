@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UBalance.Library.Classes;
 
 namespace UBalance.Library.AppLoading
 {
@@ -35,8 +36,31 @@ namespace UBalance.Library.AppLoading
                 string[] test = str.Split(null);
                 List<string> newList = test.Where(s => s.Length > 0).ToList();
 
-                _parsedFile.Add(newList);
+                if ( newList.Count == 5 )
+                    _parsedFile.Add(newList);
             }
+
+
+        }
+
+        public Row ReturnDefaultRow()
+        {
+            List<Column> cols = new List<Column>();
+            foreach (List<string> l in _parsedFile)
+            {
+                // there will be 5 items in each .APP file
+                string label = l[0];
+                Column.ColumnType type;
+                Column.ColumnType.TryParse(l[1], out type);
+                string digits = l[2];
+                string precision = l[3];
+                string connection = l[4];
+                Column c = new Column(label, type, digits, precision, connection);
+                cols.Add(c);
+            }
+            Row r = new Row(cols, 0);
+
+            return r;
         }
     }
 }

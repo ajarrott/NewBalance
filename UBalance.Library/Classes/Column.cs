@@ -13,6 +13,7 @@ namespace UBalance.Library.Classes
         private ColumnType _Type;
         private string _Digits;
         private string _Precision;
+        private string _Connection;
 
         public enum ColumnType 
         {
@@ -23,12 +24,13 @@ namespace UBalance.Library.Classes
         }
 
         // getters
-        public Column(string label, ColumnType type, string digits, string precision)
+        public Column(string label, ColumnType type, string digits, string precision, string connection)
         {
             _Label = label;
             _Type = type;
             _Digits = digits;
             _Precision = precision;
+            _Connection = connection;
         }
 
         public int Digits
@@ -75,6 +77,10 @@ namespace UBalance.Library.Classes
             get { return _Type; }
         }
 
+        public string Connection
+        {
+            get { return _Connection; }
+        }
         // 'K' type elements can have 'AUTO', 'DITTO', or 'NULL'.  'AUTO' will automatically generate numbers                     
         // 'W' type element may have an 'Advance-to-Element' option or 'NULL'.
             // An 'Advance-to-Element' is an element name in the application file that becomes the next data entry cell

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UBalance.Library.AppLoading;
+using UBalance.Library.Classes;
 using UBalance.Library.Events;
 
 namespace UBalance
@@ -17,11 +18,12 @@ namespace UBalance
     {
         public static AppLoader App = new AppLoader();
         public static FolderBrowserDialog FolderBroswer = new FolderBrowserDialog();
-        
+        public GridData ViewData;
 
         public UBalance()
         {
             InitializeComponent();
+            button1.Enabled = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -75,18 +77,29 @@ namespace UBalance
             ToolStripMenuItem t = sender as ToolStripMenuItem;
 
             //find item in app
-
             int index = App.GetFileNames().IndexOf(t.Text);
 
-            /*Popup p = new Popup();
-
-            p.Text = t.Text;
-            p.ChangeTextBox1Text(App.GetDirectoryNames()[index]);
-
-            p.Show();*/
-
             AppParser a = new AppParser(App.GetDirectoryNames()[index]);
+            ViewData = new GridData(a.ReturnDefaultRow());
 
+
+            List<string> columnHeaders = ViewData.ColumnHeaders();
+
+            int count = columnHeaders.Count;
+
+            dataGridView1.ColumnCount = count;
+            if (dataGridView1.Rows.Count < 1)
+            {
+                dataGridView1.Rows.Add();
+                ViewData.AddRow();
+            }
+            
+            for (int i = 0; i < count; i++)
+            {
+                dataGridView1.Columns[i].HeaderText = columnHeaders[i];
+            }
+
+            button1.Enabled = true;
             //textBox1.Text = app.GetDirectoryNames()[index];
             //.ShowDialog();
         }
@@ -104,6 +117,12 @@ namespace UBalance
         {
             App.UpdatePath(e.Text);
             LoadAndUpdateAppFiles();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Add();
+            ViewData.AddRow();
         }
     }
 }
