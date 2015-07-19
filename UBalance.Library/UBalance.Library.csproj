@@ -42,6 +42,7 @@
     <Compile Include="AppLoading\AppLoader.cs" />
     <Compile Include="AppLoading\AppParser.cs" />
     <Compile Include="Classes\AppItem.cs" />
+    <Compile Include="Classes\BalanceReader.cs" />
     <Compile Include="Classes\Calculation.cs" />
     <Compile Include="Classes\Column.cs" />
     <Compile Include="Classes\GridData.cs" />

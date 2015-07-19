@@ -19,11 +19,14 @@ namespace UBalance
         public static AppLoader App = new AppLoader();
         public static FolderBrowserDialog FolderBroswer = new FolderBrowserDialog();
         public GridData ViewData;
+        public BalanceReader Balance = new BalanceReader();
 
         public UBalance()
         {
             InitializeComponent();
             button1.Enabled = false;
+
+            Balance.ReadBalance();
         }
 
         private void Form1_Load(object sender, EventArgs e)
