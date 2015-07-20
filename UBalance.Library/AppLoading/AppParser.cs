@@ -22,8 +22,6 @@ namespace UBalance.Library.AppLoading
         private void ParseFile()
         {
             StreamReader strReader = new StreamReader(_openFileStream);
-            int i = 0;
-            int j = 0;
             string line;
             _parsedFile = new List<List<string>>();
             line = strReader.ReadToEnd();
