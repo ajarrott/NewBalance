@@ -12,21 +12,40 @@ namespace UBalance.Library.Classes
     {
         private readonly SerialPort _port;
 
-        public BalanceReader()
-        {
-            _port = new SerialPort(); //"COM3", 9600);
+        /*
+         *         public string ComPort = String.Empty;
+        public int BaudRate = 110;
+        public StopBits StopBits = StopBits.None;
+        public int DataBits = 7;
+        public Parity Parity = Parity.None;
+         * */
+        public BalanceReader(string comPort = "COM1", int baudRate = 110, StopBits stopBits = StopBits.One, int dataBits = 7, Parity parity = Parity.Even)
+        {       
+            _port = new SerialPort
+            {
+                PortName = comPort,
+                BaudRate = baudRate,
+                StopBits = stopBits,
+                //NewLine = System.Environment.NewLine,
+                DataBits = 7,
+                Parity = Parity.Even
+            }; //"COM3", 9600);
 
-            _port.PortName = "COM3";
-            _port.BaudRate = 9600;
             // from Page 39 of NewClassic Balances METTLER TOLEDO manual for MS-S / MS-L Models
-            _port.StopBits = StopBits.One;
             //_port.Handshake = Handshake.XOnXOff;
-            _port.NewLine = System.Environment.NewLine;
-            _port.DataBits = 7;
-            _port.Parity = Parity.Even;
 
             if (_port.IsOpen == false)
-                _port.Open();
+            {
+                try
+                {
+                    _port.Open();
+                }
+                catch (Exception ex)
+                {
+                    //
+                }
+            }
+                
 
             _port.DataReceived += _port_DataReceived;
         }

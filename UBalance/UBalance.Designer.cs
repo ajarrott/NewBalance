@@ -1,4 +1,6 @@
-﻿namespace UBalance
+﻿using System.Windows.Forms;
+
+namespace UBalance
 {
     partial class UBalance
     {
@@ -79,6 +81,8 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(524, 229);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
+            this.dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
             // 
             // button1
             // 
@@ -109,6 +113,47 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private DataGridViewCell _cellEndEdit;
+
+        void dataGridView1_CellEndEdit(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+            _cellEndEdit = dataGridView1[e.ColumnIndex, e.RowIndex];
+
+            // need to update logic layer
+        }
+
+        // redirect transfer of cell on enter from down to right
+        private void dataGridView1_SelectionChanged(object sender, System.EventArgs e)
+        {
+            int maxCols = dataGridView1.ColumnCount;
+            int newColumn, newRow;
+            // don't change on mouse press
+            if (MouseButtons != 0) return;
+
+
+            if (_cellEndEdit != null && dataGridView1.CurrentCell != null)
+            {
+                // Current cell will be diagramed as follows
+                // X -> X - X
+                // | -> 
+                // X ->
+
+                if (_cellEndEdit.ColumnIndex < maxCols - 1)
+                {
+                    newColumn = _cellEndEdit.ColumnIndex + 1;
+                    newRow = _cellEndEdit.RowIndex;
+                }
+                else
+                {
+                    newColumn = 0;
+                    newRow = _cellEndEdit.RowIndex + 1;
+                }
+
+                dataGridView1.CurrentCell = dataGridView1[newColumn, newRow];
+            }
+            _cellEndEdit = null;
         }
 
         #endregion

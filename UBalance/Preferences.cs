@@ -1,13 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO.Ports;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using UBalance.Library.Classes;
 using UBalance.Library.Events;
@@ -204,35 +197,35 @@ namespace UBalance
         {
             ComboBox c = sender as ComboBox;
 
-            ComPort = c.SelectedItem.ToString();
+            if (c != null) ComPort = c.SelectedItem.ToString();
         }
 
         private void baudRateList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox c = sender as ComboBox;
 
-            BaudRate = (int)c.SelectedItem;
+            if (c != null) BaudRate = (int)c.SelectedItem;
         }
 
         private void parityList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox c = sender as ComboBox;
 
-            Enum.TryParse(c.SelectedItem.ToString(), out Parity);
+            if (c != null) Enum.TryParse(c.SelectedItem.ToString(), out Parity);
         }
 
         private void stopBitsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox c = sender as ComboBox;
 
-            Enum.TryParse(c.SelectedItem.ToString(), out StopBits);
+            if (c != null) Enum.TryParse(c.SelectedItem.ToString(), out StopBits);
         }
 
         private void dataBitsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox c = sender as ComboBox;
 
-            DataBits = (int)c.SelectedItem;
+            if (c != null) DataBits = (int)c.SelectedItem;
         }
     }
 }

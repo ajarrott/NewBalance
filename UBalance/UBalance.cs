@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Forms;
 using UBalance.Library.AppLoading;
 using UBalance.Library.Classes;
 using UBalance.Library.Events;
+using UBalance.Properties;
 
 namespace UBalance
 {
@@ -19,14 +21,30 @@ namespace UBalance
         public static AppLoader App = new AppLoader();
         public static FolderBrowserDialog FolderBroswer = new FolderBrowserDialog();
         public GridData ViewData;
-        public BalanceReader Balance = new BalanceReader();
+        public BalanceReader Balance;
 
         public UBalance()
         {
+            Balance = DefaultBalance();
             InitializeComponent();
             button1.Enabled = false;
 
             Balance.ReadBalance();
+        }
+
+        private BalanceReader DefaultBalance()
+        {
+            // Get default settings and create balance reader off of those options
+            string comPort = Settings.Default.COMPort; //1 - position in constructor
+            int baudRate = Settings.Default.BaudRate;  //2
+            int dataBits = Settings.Default.DataBits;  //4
+            StopBits stopBits;                         //3
+            Parity parity;                             //5
+
+            Enum.TryParse(Settings.Default.StopBits, out stopBits);
+            Enum.TryParse(Settings.Default.Parity, out parity);
+
+            return new BalanceReader(comPort, baudRate, stopBits, dataBits, parity);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -119,6 +137,8 @@ namespace UBalance
         private void pref_CloseEvent(object sender, PreferenceCloseEventArgs e)
         {
             App.UpdatePath(e.Text);
+            // update balance settings
+            Balance = DefaultBalance();
             LoadAndUpdateAppFiles();
         }
 
