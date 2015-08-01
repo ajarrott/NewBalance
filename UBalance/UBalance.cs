@@ -26,25 +26,31 @@ namespace UBalance
         public UBalance()
         {
             Balance = DefaultBalance();
-            InitializeComponent();
-            button1.Enabled = false;
+            // update command being sent to the balance on click
+            Balance.UpdateCommand();
 
-            Balance.ReadBalance();
+            InitializeComponent();
+            addRowButton.Enabled = false;
+
+            readBalanceButton.Enabled = Balance.IsBalanceConnected();
         }
 
         private BalanceReader DefaultBalance()
         {
             // Get default settings and create balance reader off of those options
-            string comPort = Settings.Default.COMPort; //1 - position in constructor
-            int baudRate = Settings.Default.BaudRate;  //2
-            int dataBits = Settings.Default.DataBits;  //4
-            StopBits stopBits;                         //3
-            Parity parity;                             //5
+            string comPort = Settings.Default.COMPort;          //1 - position in constructor
+            int baudRate = Settings.Default.BaudRate;           //2
+            int dataBits = Settings.Default.DataBits;           //4
+            StopBits stopBits;                                  //3
+            Parity parity;                                      //5
+            string sicsCommand = Settings.Default.SICSCommand;  //6
+
+            //Send sicsCommand to scale to update the value
 
             Enum.TryParse(Settings.Default.StopBits, out stopBits);
             Enum.TryParse(Settings.Default.Parity, out parity);
 
-            return new BalanceReader(comPort, baudRate, stopBits, dataBits, parity);
+            return new BalanceReader(comPort, baudRate, stopBits, dataBits, parity, sicsCommand);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -108,19 +114,19 @@ namespace UBalance
 
             int count = columnHeaders.Count;
 
-            dataGridView1.ColumnCount = count;
-            if (dataGridView1.Rows.Count < 1)
+            UBalanceDataGridView.ColumnCount = count;
+            if (UBalanceDataGridView.Rows.Count < 1)
             {
-                dataGridView1.Rows.Add();
+                UBalanceDataGridView.Rows.Add();
                 ViewData.AddRow();
             }
             
             for (int i = 0; i < count; i++)
             {
-                dataGridView1.Columns[i].HeaderText = columnHeaders[i];
+                UBalanceDataGridView.Columns[i].HeaderText = columnHeaders[i];
             }
 
-            button1.Enabled = true;
+            addRowButton.Enabled = true;
             //textBox1.Text = app.GetDirectoryNames()[index];
             //.ShowDialog();
         }
@@ -138,14 +144,38 @@ namespace UBalance
         {
             App.UpdatePath(e.Text);
             // update balance settings
+            if(Balance != null)
+                Balance.Dispose();
             Balance = DefaultBalance();
+            
             LoadAndUpdateAppFiles();
+
+            readBalanceButton.Enabled = Balance.IsBalanceConnected();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Add();
+            UBalanceDataGridView.Rows.Add();
             ViewData.AddRow();
+        }
+
+        private void readBalanceButton_Click(object sender, EventArgs e)
+        {
+            DataGridViewCell cell = null;
+            try
+            {
+                cell = UBalanceDataGridView.SelectedCells[0];
+            }
+            catch (Exception ex)
+            {
+                //ignore, keep cell null
+            }
+                
+
+            if (cell != null)
+            {
+                cell.Value = Balance.GetBalanceValue();
+            }
         }
     }
 }

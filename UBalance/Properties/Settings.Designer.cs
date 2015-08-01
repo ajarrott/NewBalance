@@ -94,5 +94,17 @@ namespace UBalance.Properties {
                 this["DataBits"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SI")]
+        public string SICSCommand {
+            get {
+                return ((string)(this["SICSCommand"]));
+            }
+            set {
+                this["SICSCommand"] = value;
+            }
+        }
     }
 }

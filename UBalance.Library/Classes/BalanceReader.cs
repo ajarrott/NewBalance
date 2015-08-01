@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace UBalance.Library.Classes
 {
-    public class BalanceReader
+    public class BalanceReader : IDisposable
     {
         private readonly SerialPort _port;
+        private string _sicsCommand;
+        private double _reading = 0.0;
 
         /*
          *         public string ComPort = String.Empty;
@@ -19,8 +21,11 @@ namespace UBalance.Library.Classes
         public int DataBits = 7;
         public Parity Parity = Parity.None;
          * */
-        public BalanceReader(string comPort = "COM1", int baudRate = 110, StopBits stopBits = StopBits.One, int dataBits = 7, Parity parity = Parity.Even)
-        {       
+        public BalanceReader(string comPort = "COM1", int baudRate = 110, StopBits stopBits = StopBits.One,
+            int dataBits = 7, Parity parity = Parity.Even, string sicsCommand = "SI")
+        {
+            _sicsCommand = sicsCommand;
+
             _port = new SerialPort
             {
                 PortName = comPort,
@@ -46,13 +51,31 @@ namespace UBalance.Library.Classes
                 }
             }
                 
-
             _port.DataReceived += _port_DataReceived;
         }
 
         void _port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            SerialPort s = sender as SerialPort;
 
+            if (s != null)
+            {
+                string str = s.ReadLine();
+                string[] items = str.Split();
+
+                foreach (string item in items)
+                {
+                    double temp = 0.0;
+                    double.TryParse(item, out temp);
+
+                    if (!temp.Equals(0))
+                    {
+                        _reading = temp;
+                    }
+                }
+
+            }
+            // need to parse the data to find the string
         }
 
         public static List<string> GetPortNames()
@@ -60,19 +83,31 @@ namespace UBalance.Library.Classes
             return SerialPort.GetPortNames().ToList();
         } 
 
-        public double ReadBalance()
+        public void UpdateCommand()
         {
-            
-            //string temp = _port.ReadLine();
-            //_port.ReadBufferSize = 128;
-            //string t1 = _port.ReadBufferSize = 
+            _port.WriteLine(_sicsCommand);
+        }
 
-            //string t2 = _port.ReadExisting();
-            //string t3 = _port.BytesToRead.ToString();
+        public double GetBalanceValue()
+        {
+            return _reading;
+        }
 
-            List<string> forShitsAndGigs = GetPortNames();
+        public bool IsBalanceConnected()
+        {
+            return _port.IsOpen;
+        }
 
-            return 0.0;
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_port.IsOpen)
+                _port.Close();
         }
     }
 }

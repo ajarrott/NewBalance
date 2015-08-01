@@ -30,14 +30,17 @@ namespace UBalance
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.appsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.UBalanceDataGridView = new System.Windows.Forms.DataGridView();
+            this.addRowButton = new System.Windows.Forms.Button();
+            this.readBalanceButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UBalanceDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -71,37 +74,67 @@ namespace UBalance
             this.preferencesToolStripMenuItem.Text = "Preferences";
             this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
-            // dataGridView1
+            // UBalanceDataGridView
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.UBalanceDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(13, 28);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(524, 229);
-            this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
-            this.dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            this.UBalanceDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.UBalanceDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.UBalanceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.UBalanceDataGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            this.UBalanceDataGridView.Location = new System.Drawing.Point(13, 28);
+            this.UBalanceDataGridView.Name = "UBalanceDataGridView";
+            this.UBalanceDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.UBalanceDataGridView.RowTemplate.Height = 38;
+            this.UBalanceDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.UBalanceDataGridView.Size = new System.Drawing.Size(524, 229);
+            this.UBalanceDataGridView.TabIndex = 1;
             // 
-            // button1
+            // addRowButton
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(461, 263);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Add Row...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.addRowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.addRowButton.Location = new System.Drawing.Point(369, 263);
+            this.addRowButton.Name = "addRowButton";
+            this.addRowButton.Size = new System.Drawing.Size(75, 23);
+            this.addRowButton.TabIndex = 2;
+            this.addRowButton.Text = "Add Row...";
+            this.addRowButton.UseVisualStyleBackColor = true;
+            this.addRowButton.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // readBalanceButton
+            // 
+            this.readBalanceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.readBalanceButton.Location = new System.Drawing.Point(450, 262);
+            this.readBalanceButton.Name = "readBalanceButton";
+            this.readBalanceButton.Size = new System.Drawing.Size(86, 23);
+            this.readBalanceButton.TabIndex = 3;
+            this.readBalanceButton.Text = "Read Balance";
+            this.readBalanceButton.UseVisualStyleBackColor = true;
+            this.readBalanceButton.Click += new System.EventHandler(this.readBalanceButton_Click);
             // 
             // UBalance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(549, 298);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.readBalanceButton);
+            this.Controls.Add(this.addRowButton);
+            this.Controls.Add(this.UBalanceDataGridView);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "UBalance";
@@ -109,31 +142,57 @@ namespace UBalance
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UBalanceDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+            this.UBalanceDataGridView.CellEndEdit += UBalanceDataGridView_CellEndEdit;
+            this.UBalanceDataGridView.SelectionChanged += UBalanceDataGridView_SelectionChanged;
+            this.UBalanceDataGridView.KeyDown +=UBalanceDataGridView_KeyDown;
 
+        }
+
+        private void UBalanceDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                int column = UBalanceDataGridView.CurrentCell.ColumnIndex;
+                int row = UBalanceDataGridView.CurrentCell.RowIndex;
+                if (column == UBalanceDataGridView.ColumnCount - 1)
+                {
+                    if (UBalanceDataGridView.RowCount <= row + 1)
+                    {
+                        UBalanceDataGridView.Rows.Add();
+                        ViewData.AddRow();
+                    }
+                    UBalanceDataGridView.CurrentCell = UBalanceDataGridView[0, row + 1];
+                }
+                else
+                {
+                    UBalanceDataGridView.CurrentCell = UBalanceDataGridView[column + 1, row];
+                }
+            }
         }
 
         private DataGridViewCell _cellEndEdit;
 
-        void dataGridView1_CellEndEdit(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        void UBalanceDataGridView_CellEndEdit(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
-            _cellEndEdit = dataGridView1[e.ColumnIndex, e.RowIndex];
+            _cellEndEdit = UBalanceDataGridView[e.ColumnIndex, e.RowIndex];
 
             // need to update logic layer
         }
 
         // redirect transfer of cell on enter from down to right
-        private void dataGridView1_SelectionChanged(object sender, System.EventArgs e)
+        private void UBalanceDataGridView_SelectionChanged(object sender, System.EventArgs e)
         {
-            int maxCols = dataGridView1.ColumnCount;
+            int maxCols = UBalanceDataGridView.ColumnCount;
             int newColumn, newRow;
             // don't change on mouse press
             if (MouseButtons != 0) return;
 
 
-            if (_cellEndEdit != null && dataGridView1.CurrentCell != null)
+            if (_cellEndEdit != null && UBalanceDataGridView.CurrentCell != null)
             {
                 // Current cell will be diagramed as follows
                 // X -> X - X
@@ -151,7 +210,7 @@ namespace UBalance
                     newRow = _cellEndEdit.RowIndex + 1;
                 }
 
-                dataGridView1.CurrentCell = dataGridView1[newColumn, newRow];
+                UBalanceDataGridView.CurrentCell = UBalanceDataGridView[newColumn, newRow];
             }
             _cellEndEdit = null;
         }
@@ -162,8 +221,9 @@ namespace UBalance
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem appsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView UBalanceDataGridView;
+        private System.Windows.Forms.Button addRowButton;
+        private Button readBalanceButton;
 
     }
 }

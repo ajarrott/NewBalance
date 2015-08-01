@@ -20,6 +20,7 @@ namespace UBalance
         public StopBits StopBits = StopBits.None;
         public int DataBits = 7;
         public Parity Parity = Parity.None;
+        public string SICSCommand = "SI";
 
         // for population of ComboBoxes
         private List<string> parityItems = new List<string>()
@@ -66,20 +67,22 @@ namespace UBalance
             DataBits = Settings.Default.DataBits;
             Enum.TryParse(Settings.Default.Parity, out Parity);
             Path = Settings.Default.DefaultPath;
+            SICSCommand = Settings.Default.SICSCommand;
         }
 
         private void CheckPreferences()
         {
             // get the previous path
-            DefaultPath.Text = Settings.Default.DefaultPath;
+            defaultPathTextBox.Text = Settings.Default.DefaultPath;
+            sicsTextBox.Text = Settings.Default.SICSCommand;
 
             if (ComPort.Length > 0)
             {
                 // find item
-                foreach (string s in ComPortList.Items)
+                foreach (string s in comPortList.Items)
                 {
                     if (s != ComPort) continue;
-                    ComPortList.SelectedItem = s;
+                    comPortList.SelectedItem = s;
                     ComPort = s;
                     break;
                 }
@@ -126,7 +129,7 @@ namespace UBalance
         {
             foreach (string s in BalanceReader.GetPortNames())
             {
-                ComPortList.Items.Add(s);
+                comPortList.Items.Add(s);
             }
 
             // Populate BaudRate ListBox
@@ -163,7 +166,7 @@ namespace UBalance
             f.ShowDialog();
 
             Path = f.SelectedPath;
-            DefaultPath.Text = f.SelectedPath;
+            defaultPathTextBox.Text = f.SelectedPath;
 
             UBalance.App.UpdatePath(f.SelectedPath);
             
@@ -177,7 +180,7 @@ namespace UBalance
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
-            CloseEvent(this, new PreferenceCloseEventArgs(DefaultPath.Text));
+            CloseEvent(this, new PreferenceCloseEventArgs(defaultPathTextBox.Text));
         }
 
         private void Save_Click(object sender, EventArgs e)
@@ -188,6 +191,7 @@ namespace UBalance
             Settings.Default.DefaultPath = Path;
             Settings.Default.Parity = Parity.ToString();
             Settings.Default.StopBits = StopBits.ToString();
+            Settings.Default.SICSCommand = SICSCommand;
 
             Settings.Default.Save();
             Close();
@@ -226,6 +230,12 @@ namespace UBalance
             ComboBox c = sender as ComboBox;
 
             if (c != null) DataBits = (int)c.SelectedItem;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            TextBox t = sender as TextBox;
+            if (t.Text.Length > 0) SICSCommand = t.Text;
         }
     }
 }

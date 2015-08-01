@@ -89,7 +89,7 @@ namespace UBalance.Library.Classes
                     case '/':
                         if (b == 0)
                         {
-                            Console.WriteLine("cannot divide by 0, returning 0");
+                            //Console.WriteLine("cannot divide by 0, returning 0");
                             return 0;
                         }
                         return a / b;
