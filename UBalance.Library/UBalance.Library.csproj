@@ -44,6 +44,7 @@
     <Compile Include="Classes\AppItem.cs" />
     <Compile Include="Classes\BalanceReader.cs" />
     <Compile Include="Classes\Calculation.cs" />
+    <Compile Include="Classes\ColorReader.cs" />
     <Compile Include="Classes\Column.cs" />
     <Compile Include="Classes\GridData.cs" />
     <Compile Include="Classes\Row.cs" />

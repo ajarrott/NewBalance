@@ -29,5 +29,13 @@ namespace UBalance.Tests
 
             Assert.AreEqual(Math.Pow(2, 3) * (1 + 2 + 3) / 10 + 3.14159, c.ReEval());
         }
+
+        [TestMethod]
+        public void ColorTest()
+        {
+            ColorReader c = new ColorReader("COM3", "X");
+
+            //Assert(true);
+        }
     }
 }

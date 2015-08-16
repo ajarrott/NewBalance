@@ -22,17 +22,20 @@ namespace UBalance
         public static FolderBrowserDialog FolderBroswer = new FolderBrowserDialog();
         public GridData ViewData;
         public BalanceReader Balance;
+        public ColorReader Color;
 
         public UBalance()
         {
-            Balance = DefaultBalance();
+            //Balance = DefaultBalance();
             // update command being sent to the balance on click
-            Balance.UpdateCommand();
+            //Balance.UpdateCommand();
+
+            Color = new ColorReader("COM3", "");
 
             InitializeComponent();
             addRowButton.Enabled = false;
 
-            readBalanceButton.Enabled = Balance.IsBalanceConnected();
+            //readBalanceButton.Enabled = Balance.IsBalanceConnected();
         }
 
         private BalanceReader DefaultBalance()

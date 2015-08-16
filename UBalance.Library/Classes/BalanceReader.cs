@@ -85,7 +85,10 @@ namespace UBalance.Library.Classes
 
         public void UpdateCommand()
         {
-            _port.WriteLine(_sicsCommand);
+            if (_port.IsOpen)
+            {
+                _port.WriteLine(_sicsCommand);
+            }
         }
 
         public double GetBalanceValue()
