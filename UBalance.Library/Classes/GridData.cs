@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UBalance.Library.Events;
 
 namespace UBalance.Library.Classes
 {
@@ -12,13 +14,15 @@ namespace UBalance.Library.Classes
         //private List<Row> _DataLayerRows; 
 
         // get rid or rows
-        private List<List<Cell>> _Cells = new List<List<Cell>>(); 
+        private List<List<Cell>> _Cells = new List<List<Cell>>();
+        private string _AppName;
 
-        public GridData(List<Cell> defaultRow)
+        public GridData(List<Cell> defaultRow, string nameOfApp)
         {
             //_DefaultRow = defaultRow;
             //_DataLayerRows = new List<Row>();
             _Cells.Add(defaultRow);
+            _AppName = nameOfApp;
         }
 
         public void AddRow()
@@ -85,6 +89,32 @@ namespace UBalance.Library.Classes
         public List<string> ColumnHeaders()
         {
             return _Cells[0].Select(x => x.Label).ToList();
+        }
+
+        public string Save()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(_AppName);
+
+            foreach (List<Cell> listOfCells in _Cells)
+            {
+                foreach (Cell c in listOfCells)
+                {
+                    if (c.ValueChanged)
+                    {
+                        sb.Append(c.Value + ", ");    
+                    }
+                    else
+                    {
+                        sb.Append(", ");
+                    }
+                    
+                }
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
         }
     }
 }

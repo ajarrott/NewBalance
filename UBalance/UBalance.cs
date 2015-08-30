@@ -167,34 +167,12 @@ namespace UBalance
             ToolStripMenuItem t = sender as ToolStripMenuItem;
 
             //find item in app
-            int index = App.GetFileNames().IndexOf(t.Text);
+            string nameOfApp = t.Text;
 
-            AppParse = new AppParser(App.GetDirectoryNames()[index]);
-            ViewData = new GridData(AppParse.ReturnCellsInRow(UBalanceDataGridView.RowCount));
-
-
-            List<string> columnHeaders = ViewData.ColumnHeaders();
-
-            int count = columnHeaders.Count;
-
-            UBalanceDataGridView.ColumnCount = count;
-            UBalanceDataGridView.CellBeginEdit += UBalanceDataGridView_CellBeginEdit;
-            UBalanceDataGridView.CellEndEdit +=UBalanceDataGridView_CellEndEdit;
-            UBalanceDataGridView.RowCount = 0;
-
-            UBalanceDataGridView.Rows.Add();
-
-            //if (UBalanceDataGridView.Rows.Count < 1)
-            //{
-            //    AddRowToDataAndView();
-            //}
-            
-            for (int i = 0; i < count; i++)
-            {
-                UBalanceDataGridView.Columns[i].HeaderText = columnHeaders[i];
-            }
+            EmptyGridView(nameOfApp);
 
             addRowButton.Enabled = true;
+            saveToolStripMenuItem.Enabled = true;
             //textBox1.Text = app.GetDirectoryNames()[index];
             //.ShowDialog();
         }
@@ -204,8 +182,7 @@ namespace UBalance
         void UBalanceDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             DataGridViewCell d = UBalanceDataGridView[e.ColumnIndex, e.RowIndex];
-            if (d.Value == null) return;
-            oldCellValue = d.Value.ToString();
+            oldCellValue = d.Value == null ? null : d.Value.ToString();
         }
 
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -251,6 +228,114 @@ namespace UBalance
             if (cell != null)
             {
                 cell.Value = Balance.GetBalanceValue();
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog s = new SaveFileDialog();
+
+            if (s.ShowDialog() == DialogResult.OK)
+            {
+                FileStream fs = new FileStream(s.FileName, FileMode.Create);
+                StreamWriter w = new StreamWriter(fs);
+
+                w.Write(ViewData.Save());
+                
+                w.Close();
+                fs.Close();
+            }
+        }
+        private void EmptyGridView(string nameOfApp)
+        {
+            int index = App.GetFileNames().IndexOf(nameOfApp);
+
+            if (index < 0) return;
+            AppParse = new AppParser(App.GetDirectoryNames()[index]);
+            ViewData = new GridData(AppParse.ReturnCellsInRow(UBalanceDataGridView.RowCount), nameOfApp);
+
+            List<string> columnHeaders = ViewData.ColumnHeaders();
+
+            int count = columnHeaders.Count;
+
+            UBalanceDataGridView.ColumnCount = count;
+            UBalanceDataGridView.CellBeginEdit += UBalanceDataGridView_CellBeginEdit;
+            UBalanceDataGridView.CellEndEdit += UBalanceDataGridView_CellEndEdit;
+
+            if (UBalanceDataGridView.RowCount > 0)
+            {
+                for (int i = UBalanceDataGridView.RowCount; i > 0; i--)// UBalanceDataGridView row in UBalanceDataGridView.Rows)
+                {
+                    UBalanceDataGridView.Rows.Remove(UBalanceDataGridView.Rows[i - 1]);
+                }
+            }
+
+            UBalanceDataGridView.Rows.Add();
+
+            for (int i = 0; i < count; i++)
+            {
+                UBalanceDataGridView.Columns[i].HeaderText = columnHeaders[i];
+            }
+
+            for (int i = 0; i < UBalanceDataGridView.Rows[0].Cells.Count; i++)
+            {
+                ViewData.GetCell(0, i).CellValueChanged += UBalance_CellValueChanged;
+
+                UBalanceDataGridView.Columns[i].Resizable = DataGridViewTriState.True;
+            }
+        }
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog o = new OpenFileDialog();
+
+            if (o.ShowDialog() == DialogResult.OK)
+            {
+                FileStream fs = new FileStream(o.FileName, FileMode.Open);
+                StreamReader r = new StreamReader(fs);
+
+                // first line is the app name
+                string appName = r.ReadLine();
+
+                EmptyGridView(appName);
+                
+                string s;
+                int row = 0, column;
+                double placeHolder;
+                bool firstLine = true;
+                while ((s = r.ReadLine()) != null)
+                {
+                    if (!firstLine) 
+                        AddRowToDataAndView();
+                    var items = s.Split(',');
+                    column = 0;
+
+                    foreach (string item in items)
+                    {
+                        if (!String.IsNullOrWhiteSpace(item))
+                        {
+                            if (double.TryParse(item, out placeHolder))
+                                ViewData.GetCell(row, column).Value = placeHolder;
+                            // string, need to set correct string value for celltype
+                            // only K has a string value
+                            else
+                            {
+                                KCell kc = ViewData.GetCell(row, column) as KCell;
+                                if (kc == null) ;
+                                else
+                                {
+                                    kc.KValue = item;
+                                }
+                            }
+                        }
+                        column++;
+                    }
+                    firstLine = false;
+                    row++;
+                }
+
+                r.Close();
+                fs.Close();
+                saveToolStripMenuItem.Enabled = true;
             }
         }
     }

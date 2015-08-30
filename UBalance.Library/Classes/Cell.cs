@@ -127,23 +127,28 @@ namespace UBalance.Library.Classes
             get
             {
                 if(_KValue != String.Empty) return _KValue;
-                return Math.Round(Value, Precision).ToString();
+                if (Value != null)
+                {
+                    return Math.Round((double)Value, Precision).ToString();
+                }
+                return null;
             }
             set
             {
-                ValueChanged = true;
+                if (value == null) ValueChanged = false;
+                else ValueChanged = true;
+                
                 double d;
 
                 if (double.TryParse(value, out d))
                 {
                     _KValue = String.Empty;
                     Value = d;
-                    OnValueChanged(new PropertyChangedEventArgs("Value"));
                 }
                 else
                 {
                     _KValue = value;
-                    Value = 0.0;
+                    Value = null;
                     OnValueChanged(new PropertyChangedEventArgs("String"));
                 }
                 
@@ -220,6 +225,7 @@ namespace UBalance.Library.Classes
             _AdvanceToCell = ConnectionInfo;
         }
     }
+
     public class Cell : ICloneable
     {
         private string _Label;
@@ -228,11 +234,11 @@ namespace UBalance.Library.Classes
         private string _ConnectionInfo;
         private int _ColumnIndex;
         private int _RowIndex;
-        private double _Value;
+        private double? _Value;
         private bool _ValueChanged;
         protected CellType _CellType;
 
-        public event PropertyChangedEventHandler CellValueChanged = delegate { }; 
+        public event PropertyChangedEventHandler CellValueChanged = delegate { };
 
         public Cell(string label, int digits, int precision, string connectionInfo, int rowIndex, int columnIndex)
         {
@@ -282,15 +288,28 @@ namespace UBalance.Library.Classes
             private set { _ConnectionInfo = value; }
         }
 
-        public double Value
+        public double? Value
         {
-            get { return Math.Round(_Value, Precision); }
+            get
+            {
+                if (_Value == null) return null;
+                return Math.Round((double) _Value, Precision);
+            }
             set
             {
                 ValueChanged = true;
                 _Value = value;
-                CellValueChanged(this, new PropertyChangedEventArgs("Value"));
+
+                if (_Value == null)
+                {
+                    ValueChanged = false;
+                }
+                else
+                {
+                    CellValueChanged(this, new PropertyChangedEventArgs("Value"));
+                }
             }
+ 
         }
 
         public int ColumnIndex

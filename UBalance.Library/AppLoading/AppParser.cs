@@ -13,12 +13,14 @@ namespace UBalance.Library.AppLoading
     public class AppParser
     {
         private FileStream _openFileStream;
+        private string _appName;
         private List<List<string>> _parsedFile;
         
         public AppParser(string pathToFile)
         {
             _openFileStream = new FileStream(pathToFile, FileMode.Open);
             ParseFile();
+            _openFileStream.Close();
         }
 
         private void ParseFile()
@@ -39,6 +41,8 @@ namespace UBalance.Library.AppLoading
                 if ( newList.Count == 5 )
                     _parsedFile.Add(newList);
             }
+
+            strReader.Close();
         }
 
         public List<Cell> ReturnCellsInRow(int rowNumber)
@@ -114,5 +118,7 @@ namespace UBalance.Library.AppLoading
 
             return cols;
         }
+
+        public string AppName { get { return _appName; } }
     }
 }
