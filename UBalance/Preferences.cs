@@ -14,12 +14,13 @@ namespace UBalance
         public event EventHandler CloseEvent = delegate { };
         public string Path;
 
-        // Serial Port preferences
+        // Serial Port default preferences
         public string ComPort = String.Empty;
-        public int BaudRate = 110;
-        public StopBits StopBits = StopBits.None;
+        public int BaudRate = 2400;
+        public StopBits StopBits = StopBits.One;
         public int DataBits = 7;
-        public Parity Parity = Parity.None;
+        public Parity Parity = Parity.Even;
+        public bool RTS = false;
         public string SICSCommand = "SI";
 
         // for population of ComboBoxes
@@ -68,6 +69,7 @@ namespace UBalance
             Enum.TryParse(Settings.Default.Parity, out Parity);
             Path = Settings.Default.DefaultPath;
             SICSCommand = Settings.Default.SICSCommand;
+            RTS = Settings.Default.RTS;
         }
 
         private void CheckPreferences()

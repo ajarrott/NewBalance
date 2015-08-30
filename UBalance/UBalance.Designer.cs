@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using UBalance.Library.Classes;
 
 namespace UBalance
 {
@@ -30,8 +32,8 @@ namespace UBalance
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.appsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,27 +78,29 @@ namespace UBalance
             // 
             // UBalanceDataGridView
             // 
+            this.UBalanceDataGridView.AllowUserToAddRows = false;
+            this.UBalanceDataGridView.AllowUserToDeleteRows = false;
             this.UBalanceDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.UBalanceDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Blue;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.UBalanceDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.UBalanceDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.UBalanceDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.UBalanceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Blue;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.UBalanceDataGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.UBalanceDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.UBalanceDataGridView.Location = new System.Drawing.Point(13, 28);
             this.UBalanceDataGridView.Name = "UBalanceDataGridView";
             this.UBalanceDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
@@ -145,14 +149,12 @@ namespace UBalance
             ((System.ComponentModel.ISupportInitialize)(this.UBalanceDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.UBalanceDataGridView.CellEndEdit += UBalanceDataGridView_CellEndEdit;
-            this.UBalanceDataGridView.SelectionChanged += UBalanceDataGridView_SelectionChanged;
-            this.UBalanceDataGridView.KeyDown +=UBalanceDataGridView_KeyDown;
 
         }
 
         private void UBalanceDataGridView_KeyDown(object sender, KeyEventArgs e)
         {
+            // need to get next column value from data view then skip columns that are not KColumns or WColumns
             if(e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
@@ -162,8 +164,7 @@ namespace UBalance
                 {
                     if (UBalanceDataGridView.RowCount <= row + 1)
                     {
-                        UBalanceDataGridView.Rows.Add();
-                        ViewData.AddRow();
+                        AddRowToDataAndView();
                     }
                     UBalanceDataGridView.CurrentCell = UBalanceDataGridView[0, row + 1];
                 }
@@ -174,13 +175,97 @@ namespace UBalance
             }
         }
 
+        void AddRowToDataAndView()
+        {
+            int rowNumber = UBalanceDataGridView.RowCount; // will be correct row index when we add a row
+
+            UBalanceDataGridView.Rows.Add();
+            ViewData.AddRow();
+
+            for (int i = 0; i < UBalanceDataGridView.Rows[0].Cells.Count; i++)
+            {
+                ViewData.GetCell(rowNumber, i).CellValueChanged += UBalance_CellValueChanged;
+                
+                UBalanceDataGridView.Columns[i].Resizable = DataGridViewTriState.True;
+            }
+        }
+
+        void UBalance_CellValueChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            Cell c = sender as Cell;
+
+            if (e.PropertyName == "String")
+            {
+                KCell k = sender as KCell;
+
+                UBalanceDataGridView.Rows[k.RowIndex].Cells[k.ColumnIndex].Value = k.KValue.ToString();
+            }
+            else
+            {
+                UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = c.Value.ToString();               
+            }
+        }
+
         private DataGridViewCell _cellEndEdit;
 
         void UBalanceDataGridView_CellEndEdit(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
             _cellEndEdit = UBalanceDataGridView[e.ColumnIndex, e.RowIndex];
+            double d;
+            string s = String.Empty;
 
             // need to update logic layer
+
+            if (_cellEndEdit.Value == oldCellValue || _cellEndEdit.Value == null) return;
+            
+            if (double.TryParse(_cellEndEdit.Value.ToString(), out d) == false)
+            {
+                s = _cellEndEdit.Value.ToString();
+            }
+
+            switch(ViewData.GetCellType(e.RowIndex, e.ColumnIndex))
+            {
+                // don't update if value is not valid
+                case CellType.C:
+                    CCell c = ViewData.GetCell(e.RowIndex, e.ColumnIndex) as CCell;
+
+                    if (c == null) return;
+
+                    c.OverrideValue(d);
+                    
+                    break;
+                case CellType.K:
+                    KCell k = ViewData.GetCell(e.RowIndex, e.ColumnIndex) as KCell;
+
+                    if (k == null) return;
+
+                    if (s.Length > 0)
+                    {
+                        k.KValue = s;
+                    }
+                    else
+                    {
+                        k.KValue = d.ToString();
+                    }
+
+                    break;
+                case CellType.M:
+                    MCell m = ViewData.GetCell(e.RowIndex, e.ColumnIndex) as MCell;
+
+                    if (m == null) return;
+
+                    m.OverrideValue(d);
+                    break;
+                case CellType.W:
+                    WCell w = ViewData.GetCell(e.RowIndex, e.ColumnIndex) as WCell;
+
+                    if (w == null) return;
+
+                    w.Value = d;
+
+                    break;
+
+            }
         }
 
         // redirect transfer of cell on enter from down to right
@@ -198,6 +283,9 @@ namespace UBalance
                 // X -> X - X
                 // | -> 
                 // X ->
+
+                // need to select next cell based on logic implemented lower
+                // 
 
                 if (_cellEndEdit.ColumnIndex < maxCols - 1)
                 {

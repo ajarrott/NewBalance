@@ -10,3 +10,5 @@ C:\Users\anthony\Desktop\UBalance\UBalance\bin\Debug\UBalance.Library.dll
 C:\Users\anthony\Desktop\UBalance\UBalance\bin\Debug\UBalance.Library.pdb
 C:\Users\anthony\Desktop\UBalance\UBalance\obj\Debug\UBalance.UBalance.resources
 C:\Users\anthony\Desktop\UBalance\UBalance\obj\Debug\UBalance.Preferences.resources
+C:\Users\anthony\Desktop\UBalance\UBalance\obj\Debug\UBalance.MultipleSerialPopup.resources
+C:\Users\anthony\Desktop\UBalance\UBalance\obj\Debug\UBalance.SingleSerialPopup.resources

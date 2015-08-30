@@ -50,6 +50,18 @@
     <Compile Include="Preferences.Designer.cs">
       <DependentUpon>Preferences.cs</DependentUpon>
     </Compile>
+    <Compile Include="MultipleSerialPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultipleSerialPopup.Designer.cs">
+      <DependentUpon>MultipleSerialPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SingleSerialPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SingleSerialPopup.Designer.cs">
+      <DependentUpon>SingleSerialPopup.cs</DependentUpon>
+    </Compile>
     <Compile Include="UBalance.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +72,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Preferences.resx">
       <DependentUpon>Preferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultipleSerialPopup.resx">
+      <DependentUpon>MultipleSerialPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SingleSerialPopup.resx">
+      <DependentUpon>SingleSerialPopup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UBalance.resx">
       <DependentUpon>UBalance.cs</DependentUpon>

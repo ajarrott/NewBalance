@@ -22,7 +22,7 @@ namespace UBalance.Library.Classes
         public Parity Parity = Parity.None;
          * */
         public BalanceReader(string comPort = "COM1", int baudRate = 110, StopBits stopBits = StopBits.One,
-            int dataBits = 7, Parity parity = Parity.Even, string sicsCommand = "SI")
+            int dataBits = 7, Parity parity = Parity.Even, string sicsCommand = "SI", bool rts = false)
         {
             _sicsCommand = sicsCommand;
 
@@ -31,10 +31,10 @@ namespace UBalance.Library.Classes
                 PortName = comPort,
                 BaudRate = baudRate,
                 StopBits = stopBits,
-                //NewLine = System.Environment.NewLine,
                 DataBits = 7,
-                Parity = Parity.Even
-            }; //"COM3", 9600);
+                Parity = Parity.Even,
+                RtsEnable = rts
+            };
 
             // from Page 39 of NewClassic Balances METTLER TOLEDO manual for MS-S / MS-L Models
             //_port.Handshake = Handshake.XOnXOff;
@@ -47,7 +47,7 @@ namespace UBalance.Library.Classes
                 }
                 catch (Exception ex)
                 {
-                    //
+                    // port will not be open, therefore will become null
                 }
             }
                 

@@ -48,6 +48,7 @@ namespace UBalance
             this.sicsCommandLabel = new System.Windows.Forms.Label();
             this.sicsTextBox = new System.Windows.Forms.TextBox();
             this.defaultAppLabel = new System.Windows.Forms.Label();
+            this.RTSCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // defaultPathTextBox
@@ -192,11 +193,22 @@ namespace UBalance
             this.defaultAppLabel.TabIndex = 15;
             this.defaultAppLabel.Text = "Default .APP Folder";
             // 
+            // RTSCheckBox
+            // 
+            this.RTSCheckBox.AutoSize = true;
+            this.RTSCheckBox.Location = new System.Drawing.Point(12, 211);
+            this.RTSCheckBox.Name = "RTSCheckBox";
+            this.RTSCheckBox.Size = new System.Drawing.Size(48, 17);
+            this.RTSCheckBox.TabIndex = 16;
+            this.RTSCheckBox.Text = "RTS";
+            this.RTSCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Preferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(297, 240);
+            this.Controls.Add(this.RTSCheckBox);
             this.Controls.Add(this.defaultAppLabel);
             this.Controls.Add(this.sicsTextBox);
             this.Controls.Add(this.sicsCommandLabel);
@@ -241,5 +253,6 @@ namespace UBalance
         private Label sicsCommandLabel;
         private TextBox sicsTextBox;
         private Label defaultAppLabel;
+        private CheckBox RTSCheckBox;
     }
 }
