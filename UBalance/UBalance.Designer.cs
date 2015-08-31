@@ -203,7 +203,13 @@ namespace UBalance
             UBalanceDataGridView.Rows.Add();
             ViewData.AddRow();
 
-            for (int i = 0; i < UBalanceDataGridView.Rows[0].Cells.Count; i++)
+            // prevent a bunch of event call updates and just update manually here
+            for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+            {
+                UBalanceDataGridView.Rows[rowNumber].Cells[i].Value = ViewData.GetCell(rowNumber, i).Value;
+            }
+
+            for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
             {
                 ViewData.GetCell(rowNumber, i).CellValueChanged += UBalance_CellValueChanged;
                 ViewData.GetCell(rowNumber, i).NotifyDependents += UBalance_NotifyDependents;
@@ -285,6 +291,7 @@ namespace UBalance
             }
             else
             {
+
                 if (c.Value == null)
                 {
                     if (c is KCell)
@@ -303,6 +310,9 @@ namespace UBalance
                 }
                 else
                 {
+                    // need to check if there is a calculation with sender as a dependency
+                    ViewData.CheckAndUpdateDependency(sender as Cell);
+
                     UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = c.Value.ToString();
                 }
 
@@ -311,12 +321,18 @@ namespace UBalance
 
         private DataGridViewCell _cellEndEdit;
 
+        double? nullableDoubleTryParse(string valueString)
+        {
+            double outValue;
+            return double.TryParse(valueString, out outValue) ? (double?) outValue : null;
+        }
+
         void UBalanceDataGridView_CellEndEdit(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
             _cellEndEdit = UBalanceDataGridView[e.ColumnIndex, e.RowIndex];
             // arbitrary number
-            double d = -1.00015;
             bool changed;
+            double? d = null;
             string s = String.Empty;
 
             // need to update logic layer
@@ -324,7 +340,12 @@ namespace UBalance
             if (_cellEndEdit.Value == oldCellValue) return;
             else changed = true;
 
-            if (_cellEndEdit.Value != null && double.TryParse(_cellEndEdit.Value.ToString(), out d) == false)
+            if (_cellEndEdit.Value != null)
+            {
+                d = nullableDoubleTryParse(_cellEndEdit.Value.ToString());
+            }
+                
+            if (_cellEndEdit.Value != null && d == null)
             {
                 s = _cellEndEdit.Value.ToString();
             }
@@ -337,7 +358,7 @@ namespace UBalance
 
                     if (c == null) return;
 
-                    if (changed == true && d != -1.00015) c.OverrideValue(d);
+                    if (changed == true && d != null) c.OverrideValue((double)d);
                     else c.Value = null;
                     
                     break;
@@ -350,9 +371,13 @@ namespace UBalance
                     {
                         k.KValue = s;
                     }
-                    else if (d != 1.0015 && changed == true)
+                    else if (d != null && changed == true)
                     {
                         k.KValue = d.ToString();
+                    }
+                    else
+                    {
+                        k.KValue = null;
                     }
 
                     break;
@@ -361,7 +386,7 @@ namespace UBalance
 
                     if (m == null) return;
 
-                    if (changed == true && d != -1.00015) m.OverrideValue(d);
+                    if (changed == true && d != null) m.OverrideValue((double)d);
                     else m.Value = null;
                     
                     break;
@@ -370,7 +395,7 @@ namespace UBalance
 
                     if (w == null) return;
 
-                    if (changed == true && d != 1.0015) w.Value = d;
+                    if (changed == true && d != null) w.Value = d;
                     else w.Value = null;
 
                     break;
@@ -381,7 +406,6 @@ namespace UBalance
         private void NextCell()
         {
             int maxCols = UBalanceDataGridView.ColumnCount;
-            int newColumn, newRow;
             // don't change on mouse press
             if (MouseButtons != 0) return;
 
@@ -394,23 +418,38 @@ namespace UBalance
                 // X ->
 
                 // need to select next cell based on logic implemented lower
-                // 
+                int nextRow, nextColumn;
 
-                if (_cellEndEdit.ColumnIndex < maxCols - 1)
+                Cell c = ViewData.GetCell(_cellEndEdit.RowIndex, _cellEndEdit.ColumnIndex);
+
+                ViewData.NextCell(c, out nextRow, out nextColumn);
+
+                ////cellendedit.NextCell(out nextRow, out nextColumn)
+
+                //if (_cellEndEdit.ColumnIndex < maxCols - 1)
+                //{
+                //    newColumn = _cellEndEdit.ColumnIndex + 1;
+                //    newRow = _cellEndEdit.RowIndex;
+                //}
+                //else
+                //{
+                //    newColumn = 0;
+                //    newRow = _cellEndEdit.RowIndex + 1;
+                //}
+
+                //if ( newRow == UBalanceDataGridView.RowCount )
+                //    AddRowToDataAndView();
+
+                
+
+                if (nextRow != null && nextColumn != null)
                 {
-                    newColumn = _cellEndEdit.ColumnIndex + 1;
-                    newRow = _cellEndEdit.RowIndex;
+                    if (nextRow == UBalanceDataGridView.RowCount)
+                    {
+                        AddRowToDataAndView();
+                    }
+                    UBalanceDataGridView.CurrentCell = UBalanceDataGridView[nextColumn, nextRow];
                 }
-                else
-                {
-                    newColumn = 0;
-                    newRow = _cellEndEdit.RowIndex + 1;
-                }
-
-                if ( newRow == UBalanceDataGridView.RowCount )
-                    AddRowToDataAndView();
-
-                UBalanceDataGridView.CurrentCell = UBalanceDataGridView[newColumn, newRow];
             }
             _cellEndEdit = null;
         }

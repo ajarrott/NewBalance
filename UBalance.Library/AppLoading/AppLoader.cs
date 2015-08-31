@@ -11,9 +11,10 @@ namespace UBalance.Library.AppLoading
     public class AppLoader
     {
         private List<AppItem> _appFiles;
-        private string _defaultDirectory = "C:\\Users\\anthony\\Desktop\\Balance";
-        public AppLoader()
+        private string _defaultDirectory;
+        public AppLoader(string directoryName)
         {
+            _defaultDirectory = directoryName;
             GetAppFiles();
         }
 

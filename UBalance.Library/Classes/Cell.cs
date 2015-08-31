@@ -29,15 +29,18 @@ namespace UBalance.Library.Classes
             }
         }
 
-        public CCell(CCell c) : base(c)
+        public CCell(CCell c, List<Cell> dependencies ) : base(c)
         {
             _Calculation = new Calculation(ConnectionInfo);
             _Dependencies = new Dictionary<Cell, bool>();
             _CellType = CellType.C;
 
-            foreach (Cell dependency in c.Dependencies.Keys)
+            // need to call copy contructors for dependencies passed from old cells
+
+
+            foreach (Cell dependency in dependencies )
             {
-                _Dependencies.Add(new Cell(dependency), false);
+                _Dependencies.Add(dependency, false);
             }
         }
 
@@ -57,11 +60,7 @@ namespace UBalance.Library.Classes
         /// <returns></returns>
         public bool IsDependency(Cell c)
         {
-            bool returnValue;
-
-            _Dependencies.TryGetValue(c, out returnValue);
-
-            return returnValue;
+            return _Dependencies.ContainsKey(c);
         }
 
         /// <summary>
@@ -80,7 +79,6 @@ namespace UBalance.Library.Classes
         {
             get
             {
-
                 return String.Format("{0:F" + Precision + "}", Value);
             } 
         }
@@ -94,7 +92,22 @@ namespace UBalance.Library.Classes
         public Dictionary<Cell, bool> Dependencies
         {
             get { return _Dependencies;}
-        } 
+        }
+
+        public void CheckDependencies()
+        {
+            if (!_Dependencies.ContainsValue(false))
+            {
+                List <Tuple<string, string>> variableValues = new List<Tuple<string, string>>();
+                foreach (Cell c in _Dependencies.Keys)
+                {
+                    variableValues.Add(new Tuple<string, string>(c.Label, c.Value.ToString()));
+                }
+                SetVariables(variableValues);
+
+                RunCalculation();
+            }
+        }
     }
 
     // Keyboard Column
@@ -135,7 +148,6 @@ namespace UBalance.Library.Classes
             }
             set
             {
-                
                 double d;
 
                 if (double.TryParse(value, out d))
@@ -321,8 +333,8 @@ namespace UBalance.Library.Classes
                 }
                 else
                 {
-                    CellValueChanged(this, new PropertyChangedEventArgs("Value"));
                     ValueChanged = true;
+                    CellValueChanged(this, new PropertyChangedEventArgs("Value"));
                 }
             }
  
@@ -384,6 +396,12 @@ namespace UBalance.Library.Classes
         public object Clone()
         {
             return new Cell(this);
+        }
+
+        public void RemoveSubscriptions()
+        {
+            NotifyDependents = null;
+            CellValueChanged = null;
         }
     }
 

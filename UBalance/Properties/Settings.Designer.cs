@@ -37,7 +37,7 @@ namespace UBalance.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM1")]
         public string COMPort {
             get {
                 return ((string)(this["COMPort"]));
@@ -61,7 +61,7 @@ namespace UBalance.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        [global::System.Configuration.DefaultSettingValueAttribute("One")]
         public string StopBits {
             get {
                 return ((string)(this["StopBits"]));

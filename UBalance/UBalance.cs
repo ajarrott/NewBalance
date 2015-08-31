@@ -19,7 +19,7 @@ namespace UBalance
 {
     public partial class UBalance : Form
     {
-        public static AppLoader App = new AppLoader();
+        public static AppLoader App;
         public static FolderBrowserDialog FolderBroswer = new FolderBrowserDialog();
         public GridData ViewData;
         public BalanceReader Balance;
@@ -34,9 +34,33 @@ namespace UBalance
         public UBalance()
         {
             InitializeComponent();
+
+            if (Settings.Default.DefaultPath.Length < 4)
+            {
+                FirstRunPopup first = new FirstRunPopup();
+
+                first.ShowDialog();
+
+                if (first.DialogResult == DialogResult.OK)
+                {
+                    FolderBrowserDialog f = new FolderBrowserDialog();
+
+                    if (f.ShowDialog() == DialogResult.OK)
+                    {
+                        Settings.Default.DefaultPath = f.SelectedPath;
+                    }
+
+                    Settings.Default.Save();
+                }
+            }
+
+            App = new AppLoader(Settings.Default.DefaultPath);
+
             Balance = DefaultBalance();
 
-            if (!Balance.IsBalanceConnected())
+            
+
+            if (Balance == null || !Balance.IsBalanceConnected())
             {
                 Balance = null;
                 readBalanceButton.Enabled = false;
@@ -252,6 +276,23 @@ namespace UBalance
 
             if (index < 0) return;
             AppParse = new AppParser(App.GetDirectoryNames()[index]);
+
+            if (ViewData != null)
+            {
+                for (int j = 0; j < UBalanceDataGridView.RowCount; j++)
+                {
+                    for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+                    {
+                        Cell c = ViewData.GetCell(0, i);
+                        c.CellValueChanged -= UBalance_CellValueChanged;
+                        c.NotifyDependents -= UBalance_NotifyDependents;
+
+                        UBalanceDataGridView.Columns[i].Resizable = DataGridViewTriState.True;
+                    }
+                }
+            }
+
+            UBalanceDataGridView.Rows.Clear();
             ViewData = new GridData(AppParse.ReturnCellsInRow(UBalanceDataGridView.RowCount), nameOfApp);
 
             List<string> columnHeaders = ViewData.ColumnHeaders();
@@ -262,15 +303,13 @@ namespace UBalance
             UBalanceDataGridView.CellBeginEdit += UBalanceDataGridView_CellBeginEdit;
             UBalanceDataGridView.CellEndEdit += UBalanceDataGridView_CellEndEdit;
 
-            if (UBalanceDataGridView.RowCount > 0)
-            {
-                for (int i = UBalanceDataGridView.RowCount; i > 0; i--)// UBalanceDataGridView row in UBalanceDataGridView.Rows)
-                {
-                    UBalanceDataGridView.Rows.Remove(UBalanceDataGridView.Rows[i - 1]);
-                }
-            }
-
             UBalanceDataGridView.Rows.Add();
+
+            // update initialized values from constructor
+            for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+            {
+                UBalanceDataGridView.Rows[0].Cells[i].Value = ViewData.GetCell(0, i).Value.ToString();
+            }
 
             for (int i = 0; i < count; i++)
             {
@@ -279,8 +318,9 @@ namespace UBalance
 
             for (int i = 0; i < UBalanceDataGridView.Rows[0].Cells.Count; i++)
             {
-                ViewData.GetCell(0, i).CellValueChanged += UBalance_CellValueChanged; 
-                ViewData.GetCell(0, i).NotifyDependents += UBalance_NotifyDependents;
+                Cell c = ViewData.GetCell(0, i);
+                c.CellValueChanged += UBalance_CellValueChanged;
+                c.NotifyDependents += UBalance_NotifyDependents;
 
                 UBalanceDataGridView.Columns[i].Resizable = DataGridViewTriState.True;
             }
@@ -336,6 +376,7 @@ namespace UBalance
                 r.Close();
                 fs.Close();
                 saveToolStripMenuItem.Enabled = true;
+                addRowButton.Enabled = true;
             }
         }
 

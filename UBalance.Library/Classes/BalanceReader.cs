@@ -26,6 +26,7 @@ namespace UBalance.Library.Classes
         {
             _sicsCommand = sicsCommand;
 
+            if (comPort == String.Empty) comPort = "COM1";
             _port = new SerialPort
             {
                 PortName = comPort,
