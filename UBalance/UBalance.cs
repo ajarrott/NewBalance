@@ -207,7 +207,7 @@ namespace UBalance
             readBalanceButton.Enabled = Balance.IsBalanceConnected();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addRowButton_Click(object sender, EventArgs e)
         {
             AddRowToDataAndView();
         }
@@ -279,7 +279,8 @@ namespace UBalance
 
             for (int i = 0; i < UBalanceDataGridView.Rows[0].Cells.Count; i++)
             {
-                ViewData.GetCell(0, i).CellValueChanged += UBalance_CellValueChanged;
+                ViewData.GetCell(0, i).CellValueChanged += UBalance_CellValueChanged; 
+                ViewData.GetCell(0, i).NotifyDependents += UBalance_NotifyDependents;
 
                 UBalanceDataGridView.Columns[i].Resizable = DataGridViewTriState.True;
             }
@@ -320,8 +321,7 @@ namespace UBalance
                             else
                             {
                                 KCell kc = ViewData.GetCell(row, column) as KCell;
-                                if (kc == null) ;
-                                else
+                                if (kc != null)
                                 {
                                     kc.KValue = item;
                                 }
@@ -337,6 +337,23 @@ namespace UBalance
                 fs.Close();
                 saveToolStripMenuItem.Enabled = true;
             }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.F1) && saveToolStripMenuItem.Enabled)
+            {
+                saveToolStripMenuItem_Click(this, EventArgs.Empty);
+            }
+            if (keyData == (Keys.F2))
+            {
+                loadToolStripMenuItem_Click(this, EventArgs.Empty);
+            }
+            if (keyData == (Keys.F3) && addRowButton.Enabled )
+            {
+                addRowButton_Click(this, EventArgs.Empty);
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

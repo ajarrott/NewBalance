@@ -13,7 +13,6 @@ namespace UBalance.Library.AppLoading
     public class AppParser
     {
         private FileStream _openFileStream;
-        private string _appName;
         private List<List<string>> _parsedFile;
         
         public AppParser(string pathToFile)
@@ -36,9 +35,9 @@ namespace UBalance.Library.AppLoading
             foreach(string str in noBlankLines)
             {
                 string[] test = str.Split(null);
-                List<string> newList = test.Where(s => s.Length > 0).ToList();
+                List<string> newList = test.Where(s => s.Length > 0 && !s.ToLower().Contains("newscreen")).ToList();
 
-                if ( newList.Count == 5 )
+                if ( newList.Count == 5)
                     _parsedFile.Add(newList);
             }
 
@@ -95,7 +94,7 @@ namespace UBalance.Library.AppLoading
 
                         foreach (string name in dependencyNames)
                         {
-                            Cell dependency = cols.Single(x => x.Label == name);
+                            Cell dependency = cols.First(x => x.Label == name);
 
                             if(dependency != null)
                                 dependencies.Add(dependency);
@@ -118,7 +117,5 @@ namespace UBalance.Library.AppLoading
 
             return cols;
         }
-
-        public string AppName { get { return _appName; } }
     }
 }

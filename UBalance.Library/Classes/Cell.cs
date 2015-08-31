@@ -101,7 +101,7 @@ namespace UBalance.Library.Classes
     public class KCell : Cell
     {
         private KConnection _KConnection;
-        private string _KValue;
+        private string _KValue = String.Empty;
 
         public KCell(string label, int digits, int precision, string connectionInfo, int rowIndex, int columnIndex) : 
         base(label, digits, precision, connectionInfo, rowIndex, columnIndex)
@@ -135,8 +135,6 @@ namespace UBalance.Library.Classes
             }
             set
             {
-                if (value == null) ValueChanged = false;
-                else ValueChanged = true;
                 
                 double d;
 
@@ -151,8 +149,9 @@ namespace UBalance.Library.Classes
                     Value = null;
                     OnValueChanged(new PropertyChangedEventArgs("String"));
                 }
-                
-                
+
+                if (value == null) ValueChanged = false;
+                else ValueChanged = true;
             }
         }
 
@@ -171,6 +170,7 @@ namespace UBalance.Library.Classes
     public class MCell : Cell
     {
         private Cell _MirroredCell;
+        private string _MValue;
 
         public MCell(string label, int digits, int precision, string connectionInfo, int rowIndex, int columnIndex, Cell columnToMirror) : 
         base(label, digits, precision, connectionInfo, rowIndex, columnIndex)
@@ -201,6 +201,21 @@ namespace UBalance.Library.Classes
         {
             Value = newValue;
             OnValueChanged(new PropertyChangedEventArgs("Value"));
+        }
+
+        public string MValue
+        {
+            get { return _MValue; }
+            set
+            {
+                _MValue = value;
+                OnValueChanged(new PropertyChangedEventArgs("String"));
+            }
+        }
+
+        public bool IsDependent(Cell c)
+        {
+            return c == _MirroredCell;
         }
     }
 
@@ -237,6 +252,7 @@ namespace UBalance.Library.Classes
         private double? _Value;
         private bool _ValueChanged;
         protected CellType _CellType;
+        public event EventHandler NotifyDependents = delegate { }; 
 
         public event PropertyChangedEventHandler CellValueChanged = delegate { };
 
@@ -297,7 +313,6 @@ namespace UBalance.Library.Classes
             }
             set
             {
-                ValueChanged = true;
                 _Value = value;
 
                 if (_Value == null)
@@ -307,6 +322,7 @@ namespace UBalance.Library.Classes
                 else
                 {
                     CellValueChanged(this, new PropertyChangedEventArgs("Value"));
+                    ValueChanged = true;
                 }
             }
  
@@ -327,12 +343,26 @@ namespace UBalance.Library.Classes
         public bool ValueChanged
         {
             get { return _ValueChanged; }
-            protected set { _ValueChanged = value; }
+            protected set
+            {
+                // only notify on change for valuechanged
+                if(value == !_ValueChanged) OnMirrorValueChanged(EventArgs.Empty);
+                _ValueChanged = value;
+            }
         }
 
         protected virtual void OnValueChanged(PropertyChangedEventArgs e)
         {
             PropertyChangedEventHandler handler = CellValueChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnMirrorValueChanged(EventArgs e)
+        {
+            EventHandler handler = NotifyDependents;
             if (handler != null)
             {
                 handler(this, e);
