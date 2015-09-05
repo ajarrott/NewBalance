@@ -17,3 +17,4 @@ C:\Users\anthony\Desktop\UBalance\UBalance\bin\Release\UBalance.application
 C:\Users\anthony\Desktop\UBalance\UBalance\obj\Release\UBalance.exe.manifest
 C:\Users\anthony\Desktop\UBalance\UBalance\obj\Release\UBalance.application
 C:\Users\anthony\Desktop\UBalance\UBalance\obj\Release\UBalance.FirstRunPopup.resources
+C:\Users\anthony\Desktop\UBalance\UBalance\obj\Release\UBalance.SaveCheck.resources

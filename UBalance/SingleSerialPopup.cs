@@ -32,16 +32,19 @@ namespace UBalance
         private void button1_Click(object sender, EventArgs e)
         {
             PortType = SerialType.Balance;
+            Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             PortType = SerialType.ColorMeter;
+            Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             PortType = SerialType.Neither;
+            Close();
         }
     }
 

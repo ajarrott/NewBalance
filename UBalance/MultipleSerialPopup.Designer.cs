@@ -112,7 +112,7 @@
             this.Controls.Add(this.balanceLabel);
             this.Controls.Add(this.label1);
             this.Name = "MultipleSerialPopup";
-            this.Text = "Alert";
+            this.Text = "UBalance";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -16,15 +16,26 @@ namespace UBalance.Library.Classes
 
         public GridData(List<Cell> defaultRow, string nameOfApp)
         {
+            // temp list for calculations
+            List<Cell> cells = new List<Cell>();
             foreach (Cell c in defaultRow)
             {
-                if (c is KCell)
+                if (c.CellType == CellType.K)
                 {
                     KCell kc = c as KCell;
                     if (kc.KConnectionType != KConnection.AUTO) continue;
 
                     // initialize auto value to 1, user can respecify at a later time
                     kc.Value = 1;
+                }
+                else if (c.CellType == CellType.C)
+                {
+                    CCell cc = c as CCell;
+
+                    if (cc != null)
+                    {
+                        _CalculationCells.Add(cc);
+                    }
                 }
             }
             _Cells.Add(defaultRow);
@@ -204,8 +215,8 @@ namespace UBalance.Library.Classes
             }*/
             
             // top to bottom advance
-            row = c.RowIndex + 1;
-            column = c.ColumnIndex;
+            row = c.RowIndex;
+            column = c.ColumnIndex + 1;
         }
 
         private void WeightFindNextCell(Cell c, out int row, out int column)
@@ -223,6 +234,7 @@ namespace UBalance.Library.Classes
             if (nextCell is WCell) ;
             else
             {
+                // check if they keyboard cell is auto or ditto
                 int index = cells.IndexOf(nextCell);
 
                 while (index < cells.Count)
@@ -231,6 +243,15 @@ namespace UBalance.Library.Classes
                     {
                         nextCell = cells[index];
                         break;
+                    }
+
+                    if (cells[index] is KCell)
+                    {
+                        if (cells[index].ConnectionInfo.ToLower() == "null")
+                        {
+                            nextCell = cells[index];
+                            break;
+                        }
                     }
                     index++;
                 }

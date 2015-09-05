@@ -96,6 +96,12 @@
     <Compile Include="MultipleSerialPopup.Designer.cs">
       <DependentUpon>MultipleSerialPopup.cs</DependentUpon>
     </Compile>
+    <Compile Include="SaveCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaveCheck.Designer.cs">
+      <DependentUpon>SaveCheck.cs</DependentUpon>
+    </Compile>
     <Compile Include="SingleSerialPopup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MultipleSerialPopup.resx">
       <DependentUpon>MultipleSerialPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaveCheck.resx">
+      <DependentUpon>SaveCheck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SingleSerialPopup.resx">
       <DependentUpon>SingleSerialPopup.cs</DependentUpon>

@@ -25,6 +25,7 @@ namespace UBalance
         public BalanceReader Balance;
         public ColorReader Color;
         public AppParser AppParse;
+        public bool RecentlySaved;
 
         public string BalancePort = String.Empty;
         public string ColorPort = String.Empty;
@@ -190,8 +191,22 @@ namespace UBalance
         {
             ToolStripMenuItem t = sender as ToolStripMenuItem;
 
+            if (t == null) return;
+
+            if (UBalanceDataGridView.RowCount > 0)
+            {
+                SaveCheck sc = new SaveCheck();
+                sc.LabelCorrectlyFromLoad();
+
+                if (sc.ShowDialog() == DialogResult.Yes)
+                {
+                    saveToolStripMenuItem_Click(this, EventArgs.Empty);
+                }
+            }
+
             //find item in app
             string nameOfApp = t.Text;
+            Text = "UBalance - " + t.Text;
 
             EmptyGridView(nameOfApp);
 
@@ -205,6 +220,7 @@ namespace UBalance
         private string oldCellValue;
         void UBalanceDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
+            _cellBeginEdit = UBalanceDataGridView.CurrentCell;
             DataGridViewCell d = UBalanceDataGridView[e.ColumnIndex, e.RowIndex];
             oldCellValue = d.Value == null ? null : d.Value.ToString();
         }
@@ -257,7 +273,11 @@ namespace UBalance
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog s = new SaveFileDialog();
+            SaveFileDialog s = new SaveFileDialog()
+            {
+                RestoreDirectory = true,
+                InitialDirectory = Settings.Default.DefaultPath
+            };
 
             if (s.ShowDialog() == DialogResult.OK)
             {
@@ -269,6 +289,9 @@ namespace UBalance
                 w.Close();
                 fs.Close();
             }
+
+            // Don't annoy user if they have recently saved
+            RecentlySaved = true;
         }
         private void EmptyGridView(string nameOfApp)
         {
@@ -286,8 +309,6 @@ namespace UBalance
                         Cell c = ViewData.GetCell(0, i);
                         c.CellValueChanged -= UBalance_CellValueChanged;
                         c.NotifyDependents -= UBalance_NotifyDependents;
-
-                        UBalanceDataGridView.Columns[i].Resizable = DataGridViewTriState.True;
                     }
                 }
             }
@@ -327,7 +348,22 @@ namespace UBalance
         }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog o = new OpenFileDialog();
+            OpenFileDialog o = new OpenFileDialog()
+            {
+                InitialDirectory = Settings.Default.DefaultPath,
+                RestoreDirectory = true
+            };
+
+            if (UBalanceDataGridView.RowCount > 0)
+            {
+                SaveCheck sc = new SaveCheck();
+                sc.LabelCorrectlyFromLoad();
+
+                if (sc.ShowDialog() == DialogResult.Yes)
+                {
+                    saveToolStripMenuItem_Click(this, EventArgs.Empty);
+                }
+            }
 
             if (o.ShowDialog() == DialogResult.OK)
             {
@@ -377,6 +413,9 @@ namespace UBalance
                 fs.Close();
                 saveToolStripMenuItem.Enabled = true;
                 addRowButton.Enabled = true;
+
+                // Don't annoy user if they just loaded the file
+                RecentlySaved = true;
             }
         }
 
@@ -385,14 +424,22 @@ namespace UBalance
             if (keyData == (Keys.F1) && saveToolStripMenuItem.Enabled)
             {
                 saveToolStripMenuItem_Click(this, EventArgs.Empty);
+                return true;
             }
             if (keyData == (Keys.F2))
             {
                 loadToolStripMenuItem_Click(this, EventArgs.Empty);
+                return true;
             }
             if (keyData == (Keys.F3) && addRowButton.Enabled )
             {
                 addRowButton_Click(this, EventArgs.Empty);
+                return true;
+            }
+            if (keyData == (Keys.Enter) && _cellBeginEdit != null)
+            {
+                NextCell();
+                return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }

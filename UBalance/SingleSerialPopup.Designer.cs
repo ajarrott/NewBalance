@@ -87,7 +87,8 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "SingleSerialPopup";
-            this.Text = "Connected Device Type";
+            this.Text = "UBalance";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
