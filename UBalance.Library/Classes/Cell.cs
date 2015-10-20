@@ -1,14 +1,193 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.SqlTypes;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UBalance.Library.Classes
 {
+    // Cell for when one is defined as name[optionValue]
+    // All of these cells will have the same row/column value, but not the same internal value
+    public class MultipleCell : Cell
+    {
+        private List<Cell> _CellOptions;
+        private List<string> _OptionNames;
+        private Cell _SelectedCell;
+        private string _baseName;
+        public event EventHandler NotifyHeaderNameChange = delegate { };
+
+        public MultipleCell(Cell c, List<Cell> cells ) : base(c, true)
+        {
+            _CellOptions = new List<Cell>();
+            _OptionNames = new List<string>();
+            AddCellToOptions(c, cells, true);
+            _baseName = c.Label.Substring(0, c.Label.IndexOf('['));
+            _CellType = CellType.Multiple;
+
+            // set selected cell to first option in list of cells
+            _SelectedCell = _CellOptions[0];
+        }
+
+        public MultipleCell(MultipleCell multiple, List<Cell> cells) : base(multiple, false)
+        {
+            _CellOptions = new List<Cell>();
+            _OptionNames = new List<string>();
+            _baseName = multiple.BaseName;
+            _CellType = CellType.Multiple;
+
+            foreach (Cell c in multiple.CellOptions)
+            {
+                AddCellToOptions(c, cells, false);
+            }
+
+            // set selected cell to the first item in the list of cells
+            _SelectedCell = _CellOptions[0];
+        }
+
+        public void AddCellToOptions(Cell c, List<Cell> cells, bool newMultiCellRow)
+        {
+            var kCell = c as KCell;
+            var cCell = c as CCell;
+            var mCell = c as MCell;
+            var wCell = c as WCell;
+            if (kCell != null)
+            {
+                KCell kc = new KCell(kCell, newMultiCellRow);
+                AddOptionCell(kc);
+            }
+            else if (cCell != null)
+            {
+                List<string> names = cCell.ConnectionInfo.Split(new char[] { '(', ')', '+', '-', '*', '/', '^' }).ToList();
+
+                // need for TryParse
+                double n;
+
+                List<string> dependencyNamesPossibleDupes = (from name in names
+                                                                where name.Length > 0 &&
+                                                                !double.TryParse(name, out n)     // make sure the value isn't an integer
+                                                                select name).ToList();
+
+                List<string> dependencyNames = dependencyNamesPossibleDupes.Distinct().ToList();
+
+
+                List<Cell> dependencies = new List<Cell>();
+
+                foreach (string name in dependencyNames)
+                {
+                    Cell dependency = cells.First(x => x.Label == name);
+
+                    if (dependency != null)
+                        dependencies.Add(dependency);
+                }
+
+                CCell cc = new CCell(cCell, dependencies, newMultiCellRow);
+                    
+                AddOptionCell(cc);
+            }
+            else if (mCell != null)
+            {
+                MCell mc = new MCell(mCell, newMultiCellRow);
+
+                AddOptionCell(mc);
+            }
+            else if (wCell != null)
+            {
+                WCell wc = new WCell(wCell, newMultiCellRow);
+
+                AddOptionCell(wc);
+            }
+        }
+
+        public double? SelectedValue
+        {
+            get
+            {
+                if (_SelectedCell.Value == null) return null;
+                return Math.Round((double)_SelectedCell.Value, _SelectedCell.Precision);
+            }
+        }
+
+        public List<Cell> CellOptions
+        {
+            get { return _CellOptions; }
+        }
+
+        public string BaseName
+        {
+            get { return _baseName; }
+        }
+
+        public List<string> OptionStrings
+        {
+            get{ return _OptionNames; }
+        } 
+
+        private void AddOptionCell(Cell c)
+        {
+            var kCell = c as KCell;
+            var mCell = c as MCell;
+            var wCell = c as WCell;
+            var cCell = c as CCell;
+            if (kCell != null)
+                _CellOptions.Add(kCell);
+            else if (mCell != null)
+                _CellOptions.Add(mCell);
+            else if (wCell != null)
+                _CellOptions.Add(wCell);
+            else if (cCell != null)
+                _CellOptions.Add(cCell);
+
+            OptionStrings.Add(c.Label.Substring(c.Label.IndexOf('[') + 1, c.Label.IndexOf(']') - c.Label.IndexOf('[') - 1));
+        }
+
+        public static bool IsMultiCell(string s)
+        {
+            return s.Contains('[') && s.Contains(']');
+        }
+
+        public Cell SelectedCell
+        {
+            get { return _SelectedCell; }
+        }
+
+        public void UpdateSelectedCell(int index)
+        {
+            try
+            {
+                _SelectedCell = _CellOptions[index];
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+
+        /// <summary>
+        /// Check if you can this the current multiple cell
+        /// </summary>
+        /// <param name="label"></param>
+        /// <returns></returns>
+        public bool CanAddToOption(string label)
+        {
+            return label.Substring(0, label.IndexOf('[')) == _baseName;
+        }
+
+        public void ChangeOption(string optName)
+        {
+            int indexOf = OptionStrings.IndexOf(optName);
+
+            try
+            {
+                _SelectedCell = _CellOptions[indexOf];
+                NotifyHeaderNameChange(this, new EventArgs());
+                OnValueChanged(new PropertyChangedEventArgs("MultipleCell"));
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+    }
+
     // Calculation Column
     public class CCell : Cell
     {
@@ -29,7 +208,7 @@ namespace UBalance.Library.Classes
             }
         }
 
-        public CCell(CCell c, List<Cell> dependencies ) : base(c)
+        public CCell(CCell c, List<Cell> dependencies, bool multiCell = false ) : base(c, multiCell)
         {
             _Calculation = new Calculation(ConnectionInfo);
             _Dependencies = new Dictionary<Cell, bool>();
@@ -126,7 +305,7 @@ namespace UBalance.Library.Classes
             _CellType = CellType.K;
         }
 
-        public KCell(KCell c) : base(c)
+        public KCell(KCell c, bool MultipleCell = false) : base(c, MultipleCell)
         {
             KConnection tempConnection;
             Enum.TryParse(ConnectionInfo, out tempConnection);
@@ -170,7 +349,7 @@ namespace UBalance.Library.Classes
         public KConnection KConnectionType
         {
             get { return _KConnection; }
-            private set
+            set
             {
                 _KConnection = value;
             }
@@ -191,7 +370,7 @@ namespace UBalance.Library.Classes
             _CellType = CellType.M;
         }
 
-        public MCell(MCell c) : base(c)
+        public MCell(MCell c, bool multiCell = false) : base(c, false)
         {
             MirroredCell = c.MirroredCell;
 
@@ -244,7 +423,7 @@ namespace UBalance.Library.Classes
             _AdvanceToCell = connectionInfo;
         }
 
-        public WCell(WCell c) : base(c)
+        public WCell(WCell c, bool multiCell = false) : base(c, multiCell)
         {
             _CellType = CellType.W;
             if (ConnectionInfo == "NULL") return;
@@ -264,7 +443,7 @@ namespace UBalance.Library.Classes
         private double? _Value;
         private bool _ValueChanged;
         protected CellType _CellType;
-        public event EventHandler NotifyDependents = delegate { }; 
+        public event EventHandler NotifyDependents = delegate { };
 
         public event PropertyChangedEventHandler CellValueChanged = delegate { };
 
@@ -280,13 +459,20 @@ namespace UBalance.Library.Classes
         }
 
         // copy constructor for next row
-        public Cell(Cell c)
+        public Cell(Cell c, bool multiCell = false)
         {
             Label = c.Label;
             Digits = c.Digits;
             Precision = c.Precision;
             ConnectionInfo = c.ConnectionInfo;
-            RowIndex = c.RowIndex + 1;
+            if (multiCell)
+            {
+                RowIndex = c.RowIndex;
+            }
+            else
+            {
+                RowIndex = c.RowIndex + 1;
+            }
             ColumnIndex = c.ColumnIndex;
             ValueChanged = false;
         }
@@ -316,7 +502,7 @@ namespace UBalance.Library.Classes
             private set { _ConnectionInfo = value; }
         }
 
-        public double? Value
+        public virtual double? Value
         {
             get
             {
@@ -423,6 +609,7 @@ namespace UBalance.Library.Classes
         K,
         W,
         C,
-        M
+        M,
+        Multiple
     }
 }

@@ -49,6 +49,7 @@
     <Compile Include="Classes\ColorReader.cs" />
     <Compile Include="Classes\Cell.cs" />
     <Compile Include="Classes\GridData.cs" />
+    <Compile Include="Classes\MultiCellPrototype.cs" />
     <Compile Include="Events\AllColumnsPopulatedEventArgs.cs" />
     <Compile Include="Events\ColumnChangedEventArgs.cs" />
     <Compile Include="Events\PreferenceCloseEventArgs.cs" />

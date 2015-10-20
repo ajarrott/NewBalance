@@ -44,12 +44,42 @@ namespace UBalance.Library.AppLoading
             strReader.Close();
         }
 
+        /// <summary>
+        /// returns null if you don't need to add the cell to the columns
+        /// </summary>
+        /// <param name="c">Cell we're adding to Multiple Cell</param>
+        /// <param name="cols">the current columns in the list</param>
+        /// <returns></returns>
+        private MultipleCell BuildMultipleCell(Cell c, List<Cell> cols )
+        {
+            bool needToAddToCols = true;
+            foreach (var cell in cols.OfType<MultipleCell>())
+            {
+                if (cell.CanAddToOption(c.Label))
+                {
+                    // Cell already exists, don't need to make a new one with a new row (true)
+                    cell.AddCellToOptions(c, cols, true);
+                    needToAddToCols = false;
+                    break;
+                }
+            }
+
+            if (needToAddToCols)
+            {
+                return new MultipleCell(c, cols);
+            }
+
+            return null;
+        }
+
         public List<Cell> ReturnCellsInRow(int rowNumber)
         {
             List<Cell> cols = new List<Cell>();
             int colIndex = 0;
+
             foreach (List<string> l in _parsedFile)
             {
+                MultipleCell multi = null;
                 // there will be 5 items in each .APP file
                 if (l.Count != 5) break;
               
@@ -67,12 +97,31 @@ namespace UBalance.Library.AppLoading
                     // keyboard cell
                     case "K":
                         KCell k = new KCell(label, digits, precision, connectionInfo, rowNumber, colIndex);
-                        cols.Add(k);
+                        if (MultipleCell.IsMultiCell(label))
+                        {
+                            multi = BuildMultipleCell(k, cols);
+                            if(multi != null) cols.Add(multi);
+                            continue; // don't advance the colIndex
+                        }
+                        else
+                        {
+                            cols.Add(k);
+                        }
                         break;
                     // weight cell
                     case "W":
                         WCell w = new WCell(label, digits, precision, connectionInfo, rowNumber, colIndex);
-                        cols.Add(w);
+                        
+                        if (MultipleCell.IsMultiCell(label))
+                        {
+                            multi = BuildMultipleCell(w, cols);
+                            if(multi != null) cols.Add(multi);
+                            continue; // don't advance the colIndex
+                        }
+                        else
+                        {
+                            cols.Add(w);
+                        }
                         break;
                     // calculation cell
                     case "C":
@@ -88,7 +137,6 @@ namespace UBalance.Library.AppLoading
                             select name).ToList();
 
                         List<string> dependencyNames = dependencyNamesPossibleDupes.Distinct().ToList();
-                                                       
                             
                         List<Cell> dependencies = new List<Cell>();
 
@@ -100,15 +148,37 @@ namespace UBalance.Library.AppLoading
                                 dependencies.Add(dependency);
                         }
 
-                        CCell c = new CCell(label, digits, precision, connectionInfo, rowNumber, colIndex, dependencies);
-                        cols.Add(c);
+                        CCell c = new CCell(label, digits, precision, connectionInfo, rowNumber, colIndex,
+                            dependencies);
+
+                        if (MultipleCell.IsMultiCell(label))
+                        {
+                            multi = BuildMultipleCell(c, cols);
+                            if(multi != null) cols.Add(multi);
+                            continue; // don't advance the colIndex
+                        }
+                        else
+                        {
+                            cols.Add(c);
+                        }
+                        
                         break;
                     // mirror cell
                     case "M":
                         // find cell to mirror
                         var columnToMirror = cols.FirstOrDefault(x => x.Label == connectionInfo);
                         MCell m = new MCell(label, digits, precision, connectionInfo, rowNumber, colIndex, columnToMirror);
-                        cols.Add(m);
+
+                        if (MultipleCell.IsMultiCell(label))
+                        {
+                            multi = BuildMultipleCell(m, cols);
+                            if(multi != null) cols.Add(multi);
+                            continue; // don't advance the colIndex
+                        }
+                        else
+                        {
+                            cols.Add(m);
+                        }
                         break;
                 }
 

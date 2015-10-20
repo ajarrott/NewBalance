@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using UBalance.Library.Events;
@@ -100,10 +101,15 @@ namespace UBalance.Library.Classes
                         kcToAdd.KValue = kc.KValue;
                     cells.Add(kcToAdd);
                 }
-                else
+                else if(c.CellType == CellType.M)
                 {
                     MCell mc = c as MCell;
                     cells.Add(new MCell(mc));
+                }
+                else if (c.CellType == CellType.Multiple)
+                {
+                    MultipleCell multiple = c as MultipleCell;
+                    cells.Add(new MultipleCell(multiple, cells));
                 }
                 
             }
@@ -126,6 +132,7 @@ namespace UBalance.Library.Classes
             if (c is CCell) return CellType.C;
             if (c is MCell) return CellType.M;
             if (c is WCell) return CellType.W;
+            if (c is MultipleCell) return CellType.Multiple;
             return null;
         }
 
@@ -196,12 +203,28 @@ namespace UBalance.Library.Classes
             }
         }
 
+        public void CheckAndUpdateMultipleDependency(Cell cell, MultipleCell mc)
+        {
+            int row = mc.RowIndex;
+
+            List<CCell> calcCells = mc.CellOptions.OfType<CCell>().Select(c => c).ToList();
+
+            foreach (CCell cc in calcCells)
+            {
+                if (cc.IsDependency(cell))
+                {
+                    cc.Dependencies[cell] = cell.ValueChanged;
+                    cc.CheckDependencies();
+                }
+            }
+        }
+
         private void BasicNextCell(Cell c, out int row, out int column)
         {
             int columnCount = _Cells[0].Count;
 
             // left to right advance
-            /*nextCol = c.ColumnIndex + 1;
+            int nextCol = c.ColumnIndex + 1;
 
             if (nextCol < columnCount)
             {
@@ -212,17 +235,17 @@ namespace UBalance.Library.Classes
             {
                 row = c.RowIndex + 1;
                 column = 0;
-            }*/
-            
-            // top to bottom advance
-            row = c.RowIndex;
-            column = c.ColumnIndex + 1;
+            }
         }
 
         private void WeightFindNextCell(Cell c, out int row, out int column)
         {
             // if there is no advance-to-element type go to next cell in line
-            if( c.ConnectionInfo.ToLower() == "null" ) BasicNextCell(c, out row, out column);
+            if (c.ConnectionInfo.ToLower() == "null")
+            {
+                BasicNextCell(c, out row, out column);
+                return;
+            }
 
             // otherwise find the cell to advance to
             // current row we're on
@@ -231,8 +254,7 @@ namespace UBalance.Library.Classes
             Cell nextCell = cells.First(x => String.Equals(x.Label, c.ConnectionInfo, StringComparison.CurrentCultureIgnoreCase));
 
             // if nextCell isn't a weight cell, find the next weight cell on that line
-            if (nextCell is WCell) ;
-            else
+            if (!(nextCell is WCell))
             {
                 // check if they keyboard cell is auto or ditto
                 int index = cells.IndexOf(nextCell);
@@ -245,6 +267,7 @@ namespace UBalance.Library.Classes
                         break;
                     }
 
+                    // only go to KCell if the type is "null", meaning a comment
                     if (cells[index] is KCell)
                     {
                         if (cells[index].ConnectionInfo.ToLower() == "null")
@@ -291,6 +314,9 @@ namespace UBalance.Library.Classes
                 case CellType.W:
                     WeightFindNextCell(c, out rowValue, out colValue);
                     break;
+                case CellType.Multiple:
+                    BasicNextCell(c, out rowValue, out colValue);
+                    break;
             }
 
             row = rowValue;
@@ -306,6 +332,16 @@ namespace UBalance.Library.Classes
                     c.RemoveSubscriptions();
                 }
             }
+        }
+
+        public bool HasMultipleCells()
+        {
+            foreach (Cell c in _Cells[0])
+            {
+                if (c is MultipleCell)
+                    return true;
+            }
+            return false;
         }
     }
 }

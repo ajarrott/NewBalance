@@ -37,7 +37,7 @@ namespace UBalance.Library.Classes
                 {
                     _port.Open();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //
                 }
@@ -73,7 +73,7 @@ namespace UBalance.Library.Classes
                     double.TryParse(validValues[validValues.IndexOf("a") + 1], out _a);
                     double.TryParse(validValues[validValues.IndexOf("b") + 1], out _b);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // exception, most likely out of range, set all values to zero, there was an issue
                     // with reading from the color meter

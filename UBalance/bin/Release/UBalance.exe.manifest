@@ -42,26 +42,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UBalance.exe" size="38400">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UBalance.exe" size="39936">
       <assemblyIdentity name="UBalance" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>IkdsyiyuUn9FlrAOCqB6MeN5Uf1for09dYm8Xa9PUFs=</dsig:DigestValue>
+        <dsig:DigestValue>K6FGC5RBKitqqi4fXVzijHCePOTjf4BzlGxia/VpQ34=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UBalance.Library.dll" size="25088">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UBalance.Library.dll" size="29696">
       <assemblyIdentity name="UBalance.Library" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>V0g3dVu3e5RgIWqH+r2FIpSFQt0k3YxJE3bhKnirsYA=</dsig:DigestValue>
+        <dsig:DigestValue>Cd+XFHHtTl6n/54LwCt7f4ZN4lTwRyU+rxBd0r2Enyk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

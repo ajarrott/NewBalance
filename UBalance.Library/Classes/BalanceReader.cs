@@ -46,7 +46,7 @@ namespace UBalance.Library.Classes
                 {
                     _port.Open();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // port will not be open, therefore will become null
                 }
