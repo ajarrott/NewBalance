@@ -37,15 +37,15 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(430, 13);
+            this.label1.Size = new System.Drawing.Size(444, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "This is your first time running UBalance, please select a folder that contains yo" +
-    "ur .APP files";
+            this.label1.Text = "This is your first time running NewBalance, please select a folder that contains " +
+    "your .APP files";
             // 
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(367, 32);
+            this.button1.Location = new System.Drawing.Point(373, 30);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -57,11 +57,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(453, 67);
+            this.ClientSize = new System.Drawing.Size(460, 65);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Name = "FirstRunPopup";
-            this.Text = "UBalance";
+            this.Text = "NewBalance";
             this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -80,6 +80,7 @@ namespace UBalance.Library.AppLoading
             foreach (List<string> l in _parsedFile)
             {
                 MultipleCell multi = null;
+                
                 // there will be 5 items in each .APP file
                 if (l.Count != 5) break;
               
@@ -96,12 +97,12 @@ namespace UBalance.Library.AppLoading
                 {
                     // keyboard cell
                     case "K":
+                        if (MultipleCell.IsMultiCell(label) && cols.OfType<MultipleCell>().ToList().Count > 0) colIndex--;
                         KCell k = new KCell(label, digits, precision, connectionInfo, rowNumber, colIndex);
                         if (MultipleCell.IsMultiCell(label))
                         {
                             multi = BuildMultipleCell(k, cols);
                             if(multi != null) cols.Add(multi);
-                            continue; // don't advance the colIndex
                         }
                         else
                         {
@@ -110,13 +111,13 @@ namespace UBalance.Library.AppLoading
                         break;
                     // weight cell
                     case "W":
+                        if (MultipleCell.IsMultiCell(label) && cols.OfType<MultipleCell>().ToList().Count > 0) colIndex--;
                         WCell w = new WCell(label, digits, precision, connectionInfo, rowNumber, colIndex);
                         
                         if (MultipleCell.IsMultiCell(label))
                         {
                             multi = BuildMultipleCell(w, cols);
                             if(multi != null) cols.Add(multi);
-                            continue; // don't advance the colIndex
                         }
                         else
                         {
@@ -148,6 +149,8 @@ namespace UBalance.Library.AppLoading
                                 dependencies.Add(dependency);
                         }
 
+                        if (MultipleCell.IsMultiCell(label) && cols.OfType<MultipleCell>().ToList().Count > 0) colIndex--;
+
                         CCell c = new CCell(label, digits, precision, connectionInfo, rowNumber, colIndex,
                             dependencies);
 
@@ -155,7 +158,6 @@ namespace UBalance.Library.AppLoading
                         {
                             multi = BuildMultipleCell(c, cols);
                             if(multi != null) cols.Add(multi);
-                            continue; // don't advance the colIndex
                         }
                         else
                         {
@@ -167,13 +169,14 @@ namespace UBalance.Library.AppLoading
                     case "M":
                         // find cell to mirror
                         var columnToMirror = cols.FirstOrDefault(x => x.Label == connectionInfo);
+
+                        if (MultipleCell.IsMultiCell(label) && cols.OfType<MultipleCell>().ToList().Count > 0) colIndex--;
                         MCell m = new MCell(label, digits, precision, connectionInfo, rowNumber, colIndex, columnToMirror);
 
                         if (MultipleCell.IsMultiCell(label))
                         {
                             multi = BuildMultipleCell(m, cols);
                             if(multi != null) cols.Add(multi);
-                            continue; // don't advance the colIndex
                         }
                         else
                         {

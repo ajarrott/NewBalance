@@ -179,7 +179,7 @@ namespace UBalance.Library.Classes
             {
                 _SelectedCell = _CellOptions[indexOf];
                 NotifyHeaderNameChange(this, new EventArgs());
-                OnValueChanged(new PropertyChangedEventArgs("MultipleCell"));
+                OnValueChanged(new PropertyChangedEventArgs("Value"));
             }
             catch (Exception)
             {

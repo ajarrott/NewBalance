@@ -54,9 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UBalance.Library\UBalance.Library.csproj">
+    <ProjectReference Include="..\UBalance.Library\NewBalance.Library.csproj">
       <Project>{94b41942-77a8-4ad2-bfc2-90ade2d1cac9}</Project>
-      <Name>UBalance.Library</Name>
+      <Name>NewBalance.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

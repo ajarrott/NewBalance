@@ -201,6 +201,26 @@ namespace UBalance.Library.Classes
                     cc.CheckDependencies();
                 }
             }
+
+            // need to check multiple cells for dependencies as well
+            List<MultipleCell> multiCells = (from multi in rowValues
+                where multi is MultipleCell
+                select multi as MultipleCell).ToList();
+
+            foreach (MultipleCell mc in multiCells)
+            {
+                foreach (Cell c in mc.CellOptions)
+                {
+                    CCell calc = c as CCell;
+                    if (calc == null) continue;
+
+                    if (calc.IsDependency(cell))
+                    {
+                        calc.Dependencies[cell] = cell.ValueChanged;
+                        calc.CheckDependencies();
+                    }
+                }
+            }
         }
 
         public void CheckAndUpdateMultipleDependency(Cell cell, MultipleCell mc)

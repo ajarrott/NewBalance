@@ -4,7 +4,7 @@ using System.IO.Ports;
 using System.Windows.Forms;
 using UBalance.Library.Classes;
 using UBalance.Library.Events;
-using UBalance.Properties;
+using NewBalance.Properties;
 
 namespace UBalance
 {

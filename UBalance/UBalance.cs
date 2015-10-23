@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using UBalance.Library.AppLoading;
 using UBalance.Library.Classes;
 using UBalance.Library.Events;
-using UBalance.Properties;
+using NewBalance.Properties;
 
 namespace UBalance
 {
@@ -157,6 +157,8 @@ namespace UBalance
                         {
                             MultipleCell mc = ViewData.GetCell(0, i) as MultipleCell;
                             mc.NotifyHeaderNameChange -= mc_NotifyHeaderNameChange;
+                            mc.CellValueChanged -= UBalance_CellValueChanged;
+                            mc.NotifyDependents -= UBalance_NotifyDependents;
 
                             foreach (var cell in mc.CellOptions)
                             {
@@ -228,6 +230,8 @@ namespace UBalance
                 {
                     MultipleCell mc = ViewData.GetCell(0, i) as MultipleCell;
                     mc.NotifyHeaderNameChange += mc_NotifyHeaderNameChange;
+                    mc.CellValueChanged += UBalance_CellValueChanged;
+                    mc.NotifyDependents += UBalance_NotifyDependents;
 
                     foreach (var cell in mc.CellOptions)
                     {
@@ -266,6 +270,8 @@ namespace UBalance
                 {
                     MultipleCell mc = ViewData.GetCell(rowNumber, i) as MultipleCell;
                     mc.NotifyHeaderNameChange += mc_NotifyHeaderNameChange;
+                    mc.CellValueChanged += UBalance_CellValueChanged;
+                    mc.NotifyDependents += UBalance_NotifyDependents;
 
                     foreach (var cell in mc.CellOptions)
                     {
@@ -516,7 +522,17 @@ namespace UBalance
 
             LoadAndUpdateAppFiles();
 
-            readBalanceButton.Enabled = Balance.IsBalanceConnected();
+            if (Balance.IsBalanceConnected())
+            {
+                readBalanceButton.Enabled = true;
+                readBalanceButton.Text = @"Read Balance";
+            }
+            else
+            {
+                readBalanceButton.Enabled = false;
+                readBalanceButton.Text = @"Disconnected";
+            }
+            
         }
 
         //Add Row Event Handler;
@@ -537,7 +553,6 @@ namespace UBalance
             {
                 //ignore, keep cell null
             }
-
 
             if (cell != null)
             {
@@ -601,7 +616,12 @@ namespace UBalance
             if (mc == null) return;
 
             // change selected item to the CellOption that contains the correct name
-            mc.ChangeOption(t.ToString());
+            for (int i = 0; i < UBalanceDataGridView.RowCount; i++)
+            {
+                mc = ViewData.GetCell(i, mc.ColumnIndex) as MultipleCell;
+                if (mc == null) continue;
+                mc.ChangeOption(t.ToString());
+            }
         }
 
         #endregion
@@ -791,21 +811,6 @@ namespace UBalance
                 }
 
             }
-            //else if (e.PropertyName == "MultipleCell")
-            //{
-            //    if (sender is MultipleCell)
-            //    {
-            //        MultipleCell mc = sender as MultipleCell;
-
-            //        // make sure value is not null
-            //        if (mc.Value != null)
-            //        {
-            //            UBalanceDataGridView.Rows[mc.RowIndex].Cells[mc.ColumnIndex].Value = mc.Value;
-            //        }
-
-            //        ViewData.CheckAndUpdateDependency(mc);
-            //    }
-            //}
             else
             {
                 if (c != null && c.Value == null)
@@ -816,6 +821,15 @@ namespace UBalance
 
                         if (kc.KValue != String.Empty)
                             UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = kc.KValue;
+                        else
+                            UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = null;
+                    }
+                    else if (c is MultipleCell)
+                    {
+                        MultipleCell mc = c as MultipleCell;
+
+                        if (mc.SelectedValue != null)
+                            UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = mc.SelectedValue;
                         else
                             UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = null;
                     }
@@ -848,8 +862,12 @@ namespace UBalance
                             if (mc == null) return;
                             // Update Value to the currently selected cell
                             ViewData.CheckAndUpdateMultipleDependency(c, mc);
-                            UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value =
-                                mc.SelectedValue.ToString();
+
+                            if (mc.ColumnIndex == c.ColumnIndex && mc.RowIndex == c.RowIndex)
+                            {
+                                UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value =
+                                    mc.SelectedValue.ToString();    
+                            }
                         }
                     }
 

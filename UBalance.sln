@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBalance", "UBalance\UBalance.csproj", "{8470877F-D705-4877-912B-C2355611A7F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewBalance", "UBalance\NewBalance.csproj", "{8470877F-D705-4877-912B-C2355611A7F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBalance.Library", "UBalance.Library\UBalance.Library.csproj", "{94B41942-77A8-4AD2-BFC2-90ADE2D1CAC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewBalance.Library", "UBalance.Library\NewBalance.Library.csproj", "{94B41942-77A8-4AD2-BFC2-90ADE2D1CAC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBalance.Tests", "UBalance.Tests\UBalance.Tests.csproj", "{DC2E1617-C795-45D6-A866-25A2A582E7FB}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "UBalance.Installer", "UBalance.Installer\UBalance.Installer.vdproj", "{4C9B1C78-4A2B-455E-8D8B-B801140427A8}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "NewBalance.Installer", "UBalance.Installer\UBalance.Installer.vdproj", "{4C9B1C78-4A2B-455E-8D8B-B801140427A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

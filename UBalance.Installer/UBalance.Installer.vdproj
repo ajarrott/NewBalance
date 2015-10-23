@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:UBalance.Installer"
+"ProjectName" = "8:NewBalance.Installer"
 "LanguageId" = "3:1033"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1033"
@@ -13,6 +13,12 @@
 "SccProvider" = "8:"
     "Hierarchy"
     {
+        "Entry"
+        {
+        "MsmKey" = "8:_3DD52D90F7F347EFBEAC2DBC08799EE4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
         "Entry"
         {
         "MsmKey" = "8:_5DDBDCF4566846B3ABEAFE20FFCCCDE1"
@@ -55,6 +61,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -71,6 +93,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -100,6 +138,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3DD52D90F7F347EFBEAC2DBC08799EE4"
+            {
+            "SourcePath" = "8:..\\UBalance\\Documentation\\NewBalance User Guide v1.pdf"
+            "TargetName" = "8:NewBalance User Guide v1.pdf"
+            "Tag" = "8:"
+            "Folder" = "8:_FEB1885E9EC84E819598080D001A8805"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E1CA72C6ADF7B4E97DDD29C03DB0BDF7"
             {
             "AssemblyRegister" = "3:1"
@@ -186,20 +244,20 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:UBalance"
-        "ProductCode" = "8:{9299D347-69D8-4756-8362-1F6221F2E87A}"
-        "PackageCode" = "8:{E9E869FF-0553-4F58-8EF6-B967C1A7003B}"
+        "ProductName" = "8:NewBalance"
+        "ProductCode" = "8:{CBD619F3-5BD1-4D74-B37F-BD1BA0F68448}"
+        "PackageCode" = "8:{EBDF240C-8203-4D64-8010-931B9E543BC3}"
         "UpgradeCode" = "8:{C315BB53-6779-48C9-B58D-8E684080BCF2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:Washington State University"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:UBalance"
+        "Title" = "8:NewBalance"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Washington State University"
         "Keywords" = "8:"
@@ -709,7 +767,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5DDBDCF4566846B3ABEAFE20FFCCCDE1"
             {
-            "SourcePath" = "8:..\\UBalance\\obj\\Release\\UBalance.exe"
+            "SourcePath" = "8:..\\UBalance\\obj\\Release\\NewBalance.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FEB1885E9EC84E819598080D001A8805"

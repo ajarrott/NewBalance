@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UBalance.Properties {
+namespace NewBalance.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
