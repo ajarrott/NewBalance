@@ -49,19 +49,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>K6FGC5RBKitqqi4fXVzijHCePOTjf4BzlGxia/VpQ34=</dsig:DigestValue>
+        <dsig:DigestValue>pyRkEinbv/fBVc4Uv6DVWjpjoTz8qRcXdXdBOk+QgME=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UBalance.Library.dll" size="29696">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UBalance.Library.dll" size="30208">
       <assemblyIdentity name="UBalance.Library" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Cd+XFHHtTl6n/54LwCt7f4ZN4lTwRyU+rxBd0r2Enyk=</dsig:DigestValue>
+        <dsig:DigestValue>Hx11JTZ8TEykqvPMtOeLP/WlZf9lIpID0i9c70GzdTY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

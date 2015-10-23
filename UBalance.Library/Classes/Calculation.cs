@@ -104,7 +104,7 @@ namespace UBalance.Library.Classes
         // set the expression string
         public double SetExp(string s)
         {
-            _root = MakeTree(_exp); // make the tree based off the of the users expression
+            _root = MakeTree(s); // make the tree based off the of the users expression
             return Evaluate();
         }
 
@@ -147,51 +147,61 @@ namespace UBalance.Library.Classes
 
             return null; // no node created
         }
-        
+
+        // remove whitespace from string
+        private static string RemoveWhitespace(string input)
+        {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
+
+        private static bool isOperator(char c)
+        {
+            List<char> ops = new List<char>(){'+','-','*','/','^'};
+
+            return ops.Contains(c);
+        }
+
         // make tree based off of the current string
         private static Node MakeTree(string s)
         {
             if (string.IsNullOrEmpty(s)) // no string, return no node
                 return null;
 
-            // get rid of parenthesis
+            // get rid of spaces from the string
+            s = RemoveWhitespace(s);
+
             if ('(' == s[0])
             {
-                int counter = 0;
-                for (int i = 1; i < s.Length; i++) // check for other parenthesis
+                int counter = 1;
+                for (int i = 1; i < s.Length; i++)
                 {
-                    if ('(' == s[i])
+                    if (s[i] == '(')
                     {
                         counter++;
                     }
-                    else if (')' == s[i])
+                    else if (s[i] == ')')
                     {
                         counter--;
-                        if (0 == counter) // send items inside parenthesis for current string
+                        // if the next item in the expression is an operator, create op node, recursively call left and right sides to continue creation
+                        if (counter == 0 &&  i+1 < s.Length && isOperator(s[i+1]))
                         {
-                            // not last char
-                            if (i != s.Length - 1)
-                            {
-                                break;
-                            }
-                            else if (s[0] == '(')
-                            {
-                                //make tree again ( based off the stringwithout outside parenthesis)
-                                return MakeTree(s.Substring(1, s.Length - 2));
-                            }
-                            else
-                                break; // otherwise does not need to create a substring again, go operator loop
+                            OperatorNode op = new OperatorNode(s[i+1]);
+                            // since the first item in the string is (, and the current item is ), we need between 1 to i-1
+                            op.Left = MakeTree(s.Substring(1, i - 1));
+                            op.Right = MakeTree(s.Substring(i + 2, s.Length-(i+2)));
+                            return op;
+                        }
+                        // otherwise has parenthesis surrounding it
+                        if (counter == 0)
+                        {
+                            return MakeTree(s.Substring(1, s.Length - 2));    
                         }
                     }
-                    // make tree again (based off the string without outside parenthesis)
-                    if (')' == s[s.Length - 1] && s[0] == '(')
-                    {
-                        s = s.Substring(1, s.Length - 2);
-                        //counter = 0;  // reset counter to 0 since parenthesis removed;
-                    }
-                }
+                }   
             }
-            // valid op characters in reverse PEMDAS order
+            
             char[] ops = { '+', '-', '*', '/', '^' };
 
             //send the string to search for each valid operator allowed
