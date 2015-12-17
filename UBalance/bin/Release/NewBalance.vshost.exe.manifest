@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NewBalance.exe" size="40448">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NewBalance.exe" size="43008">
       <assemblyIdentity name="NewBalance" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>vkmQ0j+0MAQj1zvGm7Hc6K9tMAkZLlh3285eRYLHaJ4=</dsig:DigestValue>
+        <dsig:DigestValue>rU/lrnj4Zt3krTmbEKUBaiWZq8FqEzZiPDVNa4bMctg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MpB69ov8ZJH/ajZ1THhv7/YMA3DeD8cNMUxwYhrX5Pk=</dsig:DigestValue>
+        <dsig:DigestValue>y1gQjLjhOVCwjHVwTtkSBktin0X5RG4q2Y5tDTIP1O8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

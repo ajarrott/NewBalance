@@ -53,6 +53,7 @@
     <Compile Include="Events\AllColumnsPopulatedEventArgs.cs" />
     <Compile Include="Events\ColumnChangedEventArgs.cs" />
     <Compile Include="Events\PreferenceCloseEventArgs.cs" />
+    <Compile Include="Events\SelectedRowEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

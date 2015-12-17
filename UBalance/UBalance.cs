@@ -10,6 +10,7 @@ using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NewBalance;
 using UBalance.Library.AppLoading;
 using UBalance.Library.Classes;
 using UBalance.Library.Events;
@@ -153,6 +154,7 @@ namespace UBalance
                 {
                     for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
                     {
+                        
                         if (ViewData.GetCellType(0, i) == CellType.Multiple)
                         {
                             MultipleCell mc = ViewData.GetCell(0, i) as MultipleCell;
@@ -173,6 +175,15 @@ namespace UBalance
                             c.NotifyDependents -= UBalance_NotifyDependents;
                         }
                     }
+                }
+
+                // unfreeze any old frozen columns
+                UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(0)].Frozen = false;
+
+                // make sure the actual index and viewindex are the same
+                for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+                {
+                    UBalanceDataGridView.Columns[i].DisplayIndex = i;
                 }
             }
 
@@ -248,6 +259,14 @@ namespace UBalance
 
                 UBalanceDataGridView.Columns[i].Resizable = DataGridViewTriState.True;
             }
+
+            // make sure not to allow sorting
+            foreach (DataGridViewColumn col in UBalanceDataGridView.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            UBalanceDataGridView.SelectionChanged += UBalanceDataGridView_SelectionChanged;
         }
 
         //Add Row to Logic and GUI
@@ -296,7 +315,7 @@ namespace UBalance
         }
         #endregion
 
-        #region Hot Keys And Find Next Cells
+        #region Hot Keys
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.F1) && saveToolStripMenuItem.Enabled)
@@ -314,14 +333,37 @@ namespace UBalance
                 addRowButton_Click(this, EventArgs.Empty);
                 return true;
             }
+            if (keyData == (Keys.F4))
+            {
+                FreezeUnfreezeColumn();
+                return true;
+            }
             if (keyData == (Keys.Enter) && _cellBeginEdit != null)
             {
                 NextCell();
                 return true;
             }
+            // only process key if a cell is not in edit mode
+            if (keyData == (Keys.Space) && _cellBeginEdit == null)
+            {
+                if (Balance == null)
+                {
+                    MessageBox.Show("No balance is currently connected.", "NewBalance Warning");
+                    return true;
+                }
+
+                ViewData.GetCell(UBalanceDataGridView.CurrentCell.RowIndex, UBalanceDataGridView.CurrentCell.ColumnIndex)
+                    .Value = Balance.GetBalanceValue();
+
+                return true;
+
+            }
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+#endregion
+
+        #region Find Next Cell
         private void NextCell()
         {
             int maxCols = UBalanceDataGridView.ColumnCount;
@@ -603,6 +645,8 @@ namespace UBalance
 
             MultipleCell mc = null;
 
+            // currently this only works for one multiple cell
+            // need to refactor to include multiple multiple cells
             for (int i = 0; i < ViewData.ColumnHeaders().Count; i++)
             {
                 if (ViewData.GetCellType(0, i) == CellType.Multiple)
@@ -616,12 +660,18 @@ namespace UBalance
             if (mc == null) return;
 
             // change selected item to the CellOption that contains the correct name
-            for (int i = 0; i < UBalanceDataGridView.RowCount; i++)
+            /*for (int i = 0; i < UBalanceDataGridView.RowCount; i++)
             {
                 mc = ViewData.GetCell(i, mc.ColumnIndex) as MultipleCell;
                 if (mc == null) continue;
                 mc.ChangeOption(t.ToString());
-            }
+            }*/
+
+            int rowIndex = UBalanceDataGridView.CurrentCell.RowIndex;
+
+            mc = ViewData.GetCell(rowIndex, mc.ColumnIndex) as MultipleCell;
+            if (mc == null) return;
+            mc.ChangeOption(t.ToString());
         }
 
         #endregion
@@ -640,7 +690,9 @@ namespace UBalance
 
             // need to update logic layer
 
-            if ((string)_cellBeginEdit.Value == oldCellValue)
+            string valueToCheck = (string) _cellBeginEdit.Value ?? "";
+
+            if (valueToCheck == oldCellValue)
             {
                 return;
             }
@@ -718,25 +770,53 @@ namespace UBalance
             oldCellValue = d.Value == null ? null : d.Value.ToString();
         }
 
+        void UBalanceDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (ViewData.HasMultipleCells())
+            {
+                mc_NotifyHeaderNameChange(ViewData.GetCell(UBalanceDataGridView.CurrentCell.RowIndex, UBalanceDataGridView.CurrentCell.ColumnIndex), new EventArgs());
+            }
+        }
+
         // Multiple Cell Change Header Name Event Handler
         void mc_NotifyHeaderNameChange(object sender, EventArgs e)
         {
-            MultipleCell mc = sender as MultipleCell;
+            ////MultipleCell mc = sender as MultipleCell;
 
-            if (mc == null) return;
-            // don't stack overflow on recursive calls that happen below
-            if (UBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText == mc.SelectedCell.Label) return;
+            ////if (mc == null) return;
+            //// don't stack overflow on recursive calls that happen below
+            //if (UBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText == mc.SelectedCell.Label) return;
 
-            UBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText = mc.SelectedCell.Label;
+            //UBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText = mc.SelectedCell.Label;
 
-            // change the selected cells for every column to the correct Selected cell
+            //// change the selected cells for every column to the correct Selected cell
+            /// 
+            /// 
 
-            for (int i = 0; i < UBalanceDataGridView.RowCount; i++)
+            // Find the multiple cell column label for the current row
+            // need to update to use multiple multiple cells
+            Cell c = sender as Cell;
+
+            if (c == null) return;
+
+            MultipleCell mc = null;
+            // find multiple cell in column
+            for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
             {
-                MultipleCell temp = ViewData.GetCell(i, mc.ColumnIndex) as MultipleCell;
-
-                temp.ChangeOption(mc.SelectedCell.Label);
+                if (ViewData.GetCell(c.RowIndex, i) is MultipleCell)
+                {
+                    mc = ViewData.GetCell(c.RowIndex, i) as MultipleCell;
+                }
             }
+
+            // did not find a multiplecell, return
+            if (mc == null) return;
+
+            // don't update if the row is the same
+            if (UBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText == mc.SelectedCell.Label ) return;
+
+            // got here, update the Label
+            UBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText = mc.SelectedCell.Label;
         }
 
         // Notify Mirror Cell Dependents Event Handler
@@ -877,5 +957,154 @@ namespace UBalance
             }
         }
 #endregion
+
+        #region Freezing Columns
+        /// <summary>
+        /// This finds the column in the datagridview based on the display index
+        /// </summary>
+        /// <param name="displayIndex">Current Display Index</param>
+        /// <returns>The actual DataGridViewColumn object, useful for check if it's frozen or not</returns>
+        private DataGridViewColumn FindColumnByDisplayIndex(int displayIndex)
+        {
+            return
+                (from DataGridViewColumn col in UBalanceDataGridView.Columns
+                 where col.DisplayIndex == displayIndex
+                 select col).SingleOrDefault();
+        }
+
+        /// <summary>
+        /// This finds the column index in the datagridview based on the display index
+        /// </summary>
+        /// <param name="displayIndex">Current Display Index</param>
+        /// <returns>Index in DataGridView</returns>
+        private int FindDisplayIndexColumnIndex(int displayIndex)
+        {
+            return
+                (from DataGridViewColumn col in UBalanceDataGridView.Columns
+                 where col.DisplayIndex == displayIndex
+                 select col.Index).SingleOrDefault();
+        }
+
+        private int FindNextFrozenColumnIndex()
+        {
+            int endIndex = 0;
+            // find frozen column by DISPLAY index
+            for (int i = 0; i < UBalanceDataGridView.Columns.Count; i++)
+            {
+                DataGridViewColumn result = FindColumnByDisplayIndex(i);
+                if (result == null || !result.Frozen) break;
+                endIndex = i + 1;
+            }
+
+            return endIndex;
+        }
+
+        /// <summary>
+        /// This freezes or unfreezes columns, it will place the selected column on the left hand section of the screen
+        /// and keep it in place
+        /// </summary>
+        private void FreezeUnfreezeColumn()
+        {
+            // ColumnIndex gives you the actual column index, not the display index
+            int actualColumnIndex = UBalanceDataGridView.CurrentCell.ColumnIndex;
+
+            // if the column is already frozen
+            if (UBalanceDataGridView.Columns[actualColumnIndex].Frozen)
+            {
+                UnfreezeColumn();
+            }
+            // adding a frozen column, append it to the end of the frozen column list
+            else
+            {
+                UBalanceDataGridView.Columns[actualColumnIndex].DisplayIndex = FindNextFrozenColumnIndex();
+                UBalanceDataGridView.Columns[actualColumnIndex].Frozen = true;
+            }
+        }
+
+        private void UnfreezeColumn()
+        {
+            // based on the current amount of frozen columns the values will change for what their normal spot is
+
+            // | 2 | 1 | 0 | 3 || (unfreeze 0) -> | 2 | 1 | 3 || 0 |
+            // | 2 | 1 | 3 || 0 | (unfreeze 2) -> | 1 | 3 || 0 | 2 |
+            // | 1 | 3 || 0 | 2 | (unfreeze 3) -> | 1 || 0 | 2 | 3 |
+            // | 1 || 0 | 2 | 3 | (unfreeze 1) -> || 0 | 1 | 2 | 3 |
+
+            // Based on the current amount of frozen rows
+            int numFrozenColumns = FindNextFrozenColumnIndex();
+
+            // n -> (n - 1) | (column to unfreeze)
+            // need to find which index we are unfreezing
+            // | F | ... | F | X | F | ... | F | U | ...  Where F is a Frozen Column and X is the Column to unfreeze and U are the unfrozen columns
+
+            int actualIndex = UBalanceDataGridView.CurrentCell.ColumnIndex;
+            int displayIndex = UBalanceDataGridView.Columns[actualIndex].DisplayIndex;
+
+            //Unfreeze all rows (
+            UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(0)].Frozen = false;
+            /*foreach (DataGridViewColumn c in UBalanceDataGridView.Columns)
+            {
+                c.Frozen = false;
+            }*/
+
+            // new index the relative index goes to is relativeIndex + numColumns - 1
+            // need to set new location of frozen columns to numColumns - 1
+
+            // based on the first item you will be looking at in the columns after you either put it before or after the next item
+            // | F | ... | F | X | U | or | F | ... | F | U | X | where F is frozen U is the first unfrozen item, and X is where the cell will be inserted
+
+            // first and foremost make sure we do not go past the amount of items in the DGV
+            if (UBalanceDataGridView.ColumnCount == numFrozenColumns)
+            {
+                // e.g 3 cols, 0 based index, move item to 2, set frozen to 1
+                UBalanceDataGridView.Columns[actualIndex].DisplayIndex = numFrozenColumns - 1;
+                // refreeze columns one less than the number of frozen columns
+                UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
+            }
+            // Insert right after frozen items, need to base off actual index
+            else if (UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns)].Index > actualIndex)
+            {
+                UBalanceDataGridView.Columns[actualIndex].DisplayIndex = numFrozenColumns - 1;
+                // refreeze columns one less than the number of frozen columns
+                UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
+            }
+            // Need to insert somewhere after numFrozenColumns
+            else
+            {
+                int newIndex = numFrozenColumns;
+                for (int i = numFrozenColumns; i <= UBalanceDataGridView.ColumnCount; i++)
+                {
+                    // insert at very end of the list case
+                    if (i == UBalanceDataGridView.ColumnCount)
+                    {
+                        UBalanceDataGridView.Columns[actualIndex].DisplayIndex = newIndex - 1;
+                        if (numFrozenColumns > 1)
+                        {
+                            UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
+                        }
+
+                        break;
+                    }
+
+                    // need to insert after the current column we're looking at
+                    if (UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(i)].Index < actualIndex)
+                    {
+                        newIndex++;
+                        continue;
+                    }
+
+                    // otherwise freeze set the display to the new index and refreze the columns
+                    UBalanceDataGridView.Columns[actualIndex].DisplayIndex = newIndex - 1;
+                    // refreeze columns one less than the number of frozen columns
+                    if (numFrozenColumns > 1)
+                    {
+                        UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
+                    }
+                    break;
+                }
+
+            }
+        }
+        #endregion
     }
 }

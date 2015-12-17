@@ -15,13 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_3DD52D90F7F347EFBEAC2DBC08799EE4"
+        "MsmKey" = "8:_5DDBDCF4566846B3ABEAFE20FFCCCDE1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5DDBDCF4566846B3ABEAFE20FFCCCDE1"
+        "MsmKey" = "8:_D495E62A3DED4D82812599C2F7EB9A2D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -138,10 +138,10 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3DD52D90F7F347EFBEAC2DBC08799EE4"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D495E62A3DED4D82812599C2F7EB9A2D"
             {
-            "SourcePath" = "8:..\\UBalance\\Documentation\\NewBalance User Guide v1.pdf"
-            "TargetName" = "8:NewBalance User Guide v1.pdf"
+            "SourcePath" = "8:..\\UBalance\\Documentation\\NewBalance User Guide v1.1.pdf"
+            "TargetName" = "8:NewBalance User Guide v1.1.pdf"
             "Tag" = "8:"
             "Folder" = "8:_FEB1885E9EC84E819598080D001A8805"
             "Condition" = "8:"
@@ -246,7 +246,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:NewBalance"
         "ProductCode" = "8:{CBD619F3-5BD1-4D74-B37F-BD1BA0F68448}"
-        "PackageCode" = "8:{EBDF240C-8203-4D64-8010-931B9E543BC3}"
+        "PackageCode" = "8:{DC2B355C-3F46-4949-8B89-74BD16DF8305}"
         "UpgradeCode" = "8:{C315BB53-6779-48C9-B58D-8E684080BCF2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
