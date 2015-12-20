@@ -1,0 +1,4 @@
+C:\Users\anthony\Desktop\UBalance\UBalance.Library\bin\Release\UBalance.Library.dll
+C:\Users\anthony\Desktop\UBalance\UBalance.Library\bin\Release\UBalance.Library.pdb
+C:\Users\anthony\Desktop\UBalance\UBalance.Library\obj\Release\UBalance.Library.dll
+C:\Users\anthony\Desktop\UBalance\UBalance.Library\obj\Release\UBalance.Library.pdb

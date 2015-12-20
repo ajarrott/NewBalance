@@ -1,0 +1,9 @@
+C:\Users\anthony\Desktop\UBalance\UBalance.Library\bin\Release\UBalance.Library.dll
+C:\Users\anthony\Desktop\UBalance\UBalance.Library\bin\Release\UBalance.Library.pdb
+C:\Users\anthony\Desktop\UBalance\UBalance.Library\obj\Release\UBalance.Library.dll
+C:\Users\anthony\Desktop\UBalance\UBalance.Library\obj\Release\UBalance.Library.pdb
+C:\Users\anthony\Desktop\UBalance\NewBalance.Library\bin\Release\NewBalance.Library.dll
+C:\Users\anthony\Desktop\UBalance\NewBalance.Library\bin\Release\NewBalance.Library.pdb
+C:\Users\anthony\Desktop\UBalance\NewBalance.Library\obj\Release\NewBalance.Library.dll
+C:\Users\anthony\Desktop\UBalance\NewBalance.Library\obj\Release\NewBalance.Library.pdb
+C:\Users\anthony\Desktop\UBalance\NewBalance.Library\obj\Release\NewBalance.Library.csprojResolveAssemblyReference.cache
