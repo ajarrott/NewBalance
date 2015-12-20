@@ -1,7 +1,0 @@
-C:\Users\anthony\Desktop\UBalance\UBalance.Tests\bin\Release\UBalance.Tests.dll
-C:\Users\anthony\Desktop\UBalance\UBalance.Tests\bin\Release\UBalance.Tests.pdb
-C:\Users\anthony\Desktop\UBalance\UBalance.Tests\bin\Release\UBalance.Library.dll
-C:\Users\anthony\Desktop\UBalance\UBalance.Tests\bin\Release\UBalance.Library.pdb
-C:\Users\anthony\Desktop\UBalance\UBalance.Tests\obj\Release\UBalance.Tests.csprojResolveAssemblyReference.cache
-C:\Users\anthony\Desktop\UBalance\UBalance.Tests\obj\Release\UBalance.Tests.dll
-C:\Users\anthony\Desktop\UBalance\UBalance.Tests\obj\Release\UBalance.Tests.pdb
