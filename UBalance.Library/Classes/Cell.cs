@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace UBalance.Library.Classes
+namespace NewBalance.Library.Classes
 {
     // Cell for when one is defined as name[optionValue]
     // All of these cells will have the same row/column value, but not the same internal value

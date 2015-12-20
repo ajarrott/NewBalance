@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UBalance.Library.Classes
+namespace NewBalance.Library.Classes
 {
     public class ColorReader
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace UBalance.Library.Classes
+namespace NewBalance.Library.Classes
 {
     public class Calculation
     {

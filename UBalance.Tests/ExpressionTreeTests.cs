@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UBalance.Library.Classes;
-namespace UBalance.Tests
+using NewBalance.Library.Classes;
+namespace NewBalance.Tests
 {
     [TestClass]
-    public class UBalanceTesting
+    public class NewBalanceTesting
     {
         [TestMethod]
         public void NoParenthesis()

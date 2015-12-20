@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Windows.Forms;
-using UBalance.Library.Classes;
-using UBalance.Library.Events;
+using NewBalance.Library.Classes;
+using NewBalance.Library.Events;
 using NewBalance.Properties;
 
-namespace UBalance
+namespace NewBalance
 {
     public partial class Preferences : Form
     {
@@ -170,7 +170,7 @@ namespace UBalance
             Path = f.SelectedPath;
             defaultPathTextBox.Text = f.SelectedPath;
 
-            UBalance.App.UpdatePath(f.SelectedPath);
+            NewBalance.App.UpdatePath(f.SelectedPath);
             
             Show();
         }

@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UBalance.Library.Classes;
+using NewBalance.Library.Classes;
 
-namespace UBalance.Library.AppLoading
+namespace NewBalance.Library.AppLoading
 {
     public class AppLoader
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace UBalance
+namespace NewBalance
 {
     partial class Preferences
     {

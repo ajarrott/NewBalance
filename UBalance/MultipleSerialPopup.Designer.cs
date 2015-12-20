@@ -1,4 +1,4 @@
-﻿namespace UBalance
+﻿namespace NewBalance
 {
     partial class MultipleSerialPopup
     {
@@ -112,7 +112,7 @@
             this.Controls.Add(this.balanceLabel);
             this.Controls.Add(this.label1);
             this.Name = "MultipleSerialPopup";
-            this.Text = "UBalance";
+            this.Text = "NewBalance";
             this.ResumeLayout(false);
             this.PerformLayout();
 

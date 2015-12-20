@@ -6,9 +6,9 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using UBalance.Library.Classes;
+using NewBalance.Library.Classes;
 
-namespace UBalance.Library.AppLoading
+namespace NewBalance.Library.AppLoading
 {
     public class AppParser
     {

@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace UBalance
+namespace NewBalance
 {
     public partial class MultipleSerialPopup : Form
     {

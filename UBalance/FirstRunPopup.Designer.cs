@@ -1,4 +1,4 @@
-﻿namespace UBalance
+﻿namespace NewBalance
 {
     partial class FirstRunPopup
     {

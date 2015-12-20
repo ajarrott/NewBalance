@@ -1,4 +1,4 @@
-﻿namespace UBalance
+﻿namespace NewBalance
 {
     partial class SaveCheck
     {
@@ -73,7 +73,7 @@
             this.Controls.Add(this.saveFileText);
             this.Controls.Add(this.button1);
             this.Name = "SaveCheck";
-            this.Text = "UBalance";
+            this.Text = "NewBalance";
             this.ResumeLayout(false);
             this.PerformLayout();
 

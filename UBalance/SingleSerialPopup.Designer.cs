@@ -1,4 +1,4 @@
-﻿namespace UBalance
+﻿namespace NewBalance
 {
     partial class SingleSerialPopup
     {
@@ -87,7 +87,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "SingleSerialPopup";
-            this.Text = "UBalance";
+            this.Text = "NewBalance";
             this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();

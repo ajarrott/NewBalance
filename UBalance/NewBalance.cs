@@ -11,14 +11,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewBalance;
-using UBalance.Library.AppLoading;
-using UBalance.Library.Classes;
-using UBalance.Library.Events;
+using NewBalance.Library.AppLoading;
+using NewBalance.Library.Classes;
+using NewBalance.Library.Events;
 using NewBalance.Properties;
 
-namespace UBalance
+namespace NewBalance
 {
-    public partial class UBalance : Form
+    public partial class NewBalance : Form
     {
         public static AppLoader App;
         public static FolderBrowserDialog FolderBroswer = new FolderBrowserDialog();
@@ -36,7 +36,7 @@ namespace UBalance
         public ContextMenuStrip RightClickMenu;
 
         // Base Constructor for the program
-        public UBalance()
+        public NewBalance()
         {
             InitializeComponent();
 
@@ -150,50 +150,50 @@ namespace UBalance
 
             if (ViewData != null)
             {
-                for (int j = 0; j < UBalanceDataGridView.RowCount; j++)
+                for (int j = 0; j < NewBalanceDataGridView.RowCount; j++)
                 {
-                    for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+                    for (int i = 0; i < NewBalanceDataGridView.ColumnCount; i++)
                     {
                         
                         if (ViewData.GetCellType(0, i) == CellType.Multiple)
                         {
                             MultipleCell mc = ViewData.GetCell(0, i) as MultipleCell;
                             mc.NotifyHeaderNameChange -= mc_NotifyHeaderNameChange;
-                            mc.CellValueChanged -= UBalance_CellValueChanged;
-                            mc.NotifyDependents -= UBalance_NotifyDependents;
+                            mc.CellValueChanged -= NewBalance_CellValueChanged;
+                            mc.NotifyDependents -= NewBalance_NotifyDependents;
 
                             foreach (var cell in mc.CellOptions)
                             {
-                                cell.CellValueChanged -= UBalance_CellValueChanged;
-                                cell.NotifyDependents -= UBalance_NotifyDependents;
+                                cell.CellValueChanged -= NewBalance_CellValueChanged;
+                                cell.NotifyDependents -= NewBalance_NotifyDependents;
                             }
                         }
                         else
                         {
                             Cell c = ViewData.GetCell(0, i);
-                            c.CellValueChanged -= UBalance_CellValueChanged;
-                            c.NotifyDependents -= UBalance_NotifyDependents;
+                            c.CellValueChanged -= NewBalance_CellValueChanged;
+                            c.NotifyDependents -= NewBalance_NotifyDependents;
                         }
                     }
                 }
 
                 // unfreeze any old frozen columns
-                UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(0)].Frozen = false;
+                NewBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(0)].Frozen = false;
 
                 // make sure the actual index and viewindex are the same
-                for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+                for (int i = 0; i < NewBalanceDataGridView.ColumnCount; i++)
                 {
-                    UBalanceDataGridView.Columns[i].DisplayIndex = i;
+                    NewBalanceDataGridView.Columns[i].DisplayIndex = i;
                 }
             }
 
-            UBalanceDataGridView.Rows.Clear();
+            NewBalanceDataGridView.Rows.Clear();
    
-            ViewData = new GridData(AppParse.ReturnCellsInRow(UBalanceDataGridView.RowCount), nameOfApp);
+            ViewData = new GridData(AppParse.ReturnCellsInRow(NewBalanceDataGridView.RowCount), nameOfApp);
 
             // update right click context menu if multiple cells exist
             RightClickMenu = new ContextMenuStrip();
-            UBalanceDataGridView.ContextMenuStrip = RightClickMenu;
+            NewBalanceDataGridView.ContextMenuStrip = RightClickMenu;
 
             if (ViewData.HasMultipleCells())
             {
@@ -218,91 +218,91 @@ namespace UBalance
 
             int count = columnHeaders.Count;
 
-            UBalanceDataGridView.ColumnCount = count;
-            UBalanceDataGridView.CellBeginEdit += UBalanceDataGridView_CellBeginEdit;
-            UBalanceDataGridView.CellEndEdit += UBalanceDataGridView_CellEndEdit;
+            NewBalanceDataGridView.ColumnCount = count;
+            NewBalanceDataGridView.CellBeginEdit += NewBalanceDataGridView_CellBeginEdit;
+            NewBalanceDataGridView.CellEndEdit += NewBalanceDataGridView_CellEndEdit;
 
-            UBalanceDataGridView.Rows.Add();
+            NewBalanceDataGridView.Rows.Add();
 
             // update initialized values from constructor
-            for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+            for (int i = 0; i < NewBalanceDataGridView.ColumnCount; i++)
             {
-                UBalanceDataGridView.Rows[0].Cells[i].Value = ViewData.GetCell(0, i).Value.ToString();
+                NewBalanceDataGridView.Rows[0].Cells[i].Value = ViewData.GetCell(0, i).Value.ToString();
             }
 
             for (int i = 0; i < count; i++)
             {
-                UBalanceDataGridView.Columns[i].HeaderText = columnHeaders[i];
+                NewBalanceDataGridView.Columns[i].HeaderText = columnHeaders[i];
             }
 
-            for (int i = 0; i < UBalanceDataGridView.Rows[0].Cells.Count; i++)
+            for (int i = 0; i < NewBalanceDataGridView.Rows[0].Cells.Count; i++)
             {
                 if (ViewData.GetCellType(0, i) == CellType.Multiple)
                 {
                     MultipleCell mc = ViewData.GetCell(0, i) as MultipleCell;
                     mc.NotifyHeaderNameChange += mc_NotifyHeaderNameChange;
-                    mc.CellValueChanged += UBalance_CellValueChanged;
-                    mc.NotifyDependents += UBalance_NotifyDependents;
+                    mc.CellValueChanged += NewBalance_CellValueChanged;
+                    mc.NotifyDependents += NewBalance_NotifyDependents;
 
                     foreach (var cell in mc.CellOptions)
                     {
-                        cell.CellValueChanged += UBalance_CellValueChanged;
-                        cell.NotifyDependents += UBalance_NotifyDependents;
+                        cell.CellValueChanged += NewBalance_CellValueChanged;
+                        cell.NotifyDependents += NewBalance_NotifyDependents;
                     }
                 }
                 else
                 {
                     Cell c = ViewData.GetCell(0, i);
-                    c.CellValueChanged += UBalance_CellValueChanged;
-                    c.NotifyDependents += UBalance_NotifyDependents;
+                    c.CellValueChanged += NewBalance_CellValueChanged;
+                    c.NotifyDependents += NewBalance_NotifyDependents;
                 }
 
-                UBalanceDataGridView.Columns[i].Resizable = DataGridViewTriState.True;
+                NewBalanceDataGridView.Columns[i].Resizable = DataGridViewTriState.True;
             }
 
             // make sure not to allow sorting
-            foreach (DataGridViewColumn col in UBalanceDataGridView.Columns)
+            foreach (DataGridViewColumn col in NewBalanceDataGridView.Columns)
             {
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
-            UBalanceDataGridView.SelectionChanged += UBalanceDataGridView_SelectionChanged;
+            NewBalanceDataGridView.SelectionChanged += NewBalanceDataGridView_SelectionChanged;
         }
 
         //Add Row to Logic and GUI
         void AddRowToDataAndView()
         {
-            int rowNumber = UBalanceDataGridView.RowCount; // will be correct row index when we add a row
+            int rowNumber = NewBalanceDataGridView.RowCount; // will be correct row index when we add a row
 
-            UBalanceDataGridView.Rows.Add();
+            NewBalanceDataGridView.Rows.Add();
             ViewData.AddRow();
 
             // prevent a bunch of event call updates and just update manually here
-            for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+            for (int i = 0; i < NewBalanceDataGridView.ColumnCount; i++)
             {
-                UBalanceDataGridView.Rows[rowNumber].Cells[i].Value = ViewData.GetCell(rowNumber, i).Value;
+                NewBalanceDataGridView.Rows[rowNumber].Cells[i].Value = ViewData.GetCell(rowNumber, i).Value;
             }
 
-            for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+            for (int i = 0; i < NewBalanceDataGridView.ColumnCount; i++)
             {
                 if (ViewData.GetCellType(rowNumber, i) == CellType.Multiple)
                 {
                     MultipleCell mc = ViewData.GetCell(rowNumber, i) as MultipleCell;
                     mc.NotifyHeaderNameChange += mc_NotifyHeaderNameChange;
-                    mc.CellValueChanged += UBalance_CellValueChanged;
-                    mc.NotifyDependents += UBalance_NotifyDependents;
+                    mc.CellValueChanged += NewBalance_CellValueChanged;
+                    mc.NotifyDependents += NewBalance_NotifyDependents;
 
                     foreach (var cell in mc.CellOptions)
                     {
-                        cell.CellValueChanged += UBalance_CellValueChanged;
-                        cell.NotifyDependents += UBalance_NotifyDependents;
+                        cell.CellValueChanged += NewBalance_CellValueChanged;
+                        cell.NotifyDependents += NewBalance_NotifyDependents;
                     }
                 }
                 else
                 {
                     Cell c = ViewData.GetCell(rowNumber, i);
-                    c.CellValueChanged += UBalance_CellValueChanged;
-                    c.NotifyDependents += UBalance_NotifyDependents;
+                    c.CellValueChanged += NewBalance_CellValueChanged;
+                    c.NotifyDependents += NewBalance_NotifyDependents;
                 }
             }
         }
@@ -352,7 +352,7 @@ namespace UBalance
                     return true;
                 }
 
-                ViewData.GetCell(UBalanceDataGridView.CurrentCell.RowIndex, UBalanceDataGridView.CurrentCell.ColumnIndex)
+                ViewData.GetCell(NewBalanceDataGridView.CurrentCell.RowIndex, NewBalanceDataGridView.CurrentCell.ColumnIndex)
                     .Value = Balance.GetBalanceValue();
 
                 return true;
@@ -366,12 +366,12 @@ namespace UBalance
         #region Find Next Cell
         private void NextCell()
         {
-            int maxCols = UBalanceDataGridView.ColumnCount;
+            int maxCols = NewBalanceDataGridView.ColumnCount;
             // don't change on mouse press
             if (MouseButtons != 0) return;
 
 
-            if (_cellBeginEdit != null && UBalanceDataGridView.CurrentCell != null)
+            if (_cellBeginEdit != null && NewBalanceDataGridView.CurrentCell != null)
             {
                 // need to select next cell based on logic implemented lower
                 int nRow, nColumn;
@@ -380,11 +380,11 @@ namespace UBalance
 
                 ViewData.NextCell(c, out nRow, out nColumn);
 
-                if (nRow == UBalanceDataGridView.RowCount)
+                if (nRow == NewBalanceDataGridView.RowCount)
                 {
                     AddRowToDataAndView();
                 }
-                UBalanceDataGridView.CurrentCell = UBalanceDataGridView.Rows[nRow].Cells[nColumn];
+                NewBalanceDataGridView.CurrentCell = NewBalanceDataGridView.Rows[nRow].Cells[nColumn];
             }
             _cellBeginEdit = null;
         }
@@ -392,7 +392,7 @@ namespace UBalance
 
         #region GUI Event Handlers
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void NewBalance_Load(object sender, EventArgs e)
         {
             int numConnectedPorts = SerialPort.GetPortNames().ToList().Count;
 
@@ -414,7 +414,7 @@ namespace UBalance
 
             LoadAndUpdateAppFiles();
 
-            UBalanceDataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            NewBalanceDataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
         }
 
         //Load File Event Handler
@@ -426,7 +426,7 @@ namespace UBalance
                 RestoreDirectory = true
             };
 
-            if (UBalanceDataGridView.RowCount > 0)
+            if (NewBalanceDataGridView.RowCount > 0)
             {
                 SaveCheck sc = new SaveCheck();
                 sc.LabelCorrectlyFromLoad();
@@ -522,7 +522,7 @@ namespace UBalance
 
             if (t == null) return;
 
-            if (UBalanceDataGridView.RowCount > 0)
+            if (NewBalanceDataGridView.RowCount > 0)
             {
                 SaveCheck sc = new SaveCheck();
                 sc.LabelCorrectlyFromLoad();
@@ -535,7 +535,7 @@ namespace UBalance
 
             //find item in app
             string nameOfApp = t.Text;
-            Text = "UBalance - " + t.Text;
+            Text = "NewBalance - " + t.Text;
 
             EmptyGridView(nameOfApp);
 
@@ -589,7 +589,7 @@ namespace UBalance
             DataGridViewCell cell = null;
             try
             {
-                cell = UBalanceDataGridView.SelectedCells[0];
+                cell = NewBalanceDataGridView.SelectedCells[0];
             }
             catch (Exception)
             {
@@ -659,15 +659,7 @@ namespace UBalance
             // make sure we have the multiple cell selected
             if (mc == null) return;
 
-            // change selected item to the CellOption that contains the correct name
-            /*for (int i = 0; i < UBalanceDataGridView.RowCount; i++)
-            {
-                mc = ViewData.GetCell(i, mc.ColumnIndex) as MultipleCell;
-                if (mc == null) continue;
-                mc.ChangeOption(t.ToString());
-            }*/
-
-            int rowIndex = UBalanceDataGridView.CurrentCell.RowIndex;
+            int rowIndex = NewBalanceDataGridView.CurrentCell.RowIndex;
 
             mc = ViewData.GetCell(rowIndex, mc.ColumnIndex) as MultipleCell;
             if (mc == null) return;
@@ -680,9 +672,9 @@ namespace UBalance
         private DataGridViewCell _cellBeginEdit;
 
         // Finished Editing Cell Event Handler
-        void UBalanceDataGridView_CellEndEdit(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        void NewBalanceDataGridView_CellEndEdit(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
-            _cellBeginEdit = UBalanceDataGridView[e.ColumnIndex, e.RowIndex];
+            _cellBeginEdit = NewBalanceDataGridView[e.ColumnIndex, e.RowIndex];
             // arbitrary number
             bool changed;
             double? d = null;
@@ -763,36 +755,24 @@ namespace UBalance
 
         private string oldCellValue;
         // Begin Editing Cell Event handler
-        void UBalanceDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        void NewBalanceDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            _cellBeginEdit = UBalanceDataGridView.CurrentCell;
-            DataGridViewCell d = UBalanceDataGridView[e.ColumnIndex, e.RowIndex];
+            _cellBeginEdit = NewBalanceDataGridView.CurrentCell;
+            DataGridViewCell d = NewBalanceDataGridView[e.ColumnIndex, e.RowIndex];
             oldCellValue = d.Value == null ? null : d.Value.ToString();
         }
 
-        void UBalanceDataGridView_SelectionChanged(object sender, EventArgs e)
+        void NewBalanceDataGridView_SelectionChanged(object sender, EventArgs e)
         {
             if (ViewData.HasMultipleCells())
             {
-                mc_NotifyHeaderNameChange(ViewData.GetCell(UBalanceDataGridView.CurrentCell.RowIndex, UBalanceDataGridView.CurrentCell.ColumnIndex), new EventArgs());
+                mc_NotifyHeaderNameChange(ViewData.GetCell(NewBalanceDataGridView.CurrentCell.RowIndex, NewBalanceDataGridView.CurrentCell.ColumnIndex), new EventArgs());
             }
         }
 
         // Multiple Cell Change Header Name Event Handler
         void mc_NotifyHeaderNameChange(object sender, EventArgs e)
         {
-            ////MultipleCell mc = sender as MultipleCell;
-
-            ////if (mc == null) return;
-            //// don't stack overflow on recursive calls that happen below
-            //if (UBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText == mc.SelectedCell.Label) return;
-
-            //UBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText = mc.SelectedCell.Label;
-
-            //// change the selected cells for every column to the correct Selected cell
-            /// 
-            /// 
-
             // Find the multiple cell column label for the current row
             // need to update to use multiple multiple cells
             Cell c = sender as Cell;
@@ -801,7 +781,7 @@ namespace UBalance
 
             MultipleCell mc = null;
             // find multiple cell in column
-            for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+            for (int i = 0; i < NewBalanceDataGridView.ColumnCount; i++)
             {
                 if (ViewData.GetCell(c.RowIndex, i) is MultipleCell)
                 {
@@ -813,14 +793,14 @@ namespace UBalance
             if (mc == null) return;
 
             // don't update if the row is the same
-            if (UBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText == mc.SelectedCell.Label ) return;
+            if (NewBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText == mc.SelectedCell.Label ) return;
 
             // got here, update the Label
-            UBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText = mc.SelectedCell.Label;
+            NewBalanceDataGridView.Columns[mc.ColumnIndex].HeaderText = mc.SelectedCell.Label;
         }
 
         // Notify Mirror Cell Dependents Event Handler
-        void UBalance_NotifyDependents(object sender, EventArgs e)
+        void NewBalance_NotifyDependents(object sender, EventArgs e)
         {
             //Update dependents value
             Cell c = sender as Cell;
@@ -852,7 +832,7 @@ namespace UBalance
             }
 
             // Cell's will only be dependent within the current row
-            for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+            for (int i = 0; i < NewBalanceDataGridView.ColumnCount; i++)
             {
                 MCell mc = ViewData.GetCell(c.RowIndex, i) as MCell;
                 if (mc == null) continue;
@@ -865,7 +845,7 @@ namespace UBalance
         }
 
         // Logic Value Changed Event Handler
-        void UBalance_CellValueChanged(object sender, PropertyChangedEventArgs e)
+        void NewBalance_CellValueChanged(object sender, PropertyChangedEventArgs e)
         {
             Cell c = sender as Cell;
 
@@ -877,17 +857,17 @@ namespace UBalance
 
                     if (k.KValue != String.Empty)
                     {
-                        UBalanceDataGridView.Rows[k.RowIndex].Cells[k.ColumnIndex].Value = k.KValue;
+                        NewBalanceDataGridView.Rows[k.RowIndex].Cells[k.ColumnIndex].Value = k.KValue;
                     }
                     else
                     {
-                        UBalanceDataGridView.Rows[k.RowIndex].Cells[k.ColumnIndex].Value = k.Value.ToString();
+                        NewBalanceDataGridView.Rows[k.RowIndex].Cells[k.ColumnIndex].Value = k.Value.ToString();
                     }
                 }
                 else if (sender is MCell)
                 {
                     MCell m = sender as MCell;
-                    UBalanceDataGridView.Rows[m.RowIndex].Cells[m.ColumnIndex].Value = m.MValue;
+                    NewBalanceDataGridView.Rows[m.RowIndex].Cells[m.ColumnIndex].Value = m.MValue;
                 }
 
             }
@@ -900,22 +880,22 @@ namespace UBalance
                         KCell kc = c as KCell;
 
                         if (kc.KValue != String.Empty)
-                            UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = kc.KValue;
+                            NewBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = kc.KValue;
                         else
-                            UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = null;
+                            NewBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = null;
                     }
                     else if (c is MultipleCell)
                     {
                         MultipleCell mc = c as MultipleCell;
 
                         if (mc.SelectedValue != null)
-                            UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = mc.SelectedValue;
+                            NewBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = mc.SelectedValue;
                         else
-                            UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = null;
+                            NewBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = null;
                     }
                     else
                     {
-                        UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = null;
+                        NewBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = null;
                     }
                 }
                 else
@@ -924,13 +904,13 @@ namespace UBalance
                     {
                         // need to check if there is a calculation with sender as a dependency
                         ViewData.CheckAndUpdateDependency(c);
-                        UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = c.Value.ToString();
+                        NewBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value = c.Value.ToString();
 
                         if (ViewData.HasMultipleCells())
                         {
                             MultipleCell mc = null;
 
-                            for (int i = 0; i < UBalanceDataGridView.ColumnCount; i++)
+                            for (int i = 0; i < NewBalanceDataGridView.ColumnCount; i++)
                             {
                                 if (ViewData.GetCellType(c.RowIndex, i) == CellType.Multiple)
                                 {
@@ -945,7 +925,7 @@ namespace UBalance
 
                             if (mc.ColumnIndex == c.ColumnIndex && mc.RowIndex == c.RowIndex)
                             {
-                                UBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value =
+                                NewBalanceDataGridView.Rows[c.RowIndex].Cells[c.ColumnIndex].Value =
                                     mc.SelectedValue.ToString();    
                             }
                         }
@@ -967,7 +947,7 @@ namespace UBalance
         private DataGridViewColumn FindColumnByDisplayIndex(int displayIndex)
         {
             return
-                (from DataGridViewColumn col in UBalanceDataGridView.Columns
+                (from DataGridViewColumn col in NewBalanceDataGridView.Columns
                  where col.DisplayIndex == displayIndex
                  select col).SingleOrDefault();
         }
@@ -980,7 +960,7 @@ namespace UBalance
         private int FindDisplayIndexColumnIndex(int displayIndex)
         {
             return
-                (from DataGridViewColumn col in UBalanceDataGridView.Columns
+                (from DataGridViewColumn col in NewBalanceDataGridView.Columns
                  where col.DisplayIndex == displayIndex
                  select col.Index).SingleOrDefault();
         }
@@ -989,7 +969,7 @@ namespace UBalance
         {
             int endIndex = 0;
             // find frozen column by DISPLAY index
-            for (int i = 0; i < UBalanceDataGridView.Columns.Count; i++)
+            for (int i = 0; i < NewBalanceDataGridView.Columns.Count; i++)
             {
                 DataGridViewColumn result = FindColumnByDisplayIndex(i);
                 if (result == null || !result.Frozen) break;
@@ -1006,18 +986,18 @@ namespace UBalance
         private void FreezeUnfreezeColumn()
         {
             // ColumnIndex gives you the actual column index, not the display index
-            int actualColumnIndex = UBalanceDataGridView.CurrentCell.ColumnIndex;
+            int actualColumnIndex = NewBalanceDataGridView.CurrentCell.ColumnIndex;
 
             // if the column is already frozen
-            if (UBalanceDataGridView.Columns[actualColumnIndex].Frozen)
+            if (NewBalanceDataGridView.Columns[actualColumnIndex].Frozen)
             {
                 UnfreezeColumn();
             }
             // adding a frozen column, append it to the end of the frozen column list
             else
             {
-                UBalanceDataGridView.Columns[actualColumnIndex].DisplayIndex = FindNextFrozenColumnIndex();
-                UBalanceDataGridView.Columns[actualColumnIndex].Frozen = true;
+                NewBalanceDataGridView.Columns[actualColumnIndex].DisplayIndex = FindNextFrozenColumnIndex();
+                NewBalanceDataGridView.Columns[actualColumnIndex].Frozen = true;
             }
         }
 
@@ -1037,15 +1017,11 @@ namespace UBalance
             // need to find which index we are unfreezing
             // | F | ... | F | X | F | ... | F | U | ...  Where F is a Frozen Column and X is the Column to unfreeze and U are the unfrozen columns
 
-            int actualIndex = UBalanceDataGridView.CurrentCell.ColumnIndex;
-            int displayIndex = UBalanceDataGridView.Columns[actualIndex].DisplayIndex;
+            int actualIndex = NewBalanceDataGridView.CurrentCell.ColumnIndex;
+            int displayIndex = NewBalanceDataGridView.Columns[actualIndex].DisplayIndex;
 
             //Unfreeze all rows (
-            UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(0)].Frozen = false;
-            /*foreach (DataGridViewColumn c in UBalanceDataGridView.Columns)
-            {
-                c.Frozen = false;
-            }*/
+            NewBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(0)].Frozen = false;
 
             // new index the relative index goes to is relativeIndex + numColumns - 1
             // need to set new location of frozen columns to numColumns - 1
@@ -1054,51 +1030,51 @@ namespace UBalance
             // | F | ... | F | X | U | or | F | ... | F | U | X | where F is frozen U is the first unfrozen item, and X is where the cell will be inserted
 
             // first and foremost make sure we do not go past the amount of items in the DGV
-            if (UBalanceDataGridView.ColumnCount == numFrozenColumns)
+            if (NewBalanceDataGridView.ColumnCount == numFrozenColumns)
             {
                 // e.g 3 cols, 0 based index, move item to 2, set frozen to 1
-                UBalanceDataGridView.Columns[actualIndex].DisplayIndex = numFrozenColumns - 1;
+                NewBalanceDataGridView.Columns[actualIndex].DisplayIndex = numFrozenColumns - 1;
                 // refreeze columns one less than the number of frozen columns
-                UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
+                NewBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
             }
             // Insert right after frozen items, need to base off actual index
-            else if (UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns)].Index > actualIndex)
+            else if (NewBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns)].Index > actualIndex)
             {
-                UBalanceDataGridView.Columns[actualIndex].DisplayIndex = numFrozenColumns - 1;
+                NewBalanceDataGridView.Columns[actualIndex].DisplayIndex = numFrozenColumns - 1;
                 // refreeze columns one less than the number of frozen columns
-                UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
+                NewBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
             }
             // Need to insert somewhere after numFrozenColumns
             else
             {
                 int newIndex = numFrozenColumns;
-                for (int i = numFrozenColumns; i <= UBalanceDataGridView.ColumnCount; i++)
+                for (int i = numFrozenColumns; i <= NewBalanceDataGridView.ColumnCount; i++)
                 {
                     // insert at very end of the list case
-                    if (i == UBalanceDataGridView.ColumnCount)
+                    if (i == NewBalanceDataGridView.ColumnCount)
                     {
-                        UBalanceDataGridView.Columns[actualIndex].DisplayIndex = newIndex - 1;
+                        NewBalanceDataGridView.Columns[actualIndex].DisplayIndex = newIndex - 1;
                         if (numFrozenColumns > 1)
                         {
-                            UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
+                            NewBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
                         }
 
                         break;
                     }
 
                     // need to insert after the current column we're looking at
-                    if (UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(i)].Index < actualIndex)
+                    if (NewBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(i)].Index < actualIndex)
                     {
                         newIndex++;
                         continue;
                     }
 
                     // otherwise freeze set the display to the new index and refreze the columns
-                    UBalanceDataGridView.Columns[actualIndex].DisplayIndex = newIndex - 1;
+                    NewBalanceDataGridView.Columns[actualIndex].DisplayIndex = newIndex - 1;
                     // refreeze columns one less than the number of frozen columns
                     if (numFrozenColumns > 1)
                     {
-                        UBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
+                        NewBalanceDataGridView.Columns[FindDisplayIndexColumnIndex(numFrozenColumns - 2)].Frozen = true;
                     }
                     break;
                 }

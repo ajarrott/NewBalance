@@ -49,7 +49,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Ku6ZDoFcWavTcNbfwbIy/iX/dcDEBNja8beTU1UuC6k=</dsig:DigestValue>
+        <dsig:DigestValue>sPBvKV0dKykogyyCiyGtHMSnfO4gf+0389G8D9V4ShQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,17 +61,17 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>/s/H+ke/RhgOE3w8Ll6RpGh1K3dJpsV+5ZLphVUxNLI=</dsig:DigestValue>
+        <dsig:DigestValue>xvBCVjNBfDhTNFPhG7CqbqmMAkmPhl87R23K894IbhM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="NewBalance.exe.config" size="1757">
+  <file name="NewBalance.exe.config" size="1763">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>lsZaD+p2smSQlh8pHwQBoW9XU4szwYyjm/qucQoUKQ4=</dsig:DigestValue>
+      <dsig:DigestValue>FSUqdZ/LR47Y5dm8zwaj8djizm0zc20b8aTeEWKMSao=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

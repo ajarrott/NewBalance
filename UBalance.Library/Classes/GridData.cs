@@ -5,9 +5,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using UBalance.Library.Events;
+using NewBalance.Library.Events;
 
-namespace UBalance.Library.Classes
+namespace NewBalance.Library.Classes
 {
     public class GridData
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using UBalance.Library.Classes;
+using NewBalance.Library.Classes;
 
-namespace UBalance
+namespace NewBalance
 {
-    partial class UBalance
+    partial class NewBalance
     {
         /// <summary>
         /// Required designer variable.
@@ -41,11 +41,11 @@ namespace UBalance
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.appsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.UBalanceDataGridView = new System.Windows.Forms.DataGridView();
+            this.NewBalanceDataGridView = new System.Windows.Forms.DataGridView();
             this.addRowButton = new System.Windows.Forms.Button();
             this.readBalanceButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.UBalanceDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NewBalanceDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -97,14 +97,14 @@ namespace UBalance
             this.preferencesToolStripMenuItem.Text = "Preferences";
             this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
-            // UBalanceDataGridView
+            // NewBalanceDataGridView
             // 
-            this.UBalanceDataGridView.AllowUserToAddRows = false;
-            this.UBalanceDataGridView.AllowUserToDeleteRows = false;
-            this.UBalanceDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.NewBalanceDataGridView.AllowUserToAddRows = false;
+            this.NewBalanceDataGridView.AllowUserToDeleteRows = false;
+            this.NewBalanceDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.UBalanceDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.NewBalanceDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Blue;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
@@ -112,8 +112,8 @@ namespace UBalance
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.UBalanceDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.UBalanceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.NewBalanceDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.NewBalanceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.Blue;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
@@ -121,14 +121,14 @@ namespace UBalance
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.UBalanceDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            this.UBalanceDataGridView.Location = new System.Drawing.Point(13, 28);
-            this.UBalanceDataGridView.Name = "UBalanceDataGridView";
-            this.UBalanceDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.UBalanceDataGridView.RowTemplate.Height = 38;
-            this.UBalanceDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.UBalanceDataGridView.Size = new System.Drawing.Size(524, 229);
-            this.UBalanceDataGridView.TabIndex = 1;
+            this.NewBalanceDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            this.NewBalanceDataGridView.Location = new System.Drawing.Point(13, 28);
+            this.NewBalanceDataGridView.Name = "NewBalanceDataGridView";
+            this.NewBalanceDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.NewBalanceDataGridView.RowTemplate.Height = 38;
+            this.NewBalanceDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.NewBalanceDataGridView.Size = new System.Drawing.Size(524, 229);
+            this.NewBalanceDataGridView.TabIndex = 1;
             // 
             // addRowButton
             // 
@@ -152,23 +152,23 @@ namespace UBalance
             this.readBalanceButton.UseVisualStyleBackColor = true;
             this.readBalanceButton.Click += new System.EventHandler(this.readBalanceButton_Click);
             // 
-            // UBalance
+            // NewBalance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(549, 298);
             this.Controls.Add(this.readBalanceButton);
             this.Controls.Add(this.addRowButton);
-            this.Controls.Add(this.UBalanceDataGridView);
+            this.Controls.Add(this.NewBalanceDataGridView);
             this.Controls.Add(this.menuStrip1);
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "UBalance";
+            this.Name = "NewBalance";
             this.Text = "NewBalance";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.NewBalance_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.UBalanceDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NewBalanceDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,7 +180,7 @@ namespace UBalance
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem appsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
-        private System.Windows.Forms.DataGridView UBalanceDataGridView;
+        private System.Windows.Forms.DataGridView NewBalanceDataGridView;
         private System.Windows.Forms.Button addRowButton;
         private Button readBalanceButton;
         private ToolStripMenuItem saveToolStripMenuItem;
