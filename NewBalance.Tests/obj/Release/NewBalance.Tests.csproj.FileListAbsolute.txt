@@ -12,3 +12,10 @@ C:\Users\anthony\Desktop\UBalance\NewBalance.Tests\bin\Release\NewBalance.Librar
 C:\Users\anthony\Desktop\UBalance\NewBalance.Tests\obj\Release\NewBalance.Tests.csprojResolveAssemblyReference.cache
 C:\Users\anthony\Desktop\UBalance\NewBalance.Tests\obj\Release\NewBalance.Tests.dll
 C:\Users\anthony\Desktop\UBalance\NewBalance.Tests\obj\Release\NewBalance.Tests.pdb
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Release\NewBalance.Tests.dll
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Release\NewBalance.Tests.pdb
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Release\NewBalance.Library.dll
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Release\NewBalance.Library.pdb
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\obj\Release\NewBalance.Tests.csprojResolveAssemblyReference.cache
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\obj\Release\NewBalance.Tests.dll
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\obj\Release\NewBalance.Tests.pdb
