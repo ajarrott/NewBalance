@@ -21,18 +21,18 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_40980D7773ED6A04460476FEE57EB42F"
-        "OwnerKey" = "8:_5DDBDCF4566846B3ABEAFE20FFCCCDE1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_5DDBDCF4566846B3ABEAFE20FFCCCDE1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_D7E52C2C384BC812FF269FEBE060AE2D"
+        "OwnerKey" = "8:_5DDBDCF4566846B3ABEAFE20FFCCCDE1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_5DDBDCF4566846B3ABEAFE20FFCCCDE1"
         "MsmSig" = "8:_UNDEFINED"
@@ -40,7 +40,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_40980D7773ED6A04460476FEE57EB42F"
+        "OwnerKey" = "8:_D7E52C2C384BC812FF269FEBE060AE2D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -158,14 +158,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_40980D7773ED6A04460476FEE57EB42F"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D7E52C2C384BC812FF269FEBE060AE2D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:NewBalance.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_40980D7773ED6A04460476FEE57EB42F"
+                    "_D7E52C2C384BC812FF269FEBE060AE2D"
                     {
                     "Name" = "8:NewBalance.Library.dll"
                     "Attributes" = "3:512"
@@ -245,15 +245,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:NewBalance"
-        "ProductCode" = "8:{CBD619F3-5BD1-4D74-B37F-BD1BA0F68448}"
-        "PackageCode" = "8:{DC2B355C-3F46-4949-8B89-74BD16DF8305}"
+        "ProductCode" = "8:{F0986A87-FDFE-4EE2-B741-99ECA7249F9F}"
+        "PackageCode" = "8:{A5CFC72F-7994-4B6F-A897-BA88700BD2BE}"
         "UpgradeCode" = "8:{C315BB53-6779-48C9-B58D-8E684080BCF2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.1"
+        "InstallAllUsers" = "11:TRUE"
+        "ProductVersion" = "8:1.0.5"
         "Manufacturer" = "8:Washington State University"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

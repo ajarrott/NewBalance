@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -24,12 +25,13 @@ namespace NewBalance
         public static FolderBrowserDialog FolderBroswer = new FolderBrowserDialog();
         public GridData ViewData;
         public BalanceReader Balance;
-        public ColorReader Color;
+        public ColorMeter Color;
         public AppParser AppParse;
-        public bool RecentlySaved;
+        public bool RecentlySaved, showConfirmSave = true;
+        private string _currentOpenFile;
 
-        public string BalancePort = String.Empty;
-        public string ColorPort = String.Empty;
+        public string BalancePort = string.Empty;
+        public string ColorPort = string.Empty;
 
         public SerialType SingleSerialType;
 
@@ -38,6 +40,10 @@ namespace NewBalance
         // Base Constructor for the program
         public NewBalance()
         {
+#if DEBUG
+            //ApplicationSettingsBase app = new Settings();
+            //app.Reset();
+#endif
             InitializeComponent();
 
             if (Settings.Default.DefaultPath.Length < 4)
@@ -62,8 +68,6 @@ namespace NewBalance
             App = new AppLoader(Settings.Default.DefaultPath);
 
             Balance = DefaultBalance();
-
-            
 
             if (Balance == null || !Balance.IsBalanceConnected())
             {
@@ -101,6 +105,11 @@ namespace NewBalance
             Enum.TryParse(Settings.Default.Parity, out parity);
 
             return new BalanceReader(comPort, baudRate, stopBits, dataBits, parity, sicsCommand, rts);
+        }
+
+        private ColorMeter DefaultColor()
+        {
+            return new ColorMeter(ColorPort);
         }
 
         // Load App Files into ToolStripMenu "Apps"
@@ -143,9 +152,12 @@ namespace NewBalance
         //Clears GridView and Any Subscriptions
         private void EmptyGridView(string nameOfApp)
         {
-            int index = App.GetFileNames().IndexOf(nameOfApp);
+            int index = App.GetFileNames().IndexOf(nameOfApp.ToLower());
 
-            if (index < 0) return;
+            if (index < 0)
+            {
+                throw new Exception("Cannot find file \"" + nameOfApp + ".app\" in " + Settings.Default.DefaultPath );
+            }
             AppParse = new AppParser(App.GetDirectoryNames()[index]);
 
             if (ViewData != null)
@@ -224,15 +236,24 @@ namespace NewBalance
 
             NewBalanceDataGridView.Rows.Add();
 
-            // update initialized values from constructor
-            for (int i = 0; i < NewBalanceDataGridView.ColumnCount; i++)
-            {
-                NewBalanceDataGridView.Rows[0].Cells[i].Value = ViewData.GetCell(0, i).Value.ToString();
-            }
-
             for (int i = 0; i < count; i++)
             {
                 NewBalanceDataGridView.Columns[i].HeaderText = columnHeaders[i];
+
+                // hide newscreen cells (backwards compatibility)
+                NewBalanceDataGridView.Columns[i].Visible =
+                    !(NewBalanceDataGridView.Columns[i].HeaderText.ToLower().Contains("newscreen"));
+
+                // set maxium input size (backwards compatibility)
+                ((DataGridViewTextBoxColumn) NewBalanceDataGridView.Columns[i]).MaxInputLength =
+                    ViewData.GetCell(0, i).Digits;
+
+                NewBalanceDataGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+                NewBalanceDataGridView.Rows[0].Cells[i].Value = ViewData.GetCell(0, i).Value.ToString();
+
+                //// set default formatting options
+                //NewBalanceDataGridView.Columns[i].DefaultCellStyle.Format = "N" + ViewData.GetCell(0, i).Precision;
             }
 
             for (int i = 0; i < NewBalanceDataGridView.Rows[0].Cells.Count; i++)
@@ -258,12 +279,6 @@ namespace NewBalance
                 }
 
                 NewBalanceDataGridView.Columns[i].Resizable = DataGridViewTriState.True;
-            }
-
-            // make sure not to allow sorting
-            foreach (DataGridViewColumn col in NewBalanceDataGridView.Columns)
-            {
-                col.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
             NewBalanceDataGridView.SelectionChanged += NewBalanceDataGridView_SelectionChanged;
@@ -318,9 +333,9 @@ namespace NewBalance
         #region Hot Keys
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == (Keys.F1) && saveToolStripMenuItem.Enabled)
+            if (keyData == (Keys.F1) && saveAsToolStripMenuItem.Enabled)
             {
-                saveToolStripMenuItem_Click(this, EventArgs.Empty);
+                saveAsToolStripMenuItem_Click(this, EventArgs.Empty);
                 return true;
             }
             if (keyData == (Keys.F2))
@@ -339,6 +354,11 @@ namespace NewBalance
                 return true;
             }
             if (keyData == (Keys.Enter) && _cellBeginEdit != null)
+            {
+                NextCell();
+                return true;
+            }
+            if (keyData == (Keys.Tab) && _cellBeginEdit != null)
             {
                 NextCell();
                 return true;
@@ -420,6 +440,8 @@ namespace NewBalance
         //Load File Event Handler
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // add string to keep current file name after openfiledialog
+
             OpenFileDialog o = new OpenFileDialog()
             {
                 InitialDirectory = Settings.Default.DefaultPath,
@@ -431,9 +453,15 @@ namespace NewBalance
                 SaveCheck sc = new SaveCheck();
                 sc.LabelCorrectlyFromLoad();
 
-                if (sc.ShowDialog() == DialogResult.Yes)
+                DialogResult result = sc.ShowDialog();
+
+                if (result == DialogResult.Yes && !string.IsNullOrEmpty(_currentOpenFile))
                 {
                     saveToolStripMenuItem_Click(this, EventArgs.Empty);
+                }
+                else if (result == DialogResult.Retry || string.IsNullOrEmpty(_currentOpenFile))
+                {
+                    saveAsToolStripMenuItem_Click(this, EventArgs.Empty);
                 }
             }
 
@@ -445,7 +473,19 @@ namespace NewBalance
                 // first line is the app name
                 string appName = r.ReadLine();
 
-                EmptyGridView(appName);
+                try
+                {
+                    EmptyGridView(appName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+
+                    return;
+                }
+                
+
+                this.Text = "NewBalance - " + appName;
 
                 string s;
                 int row = 0, column;
@@ -484,6 +524,7 @@ namespace NewBalance
                 r.Close();
                 fs.Close();
                 saveToolStripMenuItem.Enabled = true;
+                saveAsToolStripMenuItem.Enabled = true;
                 addRowButton.Enabled = true;
 
                 // Don't annoy user if they just loaded the file
@@ -494,21 +535,53 @@ namespace NewBalance
         //Save File Event Handler
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(!string.IsNullOrEmpty(_currentOpenFile) && !RecentlySaved)
+            {
+                FileStream fs = File.OpenWrite(_currentOpenFile);
+                StreamWriter w = new StreamWriter(fs);
+
+                w.Write(ViewData.Save());
+                w.Close();
+                fs.Close();
+
+                // Don't annoy user if they have recently saved
+                RecentlySaved = true;
+            }
+
+            SaveSuccess s = new SaveSuccess(Path.GetFileName(_currentOpenFile));
+
+            if(showConfirmSave && s.ShowDialog() == DialogResult.No)
+            {
+                showConfirmSave = false;
+            }
+        }
+
+        //Save As File Event Handler
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             SaveFileDialog s = new SaveFileDialog()
             {
                 RestoreDirectory = true,
-                InitialDirectory = Settings.Default.DefaultPath
+                InitialDirectory = Settings.Default.DefaultPath,
+                Title = "Save Inputted Data"
             };
-
+            
             if (s.ShowDialog() == DialogResult.OK)
             {
+                // save the curently open file name
+                _currentOpenFile = s.FileName;
+
                 FileStream fs = new FileStream(s.FileName, FileMode.Create);
                 StreamWriter w = new StreamWriter(fs);
 
                 w.Write(ViewData.Save());
-
                 w.Close();
                 fs.Close();
+            }
+
+            if (!string.IsNullOrEmpty(_currentOpenFile))
+            {
+                saveToolStripMenuItem.Enabled = true;
             }
 
             // Don't annoy user if they have recently saved
@@ -527,44 +600,88 @@ namespace NewBalance
                 SaveCheck sc = new SaveCheck();
                 sc.LabelCorrectlyFromLoad();
 
-                if (sc.ShowDialog() == DialogResult.Yes)
+                DialogResult result = sc.ShowDialog();
+
+                if (result == DialogResult.Yes && !string.IsNullOrEmpty(_currentOpenFile))
                 {
                     saveToolStripMenuItem_Click(this, EventArgs.Empty);
                 }
+                else if(result == DialogResult.Retry || string.IsNullOrEmpty(_currentOpenFile))
+                {
+                    saveAsToolStripMenuItem_Click(this, EventArgs.Empty);
+                }
             }
 
+            _currentOpenFile = "";
             //find item in app
             string nameOfApp = t.Text;
             Text = "NewBalance - " + t.Text;
 
-            EmptyGridView(nameOfApp);
+            try
+            {
+                EmptyGridView(nameOfApp);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
 
             addRowButton.Enabled = true;
-            saveToolStripMenuItem.Enabled = true;
+            // don't show save here unless they have saved the file already
+            saveAsToolStripMenuItem.Enabled = true;
         }
 
-        //Preferences Popup Event Handler
-        private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void serialAndAppSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Preferences pref = new Preferences();
+            SerialAndAppSettings pref = new SerialAndAppSettings();
 
-            pref.CloseEvent += pref_CloseEvent;
+            pref.CloseEvent += serialAndAppSettings_CloseEvent;
 
             pref.Show();
         }
 
-        //Preferences On Close Event Handler
-        private void pref_CloseEvent(object sender, PreferenceCloseEventArgs e)
+        //Preferences popup event handler
+        private void preferencesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            App.UpdatePath(e.Text);
-            // update balance settings
-            if (Balance != null)
-                Balance.Dispose();
-            Balance = DefaultBalance();
+            Preferences p = new Preferences(this.NewBalanceDataGridView.DefaultCellStyle, this.NewBalanceDataGridView.ColumnHeadersDefaultCellStyle);
 
-            LoadAndUpdateAppFiles();
+            DialogResult result = p.ShowDialog();
 
-            if (Balance.IsBalanceConnected())
+            if(result != DialogResult.Abort)
+            {
+                // update balance colors
+                var newCellStyle = this.NewBalanceDataGridView.DefaultCellStyle;
+                newCellStyle.ForeColor = p.foreColor;
+                newCellStyle.BackColor = p.backColor;
+
+                var newColStyle = this.NewBalanceDataGridView.ColumnHeadersDefaultCellStyle;
+                newColStyle.ForeColor = p.foreColor;
+                newColStyle.BackColor = p.backColor;
+
+                Settings.Default.foreColor = p.foreColor;
+                Settings.Default.backColor = p.backColor;
+                Settings.Default.Save();
+            }
+        }
+
+        //Preferences On Close Event Handler
+        private void serialAndAppSettings_CloseEvent(object sender, SerialAndAppSettingsCloseEventArgs e)
+        {
+            SerialAndAppSettings s = sender as SerialAndAppSettings;
+
+            if (s.DialogResult != DialogResult.Abort)
+            {
+                App.UpdatePath(e.Text);
+                // update balance settings
+                if (Balance != null)
+                    Balance.Dispose();
+                Balance = DefaultBalance();
+
+                LoadAndUpdateAppFiles();
+            }
+
+
+            if (Balance != null && Balance.IsBalanceConnected())
             {
                 readBalanceButton.Enabled = true;
                 readBalanceButton.Text = @"Read Balance";
@@ -574,7 +691,6 @@ namespace NewBalance
                 readBalanceButton.Enabled = false;
                 readBalanceButton.Text = @"Disconnected";
             }
-            
         }
 
         //Add Row Event Handler;
@@ -612,11 +728,20 @@ namespace NewBalance
             if (SingleSerialType == SerialType.Balance)
             {
                 BalancePort = singleSerialPopup.PortName;
+                Settings.Default.COMPort = BalancePort;
             }
             else if (SingleSerialType == SerialType.ColorMeter)
             {
                 ColorPort = singleSerialPopup.PortName;
+                Settings.Default.ColorCOMPort = ColorPort;
             }
+            else
+            {
+                readBalanceButton.Enabled = false;
+                readBalanceButton.Text = @"Disconnected";
+            }
+
+            Settings.Default.Save();
         }
 
         // Multiple Serial Port Popup Event Handler
@@ -629,11 +754,15 @@ namespace NewBalance
             if (multipleSerialPopup.BalancePortName != "Unused")
             {
                 BalancePort = multipleSerialPopup.BalancePortName;
+                Settings.Default.COMPort = multipleSerialPopup.BalancePortName;
             }
             if (multipleSerialPopup.ColorPortName != "Unused")
             {
                 ColorPort = multipleSerialPopup.ColorPortName;
+                Settings.Default.ColorCOMPort = multipleSerialPopup.ColorPortName;
             }
+
+            Settings.Default.Save();
         }
 
         //Right Click Menu Event
@@ -1001,6 +1130,31 @@ namespace NewBalance
             }
         }
 
+        private void createNewAPPFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateAppForm c = new CreateAppForm();
+
+            c.Show();
+
+            //MessageBox.Show("This feature is not yet available and undergoing the design process.  It will be available in the next patch.", "Coming Soon.", MessageBoxButtons.OK);
+
+        }
+
+        private void colorMeterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(Balance != null)
+            {
+                Balance.Dispose();
+                Balance = null;
+            }
+
+            using (var meter = new ColorMeter(Settings.Default.ColorCOMPort))
+            {
+                ColorForm c = new ColorForm(meter);
+                c.Show();
+            }
+        }
+
         private void UnfreezeColumn()
         {
             // based on the current amount of frozen columns the values will change for what their normal spot is
@@ -1081,6 +1235,9 @@ namespace NewBalance
 
             }
         }
+
         #endregion
+
+
     }
 }

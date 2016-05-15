@@ -63,7 +63,7 @@ namespace NewBalance.Library.Classes
 
                 List<string> dependencyNamesPossibleDupes = (from name in names
                                                                 where name.Length > 0 &&
-                                                                !double.TryParse(name, out n)     // make sure the value isn't an integer
+                                                                !double.TryParse(name, out n)     // make sure the value isn't a direct value
                                                                 select name).ToList();
 
                 List<string> dependencyNames = dependencyNamesPossibleDupes.Distinct().ToList();
@@ -432,6 +432,20 @@ namespace NewBalance.Library.Classes
         }
     }
 
+    public class NewScreen : Cell
+    {
+        public NewScreen(string label, int digits, int precision, string connectionInfo, int rowIndex, int columnIndex) :
+            base(label, digits, precision, connectionInfo, rowIndex, columnIndex)
+        {
+            _CellType = CellType.NewScreen;
+        }
+
+        public NewScreen(NewScreen ns, bool multiCell = false) : base(ns, multiCell)
+        {
+            _CellType = CellType.NewScreen;
+        }
+    }
+
     public class Cell : ICloneable
     {
         private string _Label;
@@ -610,6 +624,7 @@ namespace NewBalance.Library.Classes
         W,
         C,
         M,
-        Multiple
+        Multiple,
+        NewScreen
     }
 }

@@ -17,8 +17,6 @@ namespace NewBalance.Library.Classes
 
         public GridData(List<Cell> defaultRow, string nameOfApp)
         {
-            // temp list for calculations
-            List<Cell> cells = new List<Cell>();
             foreach (Cell c in defaultRow)
             {
                 if (c.CellType == CellType.K)
@@ -62,12 +60,24 @@ namespace NewBalance.Library.Classes
                     // need for TryParse
                     double n;
 
-                    List<string> dependencyNamesPossibleDupes = (from name in names
+                    List<string> dependencyNamesPossibleDupes = new List<string>(); /* = (from name in names
                                                                  where name.Length > 0 &&
                                                                  !double.TryParse(name, out n)     // make sure the value isn't an integer
-                                                                 select name).ToList();
+                                                                 select name).ToList(); */
+                
 
-                    List<string> dependencyNames = dependencyNamesPossibleDupes.Distinct().ToList();
+                    foreach (string name in names)
+                    {
+                        if (name.Length > 0 && !double.TryParse(name, out n))
+                        {
+                            dependencyNamesPossibleDupes.Add(name);
+                        }
+                    }
+
+                    // quicker way to get distinct values
+                    HashSet<string> dependencyNames = new HashSet<string>(dependencyNamesPossibleDupes);
+
+                    //List<string> dependencyNames = dependencyNamesPossibleDupes.Distinct().ToList();
 
 
                     List<Cell> dependencies = new List<Cell>();
@@ -111,6 +121,11 @@ namespace NewBalance.Library.Classes
                     MultipleCell multiple = c as MultipleCell;
                     cells.Add(new MultipleCell(multiple, cells));
                 }
+                else if (c.CellType == CellType.NewScreen)
+                {
+                    NewScreen ns = c as NewScreen;
+                    cells.Add(new NewScreen(ns));
+                }
                 
             }
             _Cells.Add(cells);
@@ -148,6 +163,59 @@ namespace NewBalance.Library.Classes
             return _Cells[0].Select(x => x.Label).ToList();
         }
 
+        //public void DatFileAppendLoop(StringBuilder sb, string str, int length)
+        //{
+        //    // don't go beyond the amount of digits allowed in the cell
+        //    for (int i = 0; i < length; i++)
+        //    {
+        //        // need to get all characters from the string
+        //        if (i < str.Length)
+        //        {
+        //            sb.Append(str[i]);
+        //        }
+        //        // then start adding spaces
+        //        else
+        //        {
+        //            sb.Append(' ');
+        //        }
+        //    }
+        //}
+
+        //public string SaveDatFile()
+        //{
+        //    StringBuilder sb = new StringBuilder();
+
+        //    // header is the name of the app file
+        //    sb.AppendLine(_AppName);
+
+        //    // get the row
+        //    foreach (List<Cell> listOFCells in _Cells)
+        //    {
+        //        string str = "";
+        //        // get the cell
+        //        foreach (Cell c in listOFCells)
+        //        {
+        //            if (c is KCell)
+        //            {
+        //                str = (c as KCell).KValue;
+
+        //                DatFileAppendLoop(sb, str, c.Digits);
+        //            }
+        //            else
+        //            {
+        //                str = c.Value.ToString();
+        //                DatFileAppendLoop(sb, str, c.Digits);
+        //            }
+                    
+        //            sb.Append(',');
+        //        }
+
+        //        sb.Append("\r\n");
+        //    }
+
+        //    return sb.ToString();
+        //}
+
         public string Save()
         {
             StringBuilder sb = new StringBuilder();
@@ -162,18 +230,34 @@ namespace NewBalance.Library.Classes
                     {
                         if (c is KCell)
                         {
-                            sb.Append((c as KCell).KValue + ",");
+                            //sb.Append((c as KCell).KValue + ",");
+                            KCell kc = c as KCell;
+                            for(int i = 0; i < kc.Digits; i++)
+                            {
+                                // add characters for the full length of the string, do not add
+                                sb.Append(i < kc.KValue.Length ? kc.KValue[i] : ' ');
+                            }
                         }
                         else
                         {
-                            sb.Append(c.Value + ",");
+                            //sb.Append(c.Value + ",");
+                            for (int i = 0; i < c.Digits; i++)
+                            {
+                                // add characters for the full length of the string, do not add
+                                sb.Append(i < c.Value.ToString().Length ? c.Value.ToString()[i] : ' ');
+                            }
                         }    
                     }
                     else
                     {
-                        sb.Append(",");
+                        // no value entered or changed, do not change.
+                        for (int i = 0; i < c.Digits; i++)
+                        {
+                            sb.Append(' ');
+                        }
+                        
                     }
-                    
+                    sb.Append(",");
                 }
                 sb.AppendLine();
             }

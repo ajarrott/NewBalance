@@ -48,7 +48,7 @@ namespace NewBalance.Tests
         [TestMethod]
         public void ColorTest()
         {
-            ColorReader c = new ColorReader("COM3", "X");
+            ColorMeter c = new ColorMeter("COM3", "X");
 
             //Assert(true);
         }

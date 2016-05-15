@@ -1,0 +1,10 @@
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Library\bin\Debug\NewBalance.Library.dll
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Library\bin\Debug\NewBalance.Library.pdb
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Debug\NewBalance.Library.dll
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Debug\NewBalance.Library.pdb
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Debug\NewBalance.Library.csprojResolveAssemblyReference.cache
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Library\bin\Debug\NewBalance.Library.dll
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Library\bin\Debug\NewBalance.Library.pdb
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Debug\NewBalance.Library.dll
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Debug\NewBalance.Library.pdb
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Debug\NewBalance.Library.csprojResolveAssemblyReference.cache

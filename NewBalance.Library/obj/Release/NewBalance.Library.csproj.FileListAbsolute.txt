@@ -9,6 +9,9 @@ C:\Users\anthony\Desktop\UBalance\NewBalance.Library\obj\Release\NewBalance.Libr
 C:\Users\anthony\Desktop\UBalance\NewBalance.Library\obj\Release\NewBalance.Library.csprojResolveAssemblyReference.cache
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Library\bin\Release\NewBalance.Library.dll
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Library\bin\Release\NewBalance.Library.pdb
-C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Release\NewBalance.Library.csprojResolveAssemblyReference.cache
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Release\NewBalance.Library.dll
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Release\NewBalance.Library.pdb
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Library\bin\Release\NewBalance.Library.dll
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Library\bin\Release\NewBalance.Library.pdb
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Release\NewBalance.Library.dll
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Library\obj\Release\NewBalance.Library.pdb

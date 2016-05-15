@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using NewBalance.Library.Classes;
+using NewBalance.Properties;
 
 namespace NewBalance
 {
@@ -38,12 +39,17 @@ namespace NewBalance
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.appsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serialAndAppSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.createNewAPPFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewBalanceDataGridView = new System.Windows.Forms.DataGridView();
             this.addRowButton = new System.Windows.Forms.Button();
             this.readBalanceButton = new System.Windows.Forms.Button();
+            this.colorMeterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NewBalanceDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +59,8 @@ namespace NewBalance
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.appsToolStripMenuItem,
-            this.preferencesToolStripMenuItem});
+            this.preferencesToolStripMenuItem,
+            this.colorMeterToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(549, 24);
@@ -64,6 +71,7 @@ namespace NewBalance
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
             this.loadToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -73,14 +81,22 @@ namespace NewBalance
             // 
             this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Enabled = false;
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -92,10 +108,34 @@ namespace NewBalance
             // 
             // preferencesToolStripMenuItem
             // 
+            this.preferencesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.serialAndAppSettingsToolStripMenuItem,
+            this.preferencesToolStripMenuItem1,
+            this.createNewAPPFileToolStripMenuItem});
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
-            this.preferencesToolStripMenuItem.Text = "Preferences";
-            this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.preferencesToolStripMenuItem.Text = "Options";
+            // 
+            // serialAndAppSettingsToolStripMenuItem
+            // 
+            this.serialAndAppSettingsToolStripMenuItem.Name = "serialAndAppSettingsToolStripMenuItem";
+            this.serialAndAppSettingsToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.serialAndAppSettingsToolStripMenuItem.Text = "Serial and App Settings";
+            this.serialAndAppSettingsToolStripMenuItem.Click += new System.EventHandler(this.serialAndAppSettingsToolStripMenuItem_Click);
+            // 
+            // preferencesToolStripMenuItem1
+            // 
+            this.preferencesToolStripMenuItem1.Name = "preferencesToolStripMenuItem1";
+            this.preferencesToolStripMenuItem1.Size = new System.Drawing.Size(195, 22);
+            this.preferencesToolStripMenuItem1.Text = "Preferences";
+            this.preferencesToolStripMenuItem1.Click += new System.EventHandler(this.preferencesToolStripMenuItem1_Click);
+            // 
+            // createNewAPPFileToolStripMenuItem
+            // 
+            this.createNewAPPFileToolStripMenuItem.Name = "createNewAPPFileToolStripMenuItem";
+            this.createNewAPPFileToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.createNewAPPFileToolStripMenuItem.Text = "Create New .APP file";
+            this.createNewAPPFileToolStripMenuItem.Click += new System.EventHandler(this.createNewAPPFileToolStripMenuItem_Click);
             // 
             // NewBalanceDataGridView
             // 
@@ -144,13 +184,21 @@ namespace NewBalance
             // readBalanceButton
             // 
             this.readBalanceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.readBalanceButton.Location = new System.Drawing.Point(450, 262);
+            this.readBalanceButton.Location = new System.Drawing.Point(450, 263);
             this.readBalanceButton.Name = "readBalanceButton";
             this.readBalanceButton.Size = new System.Drawing.Size(86, 23);
             this.readBalanceButton.TabIndex = 3;
             this.readBalanceButton.Text = "Read Balance";
             this.readBalanceButton.UseVisualStyleBackColor = true;
             this.readBalanceButton.Click += new System.EventHandler(this.readBalanceButton_Click);
+            // 
+            // colorMeterToolStripMenuItem
+            // 
+            this.colorMeterToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.colorMeterToolStripMenuItem.Name = "colorMeterToolStripMenuItem";
+            this.colorMeterToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.colorMeterToolStripMenuItem.Text = "Color Meter";
+            this.colorMeterToolStripMenuItem.Click += new System.EventHandler(this.colorMeterToolStripMenuItem_Click);
             // 
             // NewBalance
             // 
@@ -183,9 +231,13 @@ namespace NewBalance
         private System.Windows.Forms.DataGridView NewBalanceDataGridView;
         private System.Windows.Forms.Button addRowButton;
         private Button readBalanceButton;
-        private ToolStripMenuItem saveToolStripMenuItem;
+        private ToolStripMenuItem saveAsToolStripMenuItem;
         private ToolStripMenuItem loadToolStripMenuItem;
-
+        private ToolStripMenuItem serialAndAppSettingsToolStripMenuItem;
+        private ToolStripMenuItem preferencesToolStripMenuItem1;
+        private ToolStripMenuItem saveToolStripMenuItem;
+        private ToolStripMenuItem createNewAPPFileToolStripMenuItem;
+        private ToolStripMenuItem colorMeterToolStripMenuItem;
     }
 }
 

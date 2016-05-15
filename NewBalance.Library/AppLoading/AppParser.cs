@@ -35,8 +35,10 @@ namespace NewBalance.Library.AppLoading
             foreach(string str in noBlankLines)
             {
                 string[] test = str.Split(null);
-                List<string> newList = test.Where(s => s.Length > 0 && !s.ToLower().Contains("newscreen")).ToList();
 
+                // need to keep newscreen for backwards compatibility
+                //List<string> newList = test.Where(s => s.Length > 0 && !s.ToLower().Contains("newscreen")).ToList();
+                List<string> newList = test.Where(s => s.Length > 0).ToList();
                 if ( newList.Count == 5)
                     _parsedFile.Add(newList);
             }
@@ -183,6 +185,12 @@ namespace NewBalance.Library.AppLoading
                             cols.Add(m);
                         }
                         break;
+                    // newscreen, for backwards compatibility
+                    case "0":
+                        NewScreen newScreen = new NewScreen(label, digits, precision, connectionInfo, rowNumber, colIndex);
+                        cols.Add(newScreen);
+                        break;
+
                 }
 
                 colIndex++;

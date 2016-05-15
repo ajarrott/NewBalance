@@ -42,8 +42,6 @@ C:\Users\anthony\Desktop\Wheat Lab\UBalance\NewBalance\bin\Release\NewBalance.ex
 C:\Users\anthony\Desktop\Wheat Lab\UBalance\NewBalance\obj\Release\NewBalance.exe
 C:\Users\anthony\Desktop\Wheat Lab\UBalance\NewBalance\obj\Release\NewBalance.pdb
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.exe.config
-C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.exe
-C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.pdb
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.exe.manifest
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.application
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.exe
@@ -61,3 +59,36 @@ C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.csproj.GenerateResource.Cache
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.exe.manifest
 C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.application
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.exe
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.pdb
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.exe.CodeAnalysisLog.xml
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.exe.lastcodeanalysissucceeded
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.exe.config
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.exe
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.pdb
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.csprojResolveAssemblyReference.cache
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.FirstRunPopup.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.Preferences.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.MultipleSerialPopup.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.SaveCheck.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.SingleSerialPopup.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.NewBalance.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.Properties.Resources.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.csproj.GenerateResource.Cache
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.exe.manifest
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.application
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.exe
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.pdb
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.Library.dll
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\bin\Release\NewBalance.Library.pdb
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.exe.manifest
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.application
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.ColorMeter.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.multiCellForm.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.kCellForm.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.wCellForm.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.cCellForm.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.mCellForm.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.CreateAppForm.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.SaveSuccess.resources
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance\obj\Release\NewBalance.SerialAndAppSettings.resources

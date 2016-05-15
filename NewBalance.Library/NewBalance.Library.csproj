@@ -46,13 +46,15 @@
     <Compile Include="Classes\AppItem.cs" />
     <Compile Include="Classes\BalanceReader.cs" />
     <Compile Include="Classes\Calculation.cs" />
-    <Compile Include="Classes\ColorReader.cs" />
+    <Compile Include="Classes\ColorGridData.cs" />
+    <Compile Include="Classes\ColorMeter.cs" />
     <Compile Include="Classes\Cell.cs" />
     <Compile Include="Classes\GridData.cs" />
     <Compile Include="Classes\MultiCellPrototype.cs" />
+    <Compile Include="Classes\tester.cs" />
     <Compile Include="Events\AllColumnsPopulatedEventArgs.cs" />
     <Compile Include="Events\ColumnChangedEventArgs.cs" />
-    <Compile Include="Events\PreferenceCloseEventArgs.cs" />
+    <Compile Include="Events\SerialAndAppSettingsCloseEventArgs.cs" />
     <Compile Include="Events\SelectedRowEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

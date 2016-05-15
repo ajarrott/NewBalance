@@ -78,34 +78,88 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FirstRunPopup.cs">
+    <Compile Include="ColorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FirstRunPopup.Designer.cs">
+    <Compile Include="ColorForm.Designer.cs">
+      <DependentUpon>ColorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\NewApp\multiCellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\NewApp\multiCellForm.Designer.cs">
+      <DependentUpon>multiCellForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\NewApp\kCellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\NewApp\kCellForm.Designer.cs">
+      <DependentUpon>kCellForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\NewApp\wCellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\NewApp\wCellForm.Designer.cs">
+      <DependentUpon>wCellForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\NewApp\cCellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\NewApp\cCellForm.Designer.cs">
+      <DependentUpon>cCellForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\NewApp\mCellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\NewApp\mCellForm.Designer.cs">
+      <DependentUpon>mCellForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\NewApp\CreateAppForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\NewApp\CreateAppForm.Designer.cs">
+      <DependentUpon>CreateAppForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Startup\FirstRunPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Startup\FirstRunPopup.Designer.cs">
       <DependentUpon>FirstRunPopup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Preferences.cs">
+    <Compile Include="Options\Preferences.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Preferences.Designer.cs">
+    <Compile Include="Options\Preferences.Designer.cs">
       <DependentUpon>Preferences.cs</DependentUpon>
     </Compile>
-    <Compile Include="MultipleSerialPopup.cs">
+    <Compile Include="Saving\SaveSuccess.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MultipleSerialPopup.Designer.cs">
+    <Compile Include="Saving\SaveSuccess.Designer.cs">
+      <DependentUpon>SaveSuccess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\SerialAndAppSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\SerialAndAppSettings.Designer.cs">
+      <DependentUpon>SerialAndAppSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Startup\MultipleSerialPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Startup\MultipleSerialPopup.Designer.cs">
       <DependentUpon>MultipleSerialPopup.cs</DependentUpon>
     </Compile>
-    <Compile Include="SaveCheck.cs">
+    <Compile Include="Saving\SaveCheck.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SaveCheck.Designer.cs">
+    <Compile Include="Saving\SaveCheck.Designer.cs">
       <DependentUpon>SaveCheck.cs</DependentUpon>
     </Compile>
-    <Compile Include="SingleSerialPopup.cs">
+    <Compile Include="Startup\SingleSerialPopup.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SingleSerialPopup.Designer.cs">
+    <Compile Include="Startup\SingleSerialPopup.Designer.cs">
       <DependentUpon>SingleSerialPopup.cs</DependentUpon>
     </Compile>
     <Compile Include="NewBalance.cs">
@@ -116,19 +170,46 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FirstRunPopup.resx">
+    <EmbeddedResource Include="ColorForm.resx">
+      <DependentUpon>ColorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\NewApp\multiCellForm.resx">
+      <DependentUpon>multiCellForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\NewApp\kCellForm.resx">
+      <DependentUpon>kCellForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\NewApp\wCellForm.resx">
+      <DependentUpon>wCellForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\NewApp\cCellForm.resx">
+      <DependentUpon>cCellForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\NewApp\mCellForm.resx">
+      <DependentUpon>mCellForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\NewApp\CreateAppForm.resx">
+      <DependentUpon>CreateAppForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Startup\FirstRunPopup.resx">
       <DependentUpon>FirstRunPopup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Preferences.resx">
+    <EmbeddedResource Include="Options\Preferences.resx">
       <DependentUpon>Preferences.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MultipleSerialPopup.resx">
+    <EmbeddedResource Include="Saving\SaveSuccess.resx">
+      <DependentUpon>SaveSuccess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\SerialAndAppSettings.resx">
+      <DependentUpon>SerialAndAppSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Startup\MultipleSerialPopup.resx">
       <DependentUpon>MultipleSerialPopup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SaveCheck.resx">
+    <EmbeddedResource Include="Saving\SaveCheck.resx">
       <DependentUpon>SaveCheck.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SingleSerialPopup.resx">
+    <EmbeddedResource Include="Startup\SingleSerialPopup.resx">
       <DependentUpon>SingleSerialPopup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewBalance.resx">

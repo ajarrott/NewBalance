@@ -42,36 +42,36 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NewBalance.exe" size="44008">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NewBalance.exe" size="79848">
       <assemblyIdentity name="NewBalance" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>njVQgtZFAkac8OHeUjeWtxyKNc7xYrmKDQifk0/HuR0=</dsig:DigestValue>
+        <dsig:DigestValue>OVC7obHyA+diI8Anyx/9czCaK8DkfLvhHv7srbzxnXg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NewBalance.Library.dll" size="30720">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NewBalance.Library.dll" size="31744">
       <assemblyIdentity name="NewBalance.Library" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2WRGofr+KOzvp42uyNpCOIcU4YCjDmiH7QoncH8LQqM=</dsig:DigestValue>
+        <dsig:DigestValue>kZQ5Q4ydwaG5wG+VCWhxLVB21efAOlmAYpMJ9cMh4Fs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="NewBalance.exe.config" size="1763">
+  <file name="NewBalance.exe.config" size="2134">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>FSUqdZ/LR47Y5dm8zwaj8djizm0zc20b8aTeEWKMSao=</dsig:DigestValue>
+      <dsig:DigestValue>lR1+nBpZXZise4Imy38TzXFK25Xdhqi3xE5BjXcZxSA=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

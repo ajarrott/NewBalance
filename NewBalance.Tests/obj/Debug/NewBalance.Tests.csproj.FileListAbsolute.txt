@@ -1,0 +1,15 @@
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\obj\Debug\NewBalance.Tests.csprojResolveAssemblyReference.cache
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Debug\NewBalance.Tests.dll
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Debug\NewBalance.Tests.pdb
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Debug\NewBalance.Library.dll
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Debug\NewBalance.Library.pdb
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\obj\Debug\NewBalance.Tests.dll
+C:\Users\anthony\Desktop\Wheat Lab\NewBalance\NewBalance.Tests\obj\Debug\NewBalance.Tests.pdb
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Debug\NewBalance.Tests.dll
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Debug\NewBalance.Tests.pdb
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Debug\NewBalance.Library.dll
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Tests\bin\Debug\NewBalance.Library.pdb
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Tests\obj\Debug\NewBalance.Tests.csprojResolveAssemblyReference.cache
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Tests\obj\Debug\NewBalance.Tests.dll
+D:\Stuff From Desktop\Wheat Lab\NewBalance\NewBalance.Tests\obj\Debug\NewBalance.Tests.pdb

@@ -21,7 +21,7 @@ namespace NewBalance.Library.Classes
         public int DataBits = 7;
         public Parity Parity = Parity.None;
          * */
-        public BalanceReader(string comPort = "COM1", int baudRate = 110, StopBits stopBits = StopBits.One,
+        public BalanceReader(string comPort = "COM1", int baudRate = 9600, StopBits stopBits = StopBits.One,
             int dataBits = 7, Parity parity = Parity.Even, string sicsCommand = "SI", bool rts = false)
         {
             _sicsCommand = sicsCommand;
@@ -61,19 +61,28 @@ namespace NewBalance.Library.Classes
 
             if (s != null)
             {
-                string str = s.ReadLine();
-                string[] items = str.Split();
-
-                foreach (string item in items)
+                byte[] buffer = new byte[256];
+                try
                 {
-                    double temp = 0.0;
-                    double.TryParse(item, out temp);
+                    string str = s.ReadLine();
+                    string[] items = str.Split();
 
-                    if (!temp.Equals(0))
+                    foreach (string item in items)
                     {
-                        _reading = temp;
+                        double temp = 0.0;
+                        double.TryParse(item, out temp);
+
+                        if (!temp.Equals(0))
+                        {
+                            _reading = temp;
+                        }
                     }
                 }
+                catch (Exception)
+                {
+                    //
+                }//string str = System.Text.ASCIIEncoding.Default.GetString(buffer);//.ToString();
+
 
             }
             // need to parse the data to find the string
